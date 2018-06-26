@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">CallForCode</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="project_name">CallForCode</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nearby">NEARBY</string>
+    <string name="latest">LATEST</string>
+    <string name="map">MAP</string>
+    <string name="stats">STATS</string>
+    <string name="login">LOGIN</string>
+    <string name="sign_up_now">SIGN UP NOW</string>
+    <string name="login_with_facebook">LOGIN WITH FACEBOOK</string>
+    <string name="login_with_twitter">LOGIN WITH TWITTER</string>
+    <string name="don_t_have_account">Don\'t Have Account ?</string>
+    <string name="or">Or</string>
+</resources>
