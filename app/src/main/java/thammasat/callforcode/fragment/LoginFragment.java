@@ -1,5 +1,6 @@
 package thammasat.callforcode.fragment;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 
 import thammasat.callforcode.R;
+import thammasat.callforcode.activity.MainActivity;
 import thammasat.callforcode.databinding.FragmentLoginBinding;
 
 public class LoginFragment extends Fragment {
@@ -72,17 +74,23 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        binding.tvTwitter.setOnClickListener(new View.OnClickListener() {
+        binding.llTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.llTwitter.startAnimation(anim);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
             }
         });
 
-        binding.tvFacebook.setOnClickListener(new View.OnClickListener() {
+        binding.llFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.llFacebook.startAnimation(anim);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
             }
         });
 

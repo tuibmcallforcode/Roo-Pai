@@ -1,12 +1,10 @@
 package thammasat.callforcode.fragment;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +13,11 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 
 import thammasat.callforcode.R;
-import thammasat.callforcode.activity.MainActivity;
-import thammasat.callforcode.databinding.FragmentSignupBinding;
+import thammasat.callforcode.databinding.FragmentRecoverBinding;
 
-public class SignUpFragment extends Fragment {
+public class RecoverFragment extends Fragment {
 
-    private FragmentSignupBinding binding;
+    private FragmentRecoverBinding binding;
     private Typeface bold, regular, light;
     private Animation anim;
     private BounceInterpolator interpolator;
@@ -29,7 +26,7 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_signup, container, false);
+                inflater, R.layout.fragment_recover, container, false);
         View view = binding.getRoot();
         return view;
     }
@@ -42,28 +39,6 @@ public class SignUpFragment extends Fragment {
         eventListenerBinding();
     }
 
-    private void eventListenerBinding() {
-        binding.tvCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.tvCreate.startAnimation(anim);
-                getFragmentManager().popBackStack();
-            }
-        });
-
-        binding.llSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.llSignIn.startAnimation(anim);
-                SignInFragment signUpFragment = new SignInFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-                transaction.replace(R.id.fragmentContainer, signUpFragment);
-                transaction.commit();
-            }
-        });
-    }
-
     private void initInstance() {
         bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
         regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
@@ -74,10 +49,17 @@ public class SignUpFragment extends Fragment {
         anim.setInterpolator(interpolator);
 
         binding.tvProjectName.setTypeface(bold);
-        binding.tvCreate.setTypeface(regular);
-        binding.tvSignInRec.setTypeface(light);
-        binding.tvSignIn.setTypeface(bold);
+        binding.tvConfirm.setTypeface(regular);
         binding.etEmail.setTypeface(regular);
-        binding.etPassword.setTypeface(regular);
+    }
+
+    private void eventListenerBinding() {
+        binding.tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.tvConfirm.startAnimation(anim);
+                getFragmentManager().popBackStack();
+            }
+        });
     }
 }

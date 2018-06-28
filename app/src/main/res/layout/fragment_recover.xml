@@ -1,0 +1,109 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="thammasat.callforcode.fragment.RecoverFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvProjectName"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="RECOVER"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_large" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_side_bar_large"
+                        android:layout_marginRight="@dimen/margin_side_bar_large"
+                        android:background="@drawable/button_text_box"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/user" />
+
+                        <EditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:layout_weight="4"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/email"
+                            android:inputType="textEmailAddress"
+                            android:maxLines="1"
+                            android:paddingBottom="@dimen/padding_button"
+                            android:paddingRight="@dimen/padding_button"
+                            android:paddingTop="@dimen/padding_button"
+                            android:textColor="@color/colorFontTitle"
+                            android:textColorHint="@color/colorTextHint"
+                            android:textSize="@dimen/text_medium" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvConfirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_side_bar_small"
+                        android:layout_marginRight="@dimen/margin_side_bar_small"
+                        android:background="@drawable/button_login"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_button"
+                        android:text="@string/confirm"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_medium" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.5" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

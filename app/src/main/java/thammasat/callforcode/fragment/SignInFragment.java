@@ -1,10 +1,12 @@
 package thammasat.callforcode.fragment;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 
 import thammasat.callforcode.R;
+import thammasat.callforcode.activity.MainActivity;
 import thammasat.callforcode.databinding.FragmentSigninBinding;
 
 public class SignInFragment extends Fragment {
@@ -39,10 +42,6 @@ public class SignInFragment extends Fragment {
         eventListenerBinding();
     }
 
-    private void eventListenerBinding() {
-
-    }
-
     private void initInstance() {
         bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
         regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
@@ -51,5 +50,50 @@ public class SignInFragment extends Fragment {
         anim = AnimationUtils.loadAnimation(this.getContext(), R.anim.bounce);
         interpolator = new BounceInterpolator();
         anim.setInterpolator(interpolator);
+
+        binding.tvProjectName.setTypeface(bold);
+        binding.tvLogin.setTypeface(regular);
+        binding.tvForgotPassword.setTypeface(light);
+        binding.tvSignUpRec.setTypeface(light);
+        binding.tvSignUp.setTypeface(bold);
+        binding.etEmail.setTypeface(regular);
+        binding.etPassword.setTypeface(regular);
+    }
+
+    private void eventListenerBinding() {
+        binding.tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.tvLogin.startAnimation(anim);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+            }
+        });
+
+        binding.tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.tvForgotPassword.startAnimation(anim);
+                RecoverFragment recoverFragment = new RecoverFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                transaction.replace(R.id.fragmentContainer, recoverFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        binding.llSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.llSignUp.startAnimation(anim);
+                SignUpFragment signUpFragment = new SignUpFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                transaction.replace(R.id.fragmentContainer, signUpFragment);
+                transaction.commit();
+            }
+        });
     }
 }
