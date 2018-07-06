@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -16,10 +17,13 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 
+import es.dmoral.toasty.Toasty;
 import thammasat.callforcode.R;
 import thammasat.callforcode.fragment.LoginFragment;
 
 public class WelcomeActivity extends AppCompatActivity {
+
+    private static final String TAG = WelcomeActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +41,53 @@ public class WelcomeActivity extends AppCompatActivity {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isFacebookLoggedIn = accessToken != null && !accessToken.isExpired();
         boolean isTwitterLoggedIn = TwitterCore.getInstance().getSessionManager().getActiveSession() != null;
-        boolean isGoogleLoggedIn =  GoogleSignIn.getLastSignedInAccount(this) != null;
+        boolean isGoogleLoggedIn = GoogleSignIn.getLastSignedInAccount(this) != null;
 
-        Log.i("hello", isFacebookLoggedIn + " - " + isTwitterLoggedIn + " - " + isGoogleLoggedIn);
-        if (isFacebookLoggedIn || isTwitterLoggedIn || isGoogleLoggedIn) {
-            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-            startActivity(intent);
-            overridePendingTransition(0, 0);
-            finish();
+        if (isFacebookLoggedIn) {
+            Log.d(TAG, "Authenticated with Facebook");
+            toasty("success", "Logged in");
+            goToActivity(MainActivity.class, 0, 0);
+        } else if (isTwitterLoggedIn) {
+            Log.d(TAG, "Authenticated with Twitter");
+            toasty("success", "Logged in");
+            goToActivity(MainActivity.class, 0, 0);
+        } else if (isGoogleLoggedIn) {
+            Log.d(TAG, "Authenticated with Google");
+            toasty("success", "Logged in");
+            goToActivity(MainActivity.class, 0, 0);
         } else {
             LoginFragment loginFragment = new LoginFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentContainer, loginFragment, "LoginFragment");
             transaction.commit();
         }
+    }
+
+    private void toasty(String type, String message) {
+        switch (type) {
+            case "success": {
+                Toasty.success(this, message, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case "warning": {
+                Toasty.warning(this, message, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case "error": {
+                Toasty.error(this, message, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+
+    private void goToActivity(Class activity, int enterAnim, int exitAnim) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
+        overridePendingTransition(enterAnim, exitAnim);
+        finish();
     }
 
     @Override

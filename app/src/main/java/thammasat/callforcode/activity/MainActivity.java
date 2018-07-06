@@ -27,6 +27,7 @@ import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -37,6 +38,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.twitter.sdk.android.core.TwitterCore;
 
+import es.dmoral.toasty.Toasty;
 import thammasat.callforcode.R;
 import thammasat.callforcode.adapter.PagerAdapter;
 import thammasat.callforcode.databinding.ActivityMainBinding;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView tvStatus;
+    private static final String TAG = MainActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,9 +261,13 @@ public class MainActivity extends AppCompatActivity
             Log.i("hello", isFacebookLoggedIn + " - " + isTwitterLoggedIn + " - " + isGoogleLoggedIn);
 
             if (isFacebookLoggedIn) {
+                Log.d(TAG, "Facebook logged out");
+                toasty("success", "Logged out");
                 LoginManager.getInstance().logOut();
                 goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right);
             } else if (isTwitterLoggedIn) {
+                Log.d(TAG, "Twitter logged out");
+                toasty("success", "Logged out");
                 TwitterCore.getInstance().getSessionManager().clearActiveSession();
                 goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right);
             } else if (isGoogleLoggedIn) {
@@ -272,6 +279,8 @@ public class MainActivity extends AppCompatActivity
                         .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                Log.d(TAG, "Google logged out");
+                                toasty("success", "Logged out");
                                 goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right);
                             }
                         });
@@ -290,5 +299,23 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-
+    private void toasty(String type, String message) {
+        switch (type) {
+            case "success": {
+                Toasty.success(this, message, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case "warning": {
+                Toasty.warning(this, message, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case "error": {
+                Toasty.error(this, message, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
 }

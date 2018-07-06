@@ -37,6 +37,7 @@ import com.twitter.sdk.android.core.TwitterSession;
 import es.dmoral.toasty.Toasty;
 import thammasat.callforcode.R;
 import thammasat.callforcode.activity.MainActivity;
+import thammasat.callforcode.activity.WelcomeActivity;
 import thammasat.callforcode.databinding.FragmentLoginBinding;
 
 public class LoginFragment extends Fragment {
@@ -47,7 +48,8 @@ public class LoginFragment extends Fragment {
     private BounceInterpolator interpolator;
     private CallbackManager callbackManager = CallbackManager.Factory.create();
     private GoogleSignInClient mGoogleSignInClient;
-    private static int RC_SIGN_IN = 03;
+    private static int RC_SIGN_IN = 1234;
+    private static final String TAG = WelcomeActivity.class.getName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,11 +121,7 @@ public class LoginFragment extends Fragment {
         binding.llGoogle.setOnClickListener(llGoogleClick());
         binding.tvSignUp.setOnClickListener(tvSignUpClick());
         binding.llFacebook.registerCallback(callbackManager, llFacebookCallBack());
-        if (TwitterCore.getInstance().getSessionManager().getActiveSession() == null) {
-            binding.llTwitter.setCallback(llTwitterCallback());
-        } else {
-            //TODO: Handle twitter signed in
-        }
+        binding.llTwitter.setCallback(llTwitterCallback());
     }
 
     @NonNull
@@ -143,10 +141,9 @@ public class LoginFragment extends Fragment {
         return new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
+                toasty("success", "Logged in");
                 TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
                 TwitterAuthToken authToken = session.getAuthToken();
-                String token = authToken.token;
-                String secret = authToken.secret;
 
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
@@ -156,21 +153,43 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void failure(TwitterException exception) {
-                //TODO: Handle twitter sign in error
-                Toast.makeText(getContext(), "Failed to authenticate. Please try again.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Twitter authenticated: " + exception.getMessage());
+                toasty("error", "Failed to authenticate. Please try again.");
             }
         };
     }
 
+    private void toasty(String type, String message) {
+        switch (type) {
+            case "success": {
+                Toasty.success(getContext(), message, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case "warning": {
+                Toasty.warning(getContext(), message, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case "error": {
+                Toasty.error(getContext(), message, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
+            toasty("success", "Logged in");
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
             getActivity().finish();
         } catch (ApiException e) {
-            //TODO: Handle google sign in error
+            Log.e(TAG, "Google authenticated: " + e.getMessage());
+            toasty("error", "Failed to authenticate. Please try again.");
         }
     }
 
@@ -179,6 +198,7 @@ public class LoginFragment extends Fragment {
         return new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                toasty("success", "Logged in");
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
@@ -187,12 +207,13 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onCancel() {
-                //TODO: Handle facebook sign in cancel
+                toasty("warning", "Canceled to authenticate.");
             }
 
             @Override
             public void onError(FacebookException exception) {
-                //TODO: Handle facebook sign in error
+                Log.e(TAG, "Facebook authenticated: " + exception.getMessage());
+                toasty("error", "Failed to authenticate. Please try again.");
             }
         };
     }
