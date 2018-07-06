@@ -1,8 +1,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="thammasat.callforcode.fragment.LoginFragment">
 
     <RelativeLayout
+        android:id="@+id/fragmentLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -87,32 +89,17 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <LinearLayout
+                <com.twitter.sdk.android.core.identity.TwitterLoginButton
                     android:id="@+id/llTwitter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_side_bar_large"
                     android:layout_marginRight="@dimen/margin_side_bar_large"
-                    android:background="@drawable/button_twitter"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/padding_button">
+                    android:paddingBottom="@dimen/padding_button"
+                    android:paddingLeft="@dimen/padding_button"
+                    android:paddingRight="@dimen/padding_button"
+                    android:paddingTop="@dimen/padding_button" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/twitter" />
-
-                    <TextView
-                        android:id="@+id/tvTwitter"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="@string/login_with_twitter"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_medium" />
-                </LinearLayout>
             </FrameLayout>
 
             <FrameLayout
@@ -120,32 +107,38 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <LinearLayout
+                <com.facebook.login.widget.LoginButton
                     android:id="@+id/llFacebook"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_side_bar_large"
                     android:layout_marginRight="@dimen/margin_side_bar_large"
-                    android:background="@drawable/button_facebook"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/padding_button">
+                    android:paddingBottom="@dimen/padding_button"
+                    android:paddingLeft="@dimen/padding_button"
+                    android:paddingRight="@dimen/padding_button"
+                    android:paddingTop="@dimen/padding_button"
+                    android:textSize="@dimen/text_medium"
+                    app:com_facebook_login_text="@string/login_with_facebook" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/facebook" />
+            </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/tvFacebook"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="@string/login_with_facebook"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_medium" />
-                </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <com.shobhitpuri.custombuttons.GoogleSignInButton
+                    android:id="@+id/llGoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_side_bar_large"
+                    android:layout_marginRight="@dimen/margin_side_bar_large"
+                    android:paddingBottom="@dimen/padding_button"
+                    android:paddingLeft="@dimen/padding_button"
+                    android:paddingRight="@dimen/padding_button"
+                    android:paddingTop="@dimen/padding_button"
+                    android:text="@string/login_with_google" />
+
             </FrameLayout>
 
             <TextView

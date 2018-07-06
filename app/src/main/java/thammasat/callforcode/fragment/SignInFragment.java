@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -38,15 +39,18 @@ public class SignInFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setTypeface();
         initInstance();
         eventListenerBinding();
     }
 
-    private void initInstance() {
+    private void setTypeface() {
         bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
         regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
         light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Light.ttf");
+    }
 
+    private void initInstance() {
         anim = AnimationUtils.loadAnimation(this.getContext(), R.anim.bounce);
         interpolator = new BounceInterpolator();
         anim.setInterpolator(interpolator);
@@ -61,17 +65,29 @@ public class SignInFragment extends Fragment {
     }
 
     private void eventListenerBinding() {
-        binding.tvLogin.setOnClickListener(new View.OnClickListener() {
+        binding.tvLogin.setOnClickListener(tvLoginClick());
+        binding.tvForgotPassword.setOnClickListener(tvForgotPasswordClick());
+        binding.llSignUp.setOnClickListener(llSignUpClick());
+    }
+
+    @NonNull
+    private View.OnClickListener llSignUpClick() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.tvLogin.startAnimation(anim);
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                binding.llSignUp.startAnimation(anim);
+                SignUpFragment signUpFragment = new SignUpFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                transaction.replace(R.id.fragmentContainer, signUpFragment);
+                transaction.commit();
             }
-        });
+        };
+    }
 
-        binding.tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+    @NonNull
+    private View.OnClickListener tvForgotPasswordClick() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.tvForgotPassword.startAnimation(anim);
@@ -82,18 +98,20 @@ public class SignInFragment extends Fragment {
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
-        });
+        };
+    }
 
-        binding.llSignUp.setOnClickListener(new View.OnClickListener() {
+    @NonNull
+    private View.OnClickListener tvLoginClick() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.llSignUp.startAnimation(anim);
-                SignUpFragment signUpFragment = new SignUpFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-                transaction.replace(R.id.fragmentContainer, signUpFragment);
-                transaction.commit();
+                binding.tvLogin.startAnimation(anim);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                getActivity().finish();
             }
-        });
+        };
     }
 }

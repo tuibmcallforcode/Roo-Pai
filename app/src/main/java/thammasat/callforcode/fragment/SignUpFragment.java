@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -38,20 +39,25 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setTypeface();
         initInstance();
         eventListenerBinding();
     }
 
-    private void eventListenerBinding() {
-        binding.tvCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.tvCreate.startAnimation(anim);
-                getFragmentManager().popBackStack();
-            }
-        });
+    private void setTypeface() {
+        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
+        regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
+        light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Light.ttf");
+    }
 
-        binding.llSignIn.setOnClickListener(new View.OnClickListener() {
+    private void eventListenerBinding() {
+        binding.tvCreate.setOnClickListener(tvCreateClick());
+        binding.llSignIn.setOnClickListener(llSignInClick());
+    }
+
+    @NonNull
+    private View.OnClickListener llSignInClick() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.llSignIn.startAnimation(anim);
@@ -61,14 +67,21 @@ public class SignUpFragment extends Fragment {
                 transaction.replace(R.id.fragmentContainer, signUpFragment);
                 transaction.commit();
             }
-        });
+        };
+    }
+
+    @NonNull
+    private View.OnClickListener tvCreateClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.tvCreate.startAnimation(anim);
+                getFragmentManager().popBackStack();
+            }
+        };
     }
 
     private void initInstance() {
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
-        regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
-        light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Light.ttf");
-
         anim = AnimationUtils.loadAnimation(this.getContext(), R.anim.bounce);
         interpolator = new BounceInterpolator();
         anim.setInterpolator(interpolator);

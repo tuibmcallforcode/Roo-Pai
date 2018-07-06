@@ -35,15 +35,18 @@ public class RecoverFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setTypeface();
         initInstance();
         eventListenerBinding();
     }
 
-    private void initInstance() {
+    private void setTypeface() {
         bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
         regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
         light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Light.ttf");
+    }
 
+    private void initInstance() {
         anim = AnimationUtils.loadAnimation(this.getContext(), R.anim.bounce);
         interpolator = new BounceInterpolator();
         anim.setInterpolator(interpolator);

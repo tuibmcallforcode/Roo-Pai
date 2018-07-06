@@ -12,5 +12,5 @@
     <dimen name="margin_side_bar_large">24dp</dimen>
     <dimen name="margin_side_bar_small">80dp</dimen>
     <dimen name="padding_button">12dp</dimen>
-
+    <dimen name="padding_button_services">36dp</dimen>
 </resources>

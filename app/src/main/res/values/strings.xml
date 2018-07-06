@@ -27,4 +27,9 @@
     <string name="create">CREATE</string>
     <string name="already_have_account">Already Have Account ?</string>
     <string name="confirm">CONFIRM</string>
+    <string name="facebook_app_id">1296034127197265</string>
+    <string name="fb_login_protocol_scheme">fb1296034127197265</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vw6JPJ09JenbmH4By3du4fItl</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">	0WAKz4hw72wKCWNvi8zPfMdKqVEM8bOQ4TbJZbZwOdPQKhVnYy</string>
+    <string name="login_with_google">LOGIN WITH GOOGLE</string>
 </resources>

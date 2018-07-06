@@ -1,14 +1,17 @@
 package thammasat.callforcode.activity;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +27,15 @@ import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.twitter.sdk.android.core.TwitterCore;
 
 import thammasat.callforcode.R;
 import thammasat.callforcode.adapter.PagerAdapter;
@@ -47,8 +59,15 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        setTypeface();
         initInstance();
         eventListenerBinding();
+    }
+
+    private void setTypeface() {
+        bold = Typeface.createFromAsset(getAssets(), "fonts/Bold.ttf");
+        regular = Typeface.createFromAsset(getAssets(), "fonts/Regular.ttf");
+        light = Typeface.createFromAsset(getAssets(), "fonts/Light.ttf");
     }
 
     private void initInstance() {
@@ -64,10 +83,6 @@ public class MainActivity extends AppCompatActivity
         anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
         interpolator = new BounceInterpolator();
         anim.setInterpolator(interpolator);
-
-        bold = Typeface.createFromAsset(getAssets(), "fonts/Bold.ttf");
-        regular = Typeface.createFromAsset(getAssets(), "fonts/Regular.ttf");
-        light = Typeface.createFromAsset(getAssets(), "fonts/Light.ttf");
 
         TextView tvProjectName = (TextView) findViewById(R.id.tvProjectName);
         tvProjectName.setTypeface(bold);
@@ -236,11 +251,44 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
+            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            boolean isFacebookLoggedIn = accessToken != null && !accessToken.isExpired();
+            boolean isTwitterLoggedIn = TwitterCore.getInstance().getSessionManager().getActiveSession() != null;
+            boolean isGoogleLoggedIn = GoogleSignIn.getLastSignedInAccount(this) != null;
+            Log.i("hello", isFacebookLoggedIn + " - " + isTwitterLoggedIn + " - " + isGoogleLoggedIn);
 
+            if (isFacebookLoggedIn) {
+                LoginManager.getInstance().logOut();
+                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right);
+            } else if (isTwitterLoggedIn) {
+                TwitterCore.getInstance().getSessionManager().clearActiveSession();
+                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right);
+            } else if (isGoogleLoggedIn) {
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right);
+                            }
+                        });
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void goToActivity(Class activity, int enterAnim, int exitAnim) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
+        overridePendingTransition(enterAnim, exitAnim);
+        finish();
+    }
+
+
 }
