@@ -1,9 +1,11 @@
 package thammasat.callforcode.activity;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -11,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -29,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -38,43 +42,46 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.twitter.sdk.android.core.TwitterCore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import es.dmoral.toasty.Toasty;
 import thammasat.callforcode.R;
 import thammasat.callforcode.adapter.PagerAdapter;
 import thammasat.callforcode.databinding.ActivityMainBinding;
+import thammasat.callforcode.manager.Singleton;
+import thammasat.callforcode.manager.WeatherApi;
+import thammasat.callforcode.model.Disaster;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-    private Animation anim;
     private BounceInterpolator interpolator;
-    private Typeface bold, regular, light;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView tvStatus;
+    private AppBarLayout appBarLayout;
     private static final String TAG = MainActivity.class.getName();
+    private Singleton singleton = Singleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        setAnimation();
         setTypeface();
         initInstance();
         eventListenerBinding();
-    }
-
-    private void setTypeface() {
-        bold = Typeface.createFromAsset(getAssets(), "fonts/Bold.ttf");
-        regular = Typeface.createFromAsset(getAssets(), "fonts/Regular.ttf");
-        light = Typeface.createFromAsset(getAssets(), "fonts/Light.ttf");
+        weatherDialog();
     }
 
     private void initInstance() {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -83,16 +90,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
-        interpolator = new BounceInterpolator();
-        anim.setInterpolator(interpolator);
-
         TextView tvProjectName = (TextView) findViewById(R.id.tvProjectName);
         tvProjectName.setTypeface(bold);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("NEARBY"));
-        tabLayout.addTab(tabLayout.newTab().setText("LATEST"));
+        tabLayout.addTab(tabLayout.newTab().setText("NEWS"));
         tabLayout.addTab(tabLayout.newTab().setText("MAP"));
         tabLayout.addTab(tabLayout.newTab().setText("STATS"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -106,6 +109,38 @@ public class MainActivity extends AppCompatActivity
 
         tvStatus = (TextView) findViewById(R.id.tvStatus);
         tvStatus.setTypeface(bold);
+
+        List<Disaster> disasterList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            if (i % 2 == 0) {
+                disasterList.add(new Disaster(
+                        "Ethiopia: Displacement Tracking Matrix (DTM) Oromia Region, Round 8: November to December 2017- Summary of key findings",
+                        "published",
+                        "**OROMIA REGION - KEY FINDINGS** **LOCATION AND CAUSE OF DISPLACEMENT:** 772,242 displaced individuals comprising 124,982 households in 369 displacement sites were identified in Oromia region*. These figures represent an increase of 242,532 in the total individuals (46%), an increase of 53% in households and 77% in sites since round 7 (August/September 2017). 79% sites opened in 2017. Conflict was the primary cause of displacement for an estimated 73% of the displaced population. **DEMOGRAPHICS:** 50% of displaced individuals were female and 50% were male. 61% were younger than 18 years old. 6% were over 60 years old. **SHELTER:** 70 (18%) sites reported that over 50% of households were living in shelters that were below standard. **WASH:** Only 28 sites meet SPHERE standards of access to over 15 liters of water per person per day. 219 (59%) displacement sites reported having no toilets. **FOOD, NUTRITION AND LIVELIHOODS:** 101 (27%) sites, representing 405,414 individuals, reported no access to food. 65% of sites reported that IDPs did not have access to income generating activities **HEALTH:** Pneumonia was the primary health concern in this round of data collection with 116 sites reporting this. **EDUCATION:** In 52% of sites (194) less than 50% of children are attending school. Formal primary school education is available at 52% (300) of sites. Alternative basic education (ABE) is available at 8% (31) sites. **PROTECTION:** Harmful traditional practices were reported across some sites. These practices included: female genital mutilation and child marriage. **COMMUNICATION:** 44% of sites reported that local leaders were IDPs primary source of information followed by site managers 31%.",
+                        8.63,
+                        39.62,
+                        "International Organization for Migration",
+                        "Ethiopia",
+                        "Drought",
+                        "https://reliefweb.int/node/2454884",
+                        "https://reliefweb.int/sites/reliefweb.int/files/styles/attachment-large/public/resources-pdf-previews/1038154-DTM_Round%208%20Oromia%20region.png"
+                ));
+            } else {
+                disasterList.add(new Disaster(
+                        "Ethiopia: Displacement Tracking Matrix (DTM) Oromia Region, Round 8: November to December 2017- Summary of key findings",
+                        "published",
+                        "**OROMIA REGION - KEY FINDINGS** **LOCATION AND CAUSE OF DISPLACEMENT:** 772,242 displaced individuals comprising 124,982 households in 369 displacement sites were identified in Oromia region*. These figures represent an increase of 242,532 in the total individuals (46%), an increase of 53% in households and 77% in sites since round 7 (August/September 2017). 79% sites opened in 2017. Conflict was the primary cause of displacement for an estimated 73% of the displaced population. **DEMOGRAPHICS:** 50% of displaced individuals were female and 50% were male. 61% were younger than 18 years old. 6% were over 60 years old. **SHELTER:** 70 (18%) sites reported that over 50% of households were living in shelters that were below standard. **WASH:** Only 28 sites meet SPHERE standards of access to over 15 liters of water per person per day. 219 (59%) displacement sites reported having no toilets. **FOOD, NUTRITION AND LIVELIHOODS:** 101 (27%) sites, representing 405,414 individuals, reported no access to food. 65% of sites reported that IDPs did not have access to income generating activities **HEALTH:** Pneumonia was the primary health concern in this round of data collection with 116 sites reporting this. **EDUCATION:** In 52% of sites (194) less than 50% of children are attending school. Formal primary school education is available at 52% (300) of sites. Alternative basic education (ABE) is available at 8% (31) sites. **PROTECTION:** Harmful traditional practices were reported across some sites. These practices included: female genital mutilation and child marriage. **COMMUNICATION:** 44% of sites reported that local leaders were IDPs primary source of information followed by site managers 31%.",
+                        8.63,
+                        39.62,
+                        "International Organization for Migration",
+                        "Ethiopia",
+                        "Drought",
+                        "https://reliefweb.int/node/2454884",
+                        null
+                ));
+            }
+        }
+        singleton.setDisasterList(disasterList);
     }
 
     private void eventListenerBinding() {
@@ -113,8 +148,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                goToActivity(FabActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, false);
             }
         });
 
@@ -134,9 +168,10 @@ public class MainActivity extends AppCompatActivity
                 if (tab.getPosition() == 0) {
                     tvStatus.setText("NEARBY");
                 } else if (tab.getPosition() == 1) {
-                    tvStatus.setText("LATEST");
+                    tvStatus.setText("NEWS");
                 } else if (tab.getPosition() == 2) {
                     tvStatus.setText("MAP");
+                    appBarLayout.setExpanded(false);
                 } else if (tab.getPosition() == 3) {
                     tvStatus.setText("STATS");
                 }
@@ -154,7 +189,6 @@ public class MainActivity extends AppCompatActivity
         });
 
         final LinearLayout llStatus = (LinearLayout) findViewById(R.id.llStatus);
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -244,7 +278,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -258,18 +292,17 @@ public class MainActivity extends AppCompatActivity
             boolean isFacebookLoggedIn = accessToken != null && !accessToken.isExpired();
             boolean isTwitterLoggedIn = TwitterCore.getInstance().getSessionManager().getActiveSession() != null;
             boolean isGoogleLoggedIn = GoogleSignIn.getLastSignedInAccount(this) != null;
-            Log.i("hello", isFacebookLoggedIn + " - " + isTwitterLoggedIn + " - " + isGoogleLoggedIn);
 
             if (isFacebookLoggedIn) {
                 Log.d(TAG, "Facebook logged out");
                 toasty("success", "Logged out");
                 LoginManager.getInstance().logOut();
-                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right);
+                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, true);
             } else if (isTwitterLoggedIn) {
                 Log.d(TAG, "Twitter logged out");
                 toasty("success", "Logged out");
                 TwitterCore.getInstance().getSessionManager().clearActiveSession();
-                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right);
+                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, true);
             } else if (isGoogleLoggedIn) {
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestEmail()
@@ -281,7 +314,7 @@ public class MainActivity extends AppCompatActivity
                             public void onComplete(@NonNull Task<Void> task) {
                                 Log.d(TAG, "Google logged out");
                                 toasty("success", "Logged out");
-                                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right);
+                                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, true);
                             }
                         });
             }
@@ -290,32 +323,5 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void goToActivity(Class activity, int enterAnim, int exitAnim) {
-        Intent intent = new Intent(this, activity);
-        startActivity(intent);
-        overridePendingTransition(enterAnim, exitAnim);
-        finish();
-    }
-
-    private void toasty(String type, String message) {
-        switch (type) {
-            case "success": {
-                Toasty.success(this, message, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case "warning": {
-                Toasty.warning(this, message, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case "error": {
-                Toasty.error(this, message, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            default: {
-                break;
-            }
-        }
     }
 }

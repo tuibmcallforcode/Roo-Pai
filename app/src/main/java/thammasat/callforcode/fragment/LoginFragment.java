@@ -40,10 +40,9 @@ import thammasat.callforcode.activity.MainActivity;
 import thammasat.callforcode.activity.WelcomeActivity;
 import thammasat.callforcode.databinding.FragmentLoginBinding;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends BaseFragment {
 
     private FragmentLoginBinding binding;
-    private Typeface bold, regular, light;
     private Animation anim;
     private BounceInterpolator interpolator;
     private CallbackManager callbackManager = CallbackManager.Factory.create();
@@ -79,12 +78,6 @@ public class LoginFragment extends Fragment {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-    }
-
-    private void setTypeface() {
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
-        regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
-        light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Light.ttf");
     }
 
     private void initInstance() {
@@ -157,26 +150,6 @@ public class LoginFragment extends Fragment {
                 toasty("error", "Failed to authenticate. Please try again.");
             }
         };
-    }
-
-    private void toasty(String type, String message) {
-        switch (type) {
-            case "success": {
-                Toasty.success(getContext(), message, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case "warning": {
-                Toasty.warning(getContext(), message, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case "error": {
-                Toasty.error(getContext(), message, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            default: {
-                break;
-            }
-        }
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {

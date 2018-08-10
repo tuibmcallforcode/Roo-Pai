@@ -19,12 +19,9 @@ import thammasat.callforcode.R;
 import thammasat.callforcode.activity.MainActivity;
 import thammasat.callforcode.databinding.FragmentSigninBinding;
 
-public class SignInFragment extends Fragment {
+public class SignInFragment extends BaseFragment {
 
     private FragmentSigninBinding binding;
-    private Typeface bold, regular, light;
-    private Animation anim;
-    private BounceInterpolator interpolator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,12 +39,6 @@ public class SignInFragment extends Fragment {
         setTypeface();
         initInstance();
         eventListenerBinding();
-    }
-
-    private void setTypeface() {
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
-        regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
-        light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Light.ttf");
     }
 
     private void initInstance() {

@@ -15,12 +15,9 @@ import android.view.animation.BounceInterpolator;
 import thammasat.callforcode.R;
 import thammasat.callforcode.databinding.FragmentRecoverBinding;
 
-public class RecoverFragment extends Fragment {
+public class RecoverFragment extends BaseFragment {
 
     private FragmentRecoverBinding binding;
-    private Typeface bold, regular, light;
-    private Animation anim;
-    private BounceInterpolator interpolator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,21 +33,12 @@ public class RecoverFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setTypeface();
+        setAnimation();
         initInstance();
         eventListenerBinding();
     }
 
-    private void setTypeface() {
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
-        regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
-        light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Light.ttf");
-    }
-
     private void initInstance() {
-        anim = AnimationUtils.loadAnimation(this.getContext(), R.anim.bounce);
-        interpolator = new BounceInterpolator();
-        anim.setInterpolator(interpolator);
-
         binding.tvProjectName.setTypeface(bold);
         binding.tvConfirm.setTypeface(regular);
         binding.etEmail.setTypeface(regular);

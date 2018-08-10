@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import thammasat.callforcode.fragment.LatestFragment;
+import thammasat.callforcode.fragment.NewsFragment;
 import thammasat.callforcode.fragment.MapFragment;
 import thammasat.callforcode.fragment.NearByFragment;
 import thammasat.callforcode.fragment.StatsFragment;
@@ -29,8 +29,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 NearByFragment nearBy = new NearByFragment();
                 return nearBy;
             case 1:
-                LatestFragment lastest = new LatestFragment();
-                return lastest;
+                NewsFragment news = new NewsFragment();
+                return news;
             case 2:
                 MapFragment map = new MapFragment();
                 return map;

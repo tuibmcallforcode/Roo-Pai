@@ -21,7 +21,7 @@ import es.dmoral.toasty.Toasty;
 import thammasat.callforcode.R;
 import thammasat.callforcode.fragment.LoginFragment;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseActivity {
 
     private static final String TAG = WelcomeActivity.class.getName();
 
@@ -45,16 +45,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
         if (isFacebookLoggedIn) {
             Log.d(TAG, "Authenticated with Facebook");
-            toasty("success", "Logged in");
-            goToActivity(MainActivity.class, 0, 0);
+            goToMainActivity();
         } else if (isTwitterLoggedIn) {
             Log.d(TAG, "Authenticated with Twitter");
-            toasty("success", "Logged in");
-            goToActivity(MainActivity.class, 0, 0);
+            goToMainActivity();
         } else if (isGoogleLoggedIn) {
             Log.d(TAG, "Authenticated with Google");
-            toasty("success", "Logged in");
-            goToActivity(MainActivity.class, 0, 0);
+            goToMainActivity();
         } else {
             LoginFragment loginFragment = new LoginFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -63,39 +60,24 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     }
 
-    private void toasty(String type, String message) {
-        switch (type) {
-            case "success": {
-                Toasty.success(this, message, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case "warning": {
-                Toasty.warning(this, message, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case "error": {
-                Toasty.error(this, message, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            default: {
-                break;
-            }
+    private void goToMainActivity() {
+        toasty("success", "Logged in");
+        if(checkRecordAccessFineLocationPermission()) {
+            if(checkGPSStatus())
+                goToActivity(MainActivity.class, 0, 0, true);
+            else
+                displayLocationSettingsRequest(this);
+        } else {
+            requestAccessFineLocationPermission();
         }
     }
 
-    private void goToActivity(Class activity, int enterAnim, int exitAnim) {
-        Intent intent = new Intent(this, activity);
-        startActivity(intent);
-        overridePendingTransition(enterAnim, exitAnim);
-        finish();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        FragmentManager fragment = getSupportFragmentManager();
-        if (fragment != null) {
-            fragment.findFragmentByTag("LoginFragment").onActivityResult(requestCode, resultCode, data);
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        FragmentManager fragment = getSupportFragmentManager();
+//        if (fragment != null) {
+//            fragment.findFragmentByTag("LoginFragment").onActivityResult(requestCode, resultCode, data);
+//        }
+//    }
 }

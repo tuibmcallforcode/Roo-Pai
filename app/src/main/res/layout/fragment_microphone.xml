@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragment.MicrophoneFragment">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/btnMic"
+            android:layout_width="@dimen/mic_button"
+            android:layout_height="@dimen/mic_button"
+            android:clickable="true"
+            android:src="@drawable/selector_mic"
+            android:padding="@dimen/mic_padding"
+            android:layout_centerInParent="true"
+            android:background="@drawable/selector_mic_background"/>
+    </RelativeLayout>
+
+</layout>

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import thammasat.callforcode.R;
 
-public class StatsFragment extends Fragment {
+public class StatsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_stats, container, false);

@@ -19,12 +19,9 @@ import thammasat.callforcode.R;
 import thammasat.callforcode.activity.MainActivity;
 import thammasat.callforcode.databinding.FragmentSignupBinding;
 
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends BaseFragment {
 
     private FragmentSignupBinding binding;
-    private Typeface bold, regular, light;
-    private Animation anim;
-    private BounceInterpolator interpolator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,14 +37,9 @@ public class SignUpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setTypeface();
+        setAnimation();
         initInstance();
         eventListenerBinding();
-    }
-
-    private void setTypeface() {
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");
-        regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Regular.ttf");
-        light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Light.ttf");
     }
 
     private void eventListenerBinding() {
@@ -82,10 +74,6 @@ public class SignUpFragment extends Fragment {
     }
 
     private void initInstance() {
-        anim = AnimationUtils.loadAnimation(this.getContext(), R.anim.bounce);
-        interpolator = new BounceInterpolator();
-        anim.setInterpolator(interpolator);
-
         binding.tvProjectName.setTypeface(bold);
         binding.tvCreate.setTypeface(regular);
         binding.tvSignInRec.setTypeface(light);
