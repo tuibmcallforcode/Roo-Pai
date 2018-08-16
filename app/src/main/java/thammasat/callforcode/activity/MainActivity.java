@@ -277,47 +277,45 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        switch (id) {
+            case R.id.weather:
+                weatherDialog();
+                break;
+            case R.id.settings:
+                goToActivity(SettingsActivity.class, R.anim.enter_from_right, R.anim.exit_to_left, false);
+                break;
+            case R.id.logout:
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                boolean isFacebookLoggedIn = accessToken != null && !accessToken.isExpired();
+                boolean isTwitterLoggedIn = TwitterCore.getInstance().getSessionManager().getActiveSession() != null;
+                boolean isGoogleLoggedIn = GoogleSignIn.getLastSignedInAccount(this) != null;
 
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-            AccessToken accessToken = AccessToken.getCurrentAccessToken();
-            boolean isFacebookLoggedIn = accessToken != null && !accessToken.isExpired();
-            boolean isTwitterLoggedIn = TwitterCore.getInstance().getSessionManager().getActiveSession() != null;
-            boolean isGoogleLoggedIn = GoogleSignIn.getLastSignedInAccount(this) != null;
-
-            if (isFacebookLoggedIn) {
-                Log.d(TAG, "Facebook logged out");
-                toasty("success", "Logged out");
-                LoginManager.getInstance().logOut();
-                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, true);
-            } else if (isTwitterLoggedIn) {
-                Log.d(TAG, "Twitter logged out");
-                toasty("success", "Logged out");
-                TwitterCore.getInstance().getSessionManager().clearActiveSession();
-                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, true);
-            } else if (isGoogleLoggedIn) {
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail()
-                        .build();
-                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-                mGoogleSignInClient.signOut()
-                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Log.d(TAG, "Google logged out");
-                                toasty("success", "Logged out");
-                                goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, true);
-                            }
-                        });
-            }
+                if (isFacebookLoggedIn) {
+                    Log.d(TAG, "Facebook logged out");
+                    toasty("success", "Logged out");
+                    LoginManager.getInstance().logOut();
+                    goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, true);
+                } else if (isTwitterLoggedIn) {
+                    Log.d(TAG, "Twitter logged out");
+                    toasty("success", "Logged out");
+                    TwitterCore.getInstance().getSessionManager().clearActiveSession();
+                    goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, true);
+                } else if (isGoogleLoggedIn) {
+                    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestEmail()
+                            .build();
+                    GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                    mGoogleSignInClient.signOut()
+                            .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Log.d(TAG, "Google logged out");
+                                    toasty("success", "Logged out");
+                                    goToActivity(WelcomeActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, true);
+                                }
+                            });
+                }
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

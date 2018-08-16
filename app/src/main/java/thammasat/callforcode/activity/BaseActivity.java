@@ -205,7 +205,7 @@ public class BaseActivity extends AppCompatActivity {
                 weatherIcon.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf"));
             }
         });
-        asyncTask.execute("25.180000", "89.530000"); //  asyncTask.execute("Latitude", "Longitude")
+        asyncTask.execute("13.7251088", "100.3529049"); //  asyncTask.execute("Latitude", "Longitude")
 
         weatherDialog.show();
     }

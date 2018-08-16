@@ -114,7 +114,7 @@ public class MapFragment extends BaseFragment {
 //            mClusterImageView.setImageDrawable(multiDrawable);
 //            Bitmap icon = mClusterIconGenerator.makeIcon(String.valueOf(cluster.getSize()));
 //            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
-            BitmapDrawable bitmap = (BitmapDrawable) getResources().getDrawable(R.drawable.warning);
+            BitmapDrawable bitmap = (BitmapDrawable) getApplicationContext().getResources().getDrawable(R.drawable.warning);
             Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap.getBitmap(), 100, 100, false);
             BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(smallMarker);
             markerOptions.icon(icon);
@@ -255,6 +255,12 @@ public class MapFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         mMapView.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mMapView.onStop();
     }
 
     @Override

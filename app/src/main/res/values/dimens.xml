@@ -26,4 +26,5 @@
     <dimen name="mic_padding">32dp</dimen>
     <dimen name="padding_permission">16dp</dimen>
     <dimen name="mic_button">200dp</dimen>
+    <dimen name="tab_layout_height">32dp</dimen>
 </resources>

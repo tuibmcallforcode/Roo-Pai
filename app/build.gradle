@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.google.maps.android:android-maps-utils:0.5+'
     implementation 'com.google.android.gms:play-services-location:+'
+    implementation 'com.melnykov:floatingactionbutton:1.3.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.squareup.okhttp3:okhttp:3.5.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
