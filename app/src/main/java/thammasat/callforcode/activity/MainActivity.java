@@ -64,13 +64,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView tvStatus;
     private AppBarLayout appBarLayout;
     private static final String TAG = MainActivity.class.getName();
-    private Singleton singleton = Singleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        getDisasterMap();
         setAnimation();
         setTypeface();
         initInstance();

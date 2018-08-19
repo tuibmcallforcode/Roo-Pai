@@ -34,11 +34,24 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
+import java.util.List;
+import java.util.concurrent.Callable;
+
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import thammasat.callforcode.R;
 import thammasat.callforcode.fragment.MicrophoneFragment;
 import thammasat.callforcode.fragment.PermissionFragment;
+import thammasat.callforcode.manager.Singleton;
 import thammasat.callforcode.manager.WeatherApi;
+import thammasat.callforcode.model.DisasterMap;
+import thammasat.callforcode.restful.ApiClient;
+import thammasat.callforcode.restful.ApiInterface;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -49,6 +62,44 @@ public class BaseActivity extends AppCompatActivity {
     protected BounceInterpolator interpolator;
     public static final String TAG = BaseActivity.class.getSimpleName();
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+    protected ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+    protected Singleton singleton = Singleton.getInstance();
+
+    protected void getDisasterMap() {
+        rx.Observable.fromCallable(new Callable<Call<List<DisasterMap>>>() {
+            @Override
+            public Call<List<DisasterMap>> call() throws Exception {
+                return apiService.getDisasterMap();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Call<List<DisasterMap>>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Call<List<DisasterMap>> listCall) {
+                        listCall.enqueue(new Callback<List<DisasterMap>>() {
+                            @Override
+                            public void onResponse(Call<List<DisasterMap>> call, Response<List<DisasterMap>> response) {
+                                singleton.setDisasterMapList(response.body());
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<DisasterMap>> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                });
+    }
 
     protected void setAnimation() {
         anim = AnimationUtils.loadAnimation(this, R.anim.bounce);

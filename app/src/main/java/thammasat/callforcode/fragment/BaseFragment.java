@@ -20,6 +20,7 @@ import android.widget.Toast;
 import es.dmoral.toasty.Toasty;
 import thammasat.callforcode.R;
 import thammasat.callforcode.activity.MainActivity;
+import thammasat.callforcode.manager.Singleton;
 
 public class BaseFragment extends Fragment {
     protected Typeface bold, regular, light;
@@ -27,6 +28,7 @@ public class BaseFragment extends Fragment {
     protected BounceInterpolator interpolator;
     private static final int REQUEST_RECORD_AUDIO = 1;
     private static final int REQUEST_ACCESS_FINE_LOCATION = 2;
+    protected Singleton singleton = Singleton.getInstance();
 
     protected void setTypeface() {
         bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");

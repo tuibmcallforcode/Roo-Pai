@@ -1,17 +1,12 @@
 package thammasat.callforcode.fragment;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,17 +31,22 @@ import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import thammasat.callforcode.R;
 
 import com.google.maps.android.ui.IconGenerator;
 
-import thammasat.callforcode.activity.InfoActivity;
-import thammasat.callforcode.manager.MultiDrawable;
-import thammasat.callforcode.model.Location;
+import thammasat.callforcode.model.DisasterMap;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -55,15 +55,15 @@ public class MapFragment extends BaseFragment {
 
     private GoogleMap googleMap;
     private MapView mMapView;
-    private ClusterManager<Location> mClusterManager;
+    private ClusterManager<DisasterMap> mClusterManager;
     private Random mRandom = new Random(1984);
 
 
-    private class DisasterRenderer extends DefaultClusterRenderer<Location> {
+    private class DisasterRenderer extends DefaultClusterRenderer<DisasterMap> {
         private final IconGenerator mIconGenerator = new IconGenerator(getApplicationContext());
         private final IconGenerator mClusterIconGenerator = new IconGenerator(getApplicationContext());
         private final ImageView mImageView;
-//        private final ImageView mClusterImageView;
+        //        private final ImageView mClusterImageView;
         private final int mDimension;
 
         public DisasterRenderer() {
@@ -82,26 +82,27 @@ public class MapFragment extends BaseFragment {
         }
 
         @Override
-        protected void onBeforeClusterItemRendered(Location location, MarkerOptions markerOptions) {
-            BitmapDrawable bitmap = (BitmapDrawable) getResources().getDrawable(location.profilePhoto);
+        protected void onBeforeClusterItemRendered(DisasterMap disasterMap, MarkerOptions markerOptions) {
+//            BitmapDrawable bitmap = (BitmapDrawable) getResources().getDrawable(disasterMap.profilePhoto);
+            BitmapDrawable bitmap = (BitmapDrawable) getApplicationContext().getResources().getDrawable(R.drawable.volcano);
             Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap.getBitmap(), 110, 110, false);
             BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(smallMarker);
-            markerOptions.icon(icon).title("Warning").snippet(location.name);
-//            location.getSnippet()).title(location.getTitle()
-//            mImageView.setImageResource(location.profilePhoto);
+            markerOptions.icon(icon).title("Warning").snippet("Hello");
+//            disasterMap.getSnippet()).title(disasterMap.getTitle()
+//            mImageView.setImageResource(disasterMap.profilePhoto);
 //            Bitmap icon = mIconGenerator.makeIcon();
-//            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(location.name);
+//            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(disasterMap.name);
         }
 
         @Override
-        protected void onBeforeClusterRendered(Cluster<Location> cluster, MarkerOptions markerOptions) {
+        protected void onBeforeClusterRendered(Cluster<DisasterMap> cluster, MarkerOptions markerOptions) {
             // Draw multiple people.
             // Note: this method runs on the UI thread. Don't spend too much time in here (like in this example).
 //            List<Drawable> profilePhotos = new ArrayList<Drawable>(Math.min(4, cluster.getSize()));
 //            int width = mDimension;
 //            int height = mDimension;
 //
-//            for (Location p : cluster.getItems()) {
+//            for (DisasterMap p : cluster.getItems()) {
 //                // Draw 4 at most.
 //                if (profilePhotos.size() == 4) break;
 //                Drawable drawable = getResources().getDrawable(p.profilePhoto);
@@ -154,7 +155,7 @@ public class MapFragment extends BaseFragment {
                         Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
 
-                    //Request location updates:
+                    //Request disasterMap updates:
                     googleMap.setMyLocationEnabled(true);
                 }
 
@@ -162,7 +163,7 @@ public class MapFragment extends BaseFragment {
                 googleMap.getUiSettings().setMyLocationButtonEnabled(true);
                 googleMap.getUiSettings().setRotateGesturesEnabled(true);
 
-                mClusterManager = new ClusterManager<Location>(getContext(), googleMap);
+                mClusterManager = new ClusterManager<DisasterMap>(getContext(), googleMap);
                 mClusterManager.setRenderer(new DisasterRenderer());
 
                 googleMap.setOnCameraIdleListener(mClusterManager);
@@ -176,12 +177,11 @@ public class MapFragment extends BaseFragment {
                     }
                 });
 
-                mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<Location>() {
+                mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<DisasterMap>() {
                     @Override
-                    public boolean onClusterClick(Cluster<Location> cluster) {
+                    public boolean onClusterClick(Cluster<DisasterMap> cluster) {
                         // Show a toast with some info when the cluster is clicked.
-                        String firstName = cluster.getItems().iterator().next().name;
-                        Toast.makeText(getContext(), cluster.getSize() + " (including " + firstName + ")", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), cluster.getSize() + "", Toast.LENGTH_SHORT).show();
 
                         // Zoom in the cluster. Need to create LatLngBounds and including all the cluster items
                         // inside of bounds, then animate to center of the bounds.
@@ -204,21 +204,21 @@ public class MapFragment extends BaseFragment {
                         return true;
                     }
                 });
-                mClusterManager.setOnClusterInfoWindowClickListener(new ClusterManager.OnClusterInfoWindowClickListener<Location>() {
+                mClusterManager.setOnClusterInfoWindowClickListener(new ClusterManager.OnClusterInfoWindowClickListener<DisasterMap>() {
                     @Override
-                    public void onClusterInfoWindowClick(Cluster<Location> cluster) {
+                    public void onClusterInfoWindowClick(Cluster<DisasterMap> cluster) {
 
                     }
                 });
-                mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<Location>() {
+                mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<DisasterMap>() {
                     @Override
-                    public boolean onClusterItemClick(Location location) {
+                    public boolean onClusterItemClick(DisasterMap disasterMap) {
                         return false;
                     }
                 });
-                mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<Location>() {
+                mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<DisasterMap>() {
                     @Override
-                    public void onClusterItemInfoWindowClick(Location location) {
+                    public void onClusterItemInfoWindowClick(DisasterMap disasterMap) {
 
                     }
                 });
@@ -229,7 +229,7 @@ public class MapFragment extends BaseFragment {
 //                googleMap.addMarker(new MarkerOptions().position(sydney).
 //                        title("Title").snippet("TitleName"));
 //
-//                // For zooming automatically to the location of the marker
+//                // For zooming automatically to the disasterMap of the marker
 //                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
 //                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition
 //                        (cameraPosition));
@@ -276,31 +276,36 @@ public class MapFragment extends BaseFragment {
     }
 
     private void addItems() {
-        mClusterManager.addItem(new Location(position(), "Cold Wave", R.drawable.cold_wave));
-        mClusterManager.addItem(new Location(position(), "Drought", R.drawable.drought));
-        mClusterManager.addItem(new Location(position(), "Earth Quake", R.drawable.earth_quake));
-        mClusterManager.addItem(new Location(position(), "Extra Tropical Cyclone", R.drawable.extratropical_cyclone));
-        mClusterManager.addItem(new Location(position(), "Fire", R.drawable.fire));
-        mClusterManager.addItem(new Location(position(), "Flash Flood", R.drawable.flash_flood));
-        mClusterManager.addItem(new Location(position(), "Flood", R.drawable.flood));
-        mClusterManager.addItem(new Location(position(), "Heat Wave", R.drawable.heat_wave));
-        mClusterManager.addItem(new Location(position(), "Insect Infestation", R.drawable.insect_infestation));
-        mClusterManager.addItem(new Location(position(), "Land Slide", R.drawable.land_slide));
-        mClusterManager.addItem(new Location(position(), "Mud Slide", R.drawable.mud_slide));
-        mClusterManager.addItem(new Location(position(), "Severe Local Storm", R.drawable.severe_local_storm));
-        mClusterManager.addItem(new Location(position(), "Snow Avalanche", R.drawable.snow_avalanche));
-        mClusterManager.addItem(new Location(position(), "Storm Surge", R.drawable.storm_surge));
-        mClusterManager.addItem(new Location(position(), "Technological", R.drawable.technological));
-        mClusterManager.addItem(new Location(position(), "Tropical Cyclone", R.drawable.tropical_cyclone));
-        mClusterManager.addItem(new Location(position(), "Tsunami", R.drawable.tsunami));
-        mClusterManager.addItem(new Location(position(), "Volcano", R.drawable.volcano));
-    }
-
-    private LatLng position() {
-        return new LatLng(random(51.6723432, 51.38494009999999), random(0.148271, -0.3514683));
-    }
-
-    private double random(double min, double max) {
-        return mRandom.nextDouble() * (max - min) + min;
+        List<DisasterMap> disasterMapList = singleton.getDisasterMapList();
+        for (int i = 0; i < disasterMapList.size(); i++) {
+            mClusterManager.addItem(new DisasterMap(
+                    new LatLng(Double.parseDouble(disasterMapList.get(i).getLatitude()), Double.parseDouble(disasterMapList.get(i).getLongitude())),
+                    disasterMapList.get(i).getId(),
+                    disasterMapList.get(i).getPdcId(),
+                    disasterMapList.get(i).getV(),
+                    disasterMapList.get(i).getDescription(),
+                    disasterMapList.get(i).getSeverity(),
+                    disasterMapList.get(i).getSource(),
+                    disasterMapList.get(i).getTime(),
+                    disasterMapList.get(i).getTitle()));
+        }
+//        mClusterManager.addItem(new DisasterMap(position(), "Cold Wave", R.drawable.cold_wave));
+//        mClusterManager.addItem(new DisasterMap(position(), "Drought", R.drawable.drought));
+//        mClusterManager.addItem(new DisasterMap(position(), "Earth Quake", R.drawable.earth_quake));
+//        mClusterManager.addItem(new DisasterMap(position(), "Extra Tropical Cyclone", R.drawable.extratropical_cyclone));
+//        mClusterManager.addItem(new DisasterMap(position(), "Fire", R.drawable.fire));
+//        mClusterManager.addItem(new DisasterMap(position(), "Flash Flood", R.drawable.flash_flood));
+//        mClusterManager.addItem(new DisasterMap(position(), "Flood", R.drawable.flood));
+//        mClusterManager.addItem(new DisasterMap(position(), "Heat Wave", R.drawable.heat_wave));
+//        mClusterManager.addItem(new DisasterMap(position(), "Insect Infestation", R.drawable.insect_infestation));
+//        mClusterManager.addItem(new DisasterMap(position(), "Land Slide", R.drawable.land_slide));
+//        mClusterManager.addItem(new DisasterMap(position(), "Mud Slide", R.drawable.mud_slide));
+//        mClusterManager.addItem(new DisasterMap(position(), "Severe Local Storm", R.drawable.severe_local_storm));
+//        mClusterManager.addItem(new DisasterMap(position(), "Snow Avalanche", R.drawable.snow_avalanche));
+//        mClusterManager.addItem(new DisasterMap(position(), "Storm Surge", R.drawable.storm_surge));
+//        mClusterManager.addItem(new DisasterMap(position(), "Technological", R.drawable.technological));
+//        mClusterManager.addItem(new DisasterMap(position(), "Tropical Cyclone", R.drawable.tropical_cyclone));
+//        mClusterManager.addItem(new DisasterMap(position(), "Tsunami", R.drawable.tsunami));
+//        mClusterManager.addItem(new DisasterMap(position(), "Volcano", R.drawable.volcano));
     }
 }
