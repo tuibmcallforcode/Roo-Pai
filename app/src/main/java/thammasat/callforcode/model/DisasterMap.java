@@ -5,7 +5,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.maps.android.clustering.ClusterItem;
 
-public class DisasterMap implements ClusterItem {
+import java.io.Serializable;
+
+public class DisasterMap implements ClusterItem, Serializable {
 
     @SerializedName("_id")
     @Expose
@@ -40,8 +42,11 @@ public class DisasterMap implements ClusterItem {
     @SerializedName("position")
     @Expose
     private LatLng position;
+    @SerializedName("profilePhoto")
+    @Expose
+    private int profilePhoto;
 
-    public DisasterMap(LatLng position, String id, String pdcId, Integer v, String description, String severity, String source, String time, String title) {
+    public DisasterMap(LatLng position, String id, String pdcId, Integer v, String description, String severity, String source, String time, String title, int profilePhoto) {
         this.position = position;
         this.id = id;
         this.pdcId = pdcId;
@@ -51,6 +56,7 @@ public class DisasterMap implements ClusterItem {
         this.source = source;
         this.time = time;
         this.title = title;
+        this.profilePhoto = profilePhoto;
     }
 
     public String getId() {
@@ -143,4 +149,11 @@ public class DisasterMap implements ClusterItem {
         this.title = title;
     }
 
+    public int getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(int profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
 }

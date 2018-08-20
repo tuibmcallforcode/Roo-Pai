@@ -17,10 +17,16 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import es.dmoral.toasty.Toasty;
 import thammasat.callforcode.R;
 import thammasat.callforcode.activity.MainActivity;
+import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.Singleton;
+import thammasat.callforcode.model.DisasterMap;
 
 public class BaseFragment extends Fragment {
     protected Typeface bold, regular, light;
@@ -29,6 +35,18 @@ public class BaseFragment extends Fragment {
     private static final int REQUEST_RECORD_AUDIO = 1;
     private static final int REQUEST_ACCESS_FINE_LOCATION = 2;
     protected Singleton singleton = Singleton.getInstance();
+    protected List<DisasterMap> disasterMapList = new ArrayList<>();
+
+    protected void getDisasterMapList() {
+        try{
+            List<DisasterMap> disasterMapList = (List<DisasterMap>) InternalStorage.readObject(getContext(), "disasterMap");
+            this.disasterMapList =  disasterMapList;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     protected void setTypeface() {
         bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Bold.ttf");

@@ -34,6 +34,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -47,6 +48,7 @@ import rx.schedulers.Schedulers;
 import thammasat.callforcode.R;
 import thammasat.callforcode.fragment.MicrophoneFragment;
 import thammasat.callforcode.fragment.PermissionFragment;
+import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.Singleton;
 import thammasat.callforcode.manager.WeatherApi;
 import thammasat.callforcode.model.DisasterMap;
@@ -89,7 +91,11 @@ public class BaseActivity extends AppCompatActivity {
                         listCall.enqueue(new Callback<List<DisasterMap>>() {
                             @Override
                             public void onResponse(Call<List<DisasterMap>> call, Response<List<DisasterMap>> response) {
-                                singleton.setDisasterMapList(response.body());
+                                try {
+                                    InternalStorage.writeObject(BaseActivity.this, "disasterMap", response.body());
+                                } catch (IOException e) {
+                                    Log.e(TAG, e.getMessage());
+                                }
                             }
 
                             @Override

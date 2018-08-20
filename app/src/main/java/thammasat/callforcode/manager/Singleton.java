@@ -8,7 +8,6 @@ import thammasat.callforcode.model.DisasterMap;
 public class Singleton {
 
     private List<Disaster> disasterList;
-    private List<DisasterMap> disasterMapList;
 
     private static final Singleton ourInstance = new Singleton();
 
@@ -27,11 +26,4 @@ public class Singleton {
         this.disasterList = disasterList;
     }
 
-    public List<DisasterMap> getDisasterMapList() {
-        return disasterMapList;
-    }
-
-    public void setDisasterMapList(List<DisasterMap> disasterMapList) {
-        this.disasterMapList = disasterMapList;
-    }
 }
