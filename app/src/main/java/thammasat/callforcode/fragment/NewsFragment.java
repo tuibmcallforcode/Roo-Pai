@@ -27,8 +27,6 @@ public class NewsFragment extends BaseFragment {
     private FragmentNewsBinding binding;
     private ListAdapter listAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private List<Disaster> disasterList = new ArrayList<>();
-    private Singleton singleton = Singleton.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +40,7 @@ public class NewsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        disasterList = singleton.getDisasterList();
+        getDisasterList();
         initInstance();
         eventListenerBinding();
     }

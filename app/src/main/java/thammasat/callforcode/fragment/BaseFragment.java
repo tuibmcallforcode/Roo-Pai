@@ -26,6 +26,7 @@ import thammasat.callforcode.R;
 import thammasat.callforcode.activity.MainActivity;
 import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.Singleton;
+import thammasat.callforcode.model.Disaster;
 import thammasat.callforcode.model.DisasterMap;
 
 public class BaseFragment extends Fragment {
@@ -36,11 +37,23 @@ public class BaseFragment extends Fragment {
     private static final int REQUEST_ACCESS_FINE_LOCATION = 2;
     protected Singleton singleton = Singleton.getInstance();
     protected List<DisasterMap> disasterMapList = new ArrayList<>();
+    protected List<Disaster> disasterList = new ArrayList<>();
 
     protected void getDisasterMapList() {
         try{
             List<DisasterMap> disasterMapList = (List<DisasterMap>) InternalStorage.readObject(getContext(), "disasterMap");
             this.disasterMapList =  disasterMapList;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void getDisasterList() {
+        try{
+            List<Disaster> disasterList = (List<Disaster>) InternalStorage.readObject(getContext(), "disaster");
+            this.disasterList =  disasterList;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

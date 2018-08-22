@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import thammasat.callforcode.R;
 import thammasat.callforcode.manager.GlideApp;
 import thammasat.callforcode.manager.OnItemClick;
@@ -54,32 +55,93 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.tvCountry.setText(disasterList.get(position).getCountry());
+        holder.tvCountry.setText(disasterList.get(position).getTime());
         holder.tvTitle.setText(disasterList.get(position).getTitle());
-        holder.tvTag.setText(disasterList.get(position).getDisaster());
+        holder.tvTag.setText(disasterList.get(position).getSeverity());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onItemClick.onItemClick(disasterList.get(position));
             }
         });
-
-        if (holder.getItemViewType() == 1) {
-            GlideApp.with(context)
-                    .load(disasterList.get(position).getUrl_thumb())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .fitCenter()
-                    .transition(DrawableTransitionOptions.withCrossFade()) //Optional
-                    .into(holder.ivCover);
+        switch (disasterList.get(position).getSeverity().toLowerCase()) {
+            case "cold wave":
+                holder.civProfile.setImageResource(R.drawable.white_cold_wave);
+                break;
+            case "drought":
+                holder.civProfile.setImageResource(R.drawable.white_drought);
+                break;
+            case "earthquake":
+                holder.civProfile.setImageResource(R.drawable.white_earth_quake);
+                break;
+            case "epidemic":
+                holder.civProfile.setImageResource(R.drawable.white_epidemic);
+                break;
+            case "extratropical cyclone":
+                holder.civProfile.setImageResource(R.drawable.white_extratropical_cyclone);
+                break;
+            case "fire":
+                holder.civProfile.setImageResource(R.drawable.white_fire);
+                break;
+            case "wild fire":
+                holder.civProfile.setImageResource(R.drawable.white_fire);
+                break;
+            case "flash flood":
+                holder.civProfile.setImageResource(R.drawable.white_flash_flood);
+                break;
+            case "flood":
+                holder.civProfile.setImageResource(R.drawable.white_flood);
+                break;
+            case "heat wave":
+                holder.civProfile.setImageResource(R.drawable.white_heat_wave);
+                break;
+            case "insect infestation":
+                holder.civProfile.setImageResource(R.drawable.white_insect_infestation);
+                break;
+            case "land slide":
+                holder.civProfile.setImageResource(R.drawable.white_land_slide);
+                break;
+            case "mud slide":
+                holder.civProfile.setImageResource(R.drawable.white_mud_slide);
+                break;
+            case "severe local storm":
+                holder.civProfile.setImageResource(R.drawable.white_severe_local_storm);
+                break;
+            case "snow avalanche":
+                holder.civProfile.setImageResource(R.drawable.white_snow_avalanche);
+                break;
+            case "storm surge":
+                holder.civProfile.setImageResource(R.drawable.white_storm_surge);
+                break;
+            case "technological disaster":
+                holder.civProfile.setImageResource(R.drawable.white_technological_disaster);
+                break;
+            case "tropical cyclone":
+                holder.civProfile.setImageResource(R.drawable.white_tropical_cyclone);
+                break;
+            case "tsunami":
+                holder.civProfile.setImageResource(R.drawable.white_tsunami);
+                break;
+            case "volcano":
+                holder.civProfile.setImageResource(R.drawable.white_volcano);
+                break;
+            default:
+                holder.civProfile.setImageResource(R.drawable.microphone);
         }
+
+//        if (holder.getItemViewType() == 1) {
+//            GlideApp.with(context)
+//                    .load(disasterList.get(position).getUrl_thumb())
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .fitCenter()
+//                    .transition(DrawableTransitionOptions.withCrossFade()) //Optional
+//                    .into(holder.ivCover);
+//        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (disasterList.get(position).getUrl_thumb() == null)
-            return 0;
-        else
-            return 1;
+        return 0;
     }
 
     @Override
@@ -90,6 +152,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
+        CircleImageView civProfile;
         ImageView ivCover;
         TextView tvTitle, tvCountry, tvDuration, tvDistance, tvTag;
 
@@ -101,6 +164,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             light = Typeface.createFromAsset(context.getAssets(), "fonts/Light.ttf");
 
             cardView = (CardView) itemView.findViewById(R.id.cardView);
+            civProfile = (CircleImageView) itemView.findViewById(R.id.civProfile);
             ivCover = (ImageView) itemView.findViewById(R.id.ivCover);
             tvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
             tvDuration = (TextView) itemView.findViewById(R.id.tvDuration);

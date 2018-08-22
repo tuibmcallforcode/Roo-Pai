@@ -1,46 +1,61 @@
 package thammasat.callforcode.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Disaster implements Serializable {
-    private String title;
-    private String status;
+    @SerializedName("loc")
+    @Expose
+    private Loc loc;
+    @SerializedName("_id")
+    @Expose
+    private String id;
+    @SerializedName("relief_id")
+    @Expose
+    private Integer reliefId;
+    @SerializedName("body")
+    @Expose
     private String body;
-    private double lat;
-    private double lon;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("severity")
+    @Expose
+    private String severity;
+    @SerializedName("source")
+    @Expose
     private String source;
-    private String country;
-    private String disaster;
-    private String url;
-    private String url_thumb;
+    @SerializedName("time")
+    @Expose
+    private String time;
+    @SerializedName("title")
+    @Expose
+    private String title;
 
-    public Disaster(String title, String status, String body, double lat, double lon, String source, String country, String disaster, String url, String url_thumb) {
-        this.title = title;
-        this.status = status;
-        this.body = body;
-        this.lat = lat;
-        this.lon = lon;
-        this.source = source;
-        this.country = country;
-        this.disaster = disaster;
-        this.url = url;
-        this.url_thumb = url_thumb;
+    public Loc getLoc() {
+        return loc;
     }
 
-    public String getTitle() {
-        return title;
+    public void setLoc(Loc loc) {
+        this.loc = loc;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getId() {
+        return id;
     }
 
-    public String getStatus() {
-        return status;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public Integer getReliefId() {
+        return reliefId;
+    }
+
+    public void setReliefId(Integer reliefId) {
+        this.reliefId = reliefId;
     }
 
     public String getBody() {
@@ -51,20 +66,20 @@ public class Disaster implements Serializable {
         this.body = body;
     }
 
-    public double getLat() {
-        return lat;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public double getLon() {
-        return lon;
+    public String getSeverity() {
+        return severity;
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
+    public void setSeverity(String severity) {
+        this.severity = severity;
     }
 
     public String getSource() {
@@ -75,35 +90,19 @@ public class Disaster implements Serializable {
         this.source = source;
     }
 
-    public String getCountry() {
-        return country;
+    public String getTime() {
+        return time;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getDisaster() {
-        return disaster;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDisaster(String disaster) {
-        this.disaster = disaster;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUrl_thumb() {
-        return url_thumb;
-    }
-
-    public void setUrl_thumb(String url_thumb) {
-        this.url_thumb = url_thumb;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -35,13 +35,6 @@ public class InfoActivity extends BaseActivity {
 
         ImageView ivCover = (ImageView) findViewById(R.id.ivCover);
 
-        GlideApp.with(this)
-                .load(disaster.getUrl_thumb())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .fitCenter()
-                .transition(DrawableTransitionOptions.withCrossFade()) //Optional
-                .into(ivCover);
-
         InfoFragment infoFragment = new InfoFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("disaster", disaster);

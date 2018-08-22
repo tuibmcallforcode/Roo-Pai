@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        getDisaster();
         getDisasterMap();
         setAnimation();
         setTypeface();
@@ -109,38 +110,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         tvStatus = (TextView) findViewById(R.id.tvStatus);
         tvStatus.setTypeface(bold);
-
-        List<Disaster> disasterList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            if (i % 2 == 0) {
-                disasterList.add(new Disaster(
-                        "Ethiopia: Displacement Tracking Matrix (DTM) Oromia Region, Round 8: November to December 2017- Summary of key findings",
-                        "published",
-                        "**OROMIA REGION - KEY FINDINGS** **LOCATION AND CAUSE OF DISPLACEMENT:** 772,242 displaced individuals comprising 124,982 households in 369 displacement sites were identified in Oromia region*. These figures represent an increase of 242,532 in the total individuals (46%), an increase of 53% in households and 77% in sites since round 7 (August/September 2017). 79% sites opened in 2017. Conflict was the primary cause of displacement for an estimated 73% of the displaced population. **DEMOGRAPHICS:** 50% of displaced individuals were female and 50% were male. 61% were younger than 18 years old. 6% were over 60 years old. **SHELTER:** 70 (18%) sites reported that over 50% of households were living in shelters that were below standard. **WASH:** Only 28 sites meet SPHERE standards of access to over 15 liters of water per person per day. 219 (59%) displacement sites reported having no toilets. **FOOD, NUTRITION AND LIVELIHOODS:** 101 (27%) sites, representing 405,414 individuals, reported no access to food. 65% of sites reported that IDPs did not have access to income generating activities **HEALTH:** Pneumonia was the primary health concern in this round of data collection with 116 sites reporting this. **EDUCATION:** In 52% of sites (194) less than 50% of children are attending school. Formal primary school education is available at 52% (300) of sites. Alternative basic education (ABE) is available at 8% (31) sites. **PROTECTION:** Harmful traditional practices were reported across some sites. These practices included: female genital mutilation and child marriage. **COMMUNICATION:** 44% of sites reported that local leaders were IDPs primary source of information followed by site managers 31%.",
-                        8.63,
-                        39.62,
-                        "International Organization for Migration",
-                        "Ethiopia",
-                        "Drought",
-                        "https://reliefweb.int/node/2454884",
-                        "https://reliefweb.int/sites/reliefweb.int/files/styles/attachment-large/public/resources-pdf-previews/1038154-DTM_Round%208%20Oromia%20region.png"
-                ));
-            } else {
-                disasterList.add(new Disaster(
-                        "Ethiopia: Displacement Tracking Matrix (DTM) Oromia Region, Round 8: November to December 2017- Summary of key findings",
-                        "published",
-                        "**OROMIA REGION - KEY FINDINGS** **LOCATION AND CAUSE OF DISPLACEMENT:** 772,242 displaced individuals comprising 124,982 households in 369 displacement sites were identified in Oromia region*. These figures represent an increase of 242,532 in the total individuals (46%), an increase of 53% in households and 77% in sites since round 7 (August/September 2017). 79% sites opened in 2017. Conflict was the primary cause of displacement for an estimated 73% of the displaced population. **DEMOGRAPHICS:** 50% of displaced individuals were female and 50% were male. 61% were younger than 18 years old. 6% were over 60 years old. **SHELTER:** 70 (18%) sites reported that over 50% of households were living in shelters that were below standard. **WASH:** Only 28 sites meet SPHERE standards of access to over 15 liters of water per person per day. 219 (59%) displacement sites reported having no toilets. **FOOD, NUTRITION AND LIVELIHOODS:** 101 (27%) sites, representing 405,414 individuals, reported no access to food. 65% of sites reported that IDPs did not have access to income generating activities **HEALTH:** Pneumonia was the primary health concern in this round of data collection with 116 sites reporting this. **EDUCATION:** In 52% of sites (194) less than 50% of children are attending school. Formal primary school education is available at 52% (300) of sites. Alternative basic education (ABE) is available at 8% (31) sites. **PROTECTION:** Harmful traditional practices were reported across some sites. These practices included: female genital mutilation and child marriage. **COMMUNICATION:** 44% of sites reported that local leaders were IDPs primary source of information followed by site managers 31%.",
-                        8.63,
-                        39.62,
-                        "International Organization for Migration",
-                        "Ethiopia",
-                        "Drought",
-                        "https://reliefweb.int/node/2454884",
-                        null
-                ));
-            }
-        }
-        singleton.setDisasterList(disasterList);
     }
 
     private void eventListenerBinding() {

@@ -51,6 +51,7 @@ import thammasat.callforcode.fragment.PermissionFragment;
 import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.Singleton;
 import thammasat.callforcode.manager.WeatherApi;
+import thammasat.callforcode.model.Disaster;
 import thammasat.callforcode.model.DisasterMap;
 import thammasat.callforcode.restful.ApiClient;
 import thammasat.callforcode.restful.ApiInterface;
@@ -106,6 +107,47 @@ public class BaseActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    protected void getDisaster() {
+        rx.Observable.fromCallable(new Callable<Call<List<Disaster>>>() {
+            @Override
+            public Call<List<Disaster>> call() throws Exception {
+                return apiService.getDisaster();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Call<List<Disaster>>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Call<List<Disaster>> listCall) {
+                        listCall.enqueue(new Callback<List<Disaster>>() {
+                            @Override
+                            public void onResponse(Call<List<Disaster>> call, Response<List<Disaster>> response) {
+                                try {
+                                    InternalStorage.writeObject(BaseActivity.this, "disaster", response.body());
+                                } catch (IOException e) {
+                                    Log.e(TAG, e.getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Disaster>> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                });
+    }
+
 
     protected void setAnimation() {
         anim = AnimationUtils.loadAnimation(this, R.anim.bounce);
