@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
 
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
 
         getCurrentLocation();
         weatherDialog();
@@ -316,7 +316,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         try {
             InternalStorage.writeObject(this, "latitude", location.getLatitude());
             InternalStorage.writeObject(this, "longitude", location.getLongitude());
-            Log.i("hello", location.getLatitude() + " | " + location.getLongitude());
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         }

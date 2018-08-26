@@ -15,6 +15,9 @@ import android.widget.TextView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
+import org.w3c.dom.Text;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import thammasat.callforcode.R;
 import thammasat.callforcode.fragment.InfoFragment;
 import thammasat.callforcode.manager.GlideApp;
@@ -33,6 +36,9 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
     private TextView tvTitle;
     private AppBarLayout appBar;
     private Toolbar toolbar;
+    private CircleImageView circleImageView;
+    private TextView toolbarTitle, title, description;
+    private Disaster disaster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +49,22 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
     }
 
     private void initInstance() {
-        Disaster disaster = (Disaster) getIntent().getSerializableExtra("disaster");
+        disaster = (Disaster) getIntent().getSerializableExtra("disaster");
 
         toolbar = (Toolbar) findViewById(R.id.info_toolbar);
-        tvTitle = (TextView) findViewById(R.id.info_textview_title);
         llTitle = (LinearLayout) findViewById(R.id.info_linearlayout_title);
         appBar = (AppBarLayout) findViewById(R.id.info_appbar);
+        circleImageView = (CircleImageView) findViewById(R.id.info_circleImageView); 
+        toolbarTitle = (TextView) findViewById(R.id.info_textview_toolbarTitle);
+        title = (TextView) findViewById(R.id.info_textview_title);
+        description = (TextView) findViewById(R.id.info_textview_description);
+
+        setTypeface();
+        setCircleImageView();
+        setTextView();
 
         appBar.addOnOffsetChangedListener(this);
-        startAlphaAnimation(tvTitle, 0, View.INVISIBLE);
+        startAlphaAnimation(toolbarTitle, 0, View.INVISIBLE);
 
         InfoFragment infoFragment = new InfoFragment();
         Bundle bundle = new Bundle();
@@ -62,11 +75,81 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
         transaction.commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    private void setTextView() {
+        title.setTypeface(bold);
+        toolbarTitle.setTypeface(regular);
+        description.setTypeface(regular);
 
-        return super.onOptionsItemSelected(item);
+        title.setText(disaster.getSeverity());
+        toolbarTitle.setText(disaster.getSeverity());
+        description.setText(disaster.getTitle());
+    }
+
+    private void setCircleImageView() {
+        switch (disaster.getSeverity().toLowerCase()) {
+            case "cold wave":
+                circleImageView.setImageResource(R.drawable.white_cold_wave);
+                break;
+            case "drought":
+                circleImageView.setImageResource(R.drawable.white_drought);
+                break;
+            case "earthquake":
+                circleImageView.setImageResource(R.drawable.white_earth_quake);
+                break;
+            case "epidemic":
+                circleImageView.setImageResource(R.drawable.white_epidemic);
+                break;
+            case "extratropical cyclone":
+                circleImageView.setImageResource(R.drawable.white_extratropical_cyclone);
+                break;
+            case "fire":
+                circleImageView.setImageResource(R.drawable.white_fire);
+                break;
+            case "wild fire":
+                circleImageView.setImageResource(R.drawable.white_fire);
+                break;
+            case "flash flood":
+                circleImageView.setImageResource(R.drawable.white_flash_flood);
+                break;
+            case "flood":
+                circleImageView.setImageResource(R.drawable.white_flood);
+                break;
+            case "heat wave":
+                circleImageView.setImageResource(R.drawable.white_heat_wave);
+                break;
+            case "insect infestation":
+                circleImageView.setImageResource(R.drawable.white_insect_infestation);
+                break;
+            case "land slide":
+                circleImageView.setImageResource(R.drawable.white_land_slide);
+                break;
+            case "mud slide":
+                circleImageView.setImageResource(R.drawable.white_mud_slide);
+                break;
+            case "severe local storm":
+                circleImageView.setImageResource(R.drawable.white_severe_local_storm);
+                break;
+            case "snow avalanche":
+                circleImageView.setImageResource(R.drawable.white_snow_avalanche);
+                break;
+            case "storm surge":
+                circleImageView.setImageResource(R.drawable.white_storm_surge);
+                break;
+            case "technological disaster":
+                circleImageView.setImageResource(R.drawable.white_technological_disaster);
+                break;
+            case "tropical cyclone":
+                circleImageView.setImageResource(R.drawable.white_tropical_cyclone);
+                break;
+            case "tsunami":
+                circleImageView.setImageResource(R.drawable.white_tsunami);
+                break;
+            case "volcano":
+                circleImageView.setImageResource(R.drawable.white_volcano);
+                break;
+            default:
+                circleImageView.setImageResource(R.drawable.microphone);
+        }
     }
 
     @Override
@@ -82,14 +165,14 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
         if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
 
             if (!mIsTheTitleVisible) {
-                startAlphaAnimation(tvTitle, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                startAlphaAnimation(toolbarTitle, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
                 mIsTheTitleVisible = true;
             }
 
         } else {
 
             if (mIsTheTitleVisible) {
-                startAlphaAnimation(tvTitle, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                startAlphaAnimation(toolbarTitle, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
                 mIsTheTitleVisible = false;
             }
         }

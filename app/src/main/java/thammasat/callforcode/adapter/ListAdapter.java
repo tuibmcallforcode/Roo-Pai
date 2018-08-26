@@ -2,6 +2,7 @@ package thammasat.callforcode.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -79,11 +80,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.tvCountry.setText(disasterList.get(position).getTime());
+        int distance = (int) distance(latitude, longitude, disasterList.get(position).getLoc().getCoordinates().get(0), disasterList.get(position).getLoc().getCoordinates().get(1)) / 1000;
         holder.tvTitle.setText(disasterList.get(position).getTitle());
         holder.tvTag.setText(disasterList.get(position).getSeverity());
         holder.tvDuration.setText(getDateDiff(date, now, TimeUnit.DAYS) + " days ago | ");
-        holder.tvDistance.setText(distance(latitude, longitude, disasterList.get(position).getLoc().getCoordinates().get(0), disasterList.get(position).getLoc().getCoordinates().get(1), "K") + " km away");
+        holder.tvDistance.setText(distance + " km away");
+        holder.tvDescription.setText(disasterList.get(position).getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,29 +182,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
-    private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        if (unit == "K") {
-            dist = dist * 1.609344;
-        } else if (unit == "N") {
-            dist = dist * 0.8684;
-        }
+    private static double distance(double lat1, double lon1, double lat2, double lon2) {
+        Location loc1 = new Location("current");
+        loc1.setLatitude(lat1);
+        loc1.setLongitude(lon1);
 
-        return (dist);
-    }
+        Location loc2 = new Location("target");
+        loc2.setLatitude(lat2);
+        loc2.setLongitude(lon2);
 
-    private static final double deg2rad(double deg)
-    {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private static final double rad2deg(double rad)
-    {
-        return (rad * 180 / Math.PI);
+        return loc1.distanceTo(loc2);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -210,7 +199,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         CardView cardView;
         CircleImageView civProfile;
         ImageView ivCover;
-        TextView tvTitle, tvCountry, tvDuration, tvDistance, tvTag;
+        TextView tvTitle, tvDuration, tvDistance, tvTag, tvDescription;
 
         public ViewHolder(View itemView, int type) {
             super(itemView);
@@ -222,17 +211,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             cardView = (CardView) itemView.findViewById(R.id.cardView);
             civProfile = (CircleImageView) itemView.findViewById(R.id.civProfile);
             ivCover = (ImageView) itemView.findViewById(R.id.ivCover);
-            tvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
             tvDuration = (TextView) itemView.findViewById(R.id.tvDuration);
             tvDistance = (TextView) itemView.findViewById(R.id.tvDistance);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvTag = (TextView) itemView.findViewById(R.id.tvTag);
+            tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
 
-            tvCountry.setTypeface(light);
             tvDistance.setTypeface(light);
             tvDuration.setTypeface(light);
             tvTitle.setTypeface(regular);
             tvTag.setTypeface(light);
+            tvDescription.setTypeface(light);
         }
     }
 }
