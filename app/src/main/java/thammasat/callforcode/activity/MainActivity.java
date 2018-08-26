@@ -1,10 +1,14 @@
 package thammasat.callforcode.activity;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +16,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.util.Log;
@@ -42,6 +47,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.twitter.sdk.android.core.TwitterCore;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,16 +55,17 @@ import es.dmoral.toasty.Toasty;
 import thammasat.callforcode.R;
 import thammasat.callforcode.adapter.PagerAdapter;
 import thammasat.callforcode.databinding.ActivityMainBinding;
+import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.Singleton;
 import thammasat.callforcode.manager.WeatherApi;
 import thammasat.callforcode.model.Disaster;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-    private BounceInterpolator interpolator;
+    protected LocationManager locationManager;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView tvStatus;
@@ -70,13 +77,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        } else {
+
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
+        getCurrentLocation();
+        weatherDialog();
         getDisaster();
         getDisasterMap();
         setAnimation();
         setTypeface();
         initInstance();
         eventListenerBinding();
-        weatherDialog();
     }
 
     private void initInstance() {
@@ -106,6 +122,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setCurrentItem(1);
         setCustomFont();
 
         tvStatus = (TextView) findViewById(R.id.tvStatus);
@@ -249,6 +266,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id) {
             case R.id.weather:
+                getCurrentLocation();
                 weatherDialog();
                 break;
             case R.id.settings:
@@ -291,5 +309,31 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        try {
+            InternalStorage.writeObject(this, "latitude", location.getLatitude());
+            InternalStorage.writeObject(this, "longitude", location.getLongitude());
+            Log.i("hello", location.getLatitude() + " | " + location.getLongitude());
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 }

@@ -67,6 +67,18 @@ public class BaseActivity extends AppCompatActivity {
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     protected ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     protected Singleton singleton = Singleton.getInstance();
+    protected double latitude = 0, longitude = 0;
+
+    protected void getCurrentLocation() {
+        try {
+            latitude = (double) InternalStorage.readObject(this, "latitude");
+            longitude = (double) InternalStorage.readObject(this, "longitude");
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        } catch (ClassNotFoundException e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
 
     protected void getDisasterMap() {
         rx.Observable.fromCallable(new Callable<Call<List<DisasterMap>>>() {
@@ -159,7 +171,7 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
         overridePendingTransition(enterAnim, exitAnim);
-        if(finish)
+        if (finish)
             finish();
     }
 
@@ -304,7 +316,7 @@ public class BaseActivity extends AppCompatActivity {
                 weatherIcon.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf"));
             }
         });
-        asyncTask.execute("13.7251088", "100.3529049"); //  asyncTask.execute("Latitude", "Longitude")
+        asyncTask.execute(latitude + "", longitude + ""); //  asyncTask.execute("Latitude", "Longitude")
 
         weatherDialog.show();
     }

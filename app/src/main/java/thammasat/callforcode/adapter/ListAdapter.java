@@ -13,11 +13,18 @@ import android.widget.TextView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import thammasat.callforcode.R;
 import thammasat.callforcode.manager.GlideApp;
+import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.OnItemClick;
 import thammasat.callforcode.model.Disaster;
 
@@ -26,6 +33,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private Context context;
     private List<Disaster> disasterList;
     private Typeface bold, regular, light;
+    private Date now = new Date();
+    private double latitude = 0, longitude = 0;
 
     public OnItemClick getOnItemClick() {
         return onItemClick;
@@ -40,6 +49,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public ListAdapter(Context context, List<Disaster> disasterList) {
         this.context = context;
         this.disasterList = disasterList;
+        try {
+            latitude = (double) InternalStorage.readObject(context, "latitude");
+            longitude = (double) InternalStorage.readObject(context, "longitude");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -55,9 +72,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        try {
+            date = df.parse(disasterList.get(position).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         holder.tvCountry.setText(disasterList.get(position).getTime());
         holder.tvTitle.setText(disasterList.get(position).getTitle());
         holder.tvTag.setText(disasterList.get(position).getSeverity());
+        holder.tvDuration.setText(getDateDiff(date, now, TimeUnit.DAYS) + " days ago | ");
+        holder.tvDistance.setText(distance(latitude, longitude, disasterList.get(position).getLoc().getCoordinates().get(0), disasterList.get(position).getLoc().getCoordinates().get(1), "K") + " km away");
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,6 +173,36 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return disasterList != null ? disasterList.size() : 0;
+    }
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    }
+
+    private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == "K") {
+            dist = dist * 1.609344;
+        } else if (unit == "N") {
+            dist = dist * 0.8684;
+        }
+
+        return (dist);
+    }
+
+    private static final double deg2rad(double deg)
+    {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static final double rad2deg(double rad)
+    {
+        return (rad * 180 / Math.PI);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
