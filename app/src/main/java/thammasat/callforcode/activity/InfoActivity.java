@@ -2,25 +2,16 @@ package thammasat.callforcode.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-
-import org.w3c.dom.Text;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import thammasat.callforcode.R;
 import thammasat.callforcode.fragment.InfoFragment;
-import thammasat.callforcode.manager.GlideApp;
 import thammasat.callforcode.model.Disaster;
 
 public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetChangedListener {
@@ -33,9 +24,7 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
     private boolean mIsTheTitleContainerVisible = true;
 
     private LinearLayout llTitle;
-    private TextView tvTitle;
     private AppBarLayout appBar;
-    private Toolbar toolbar;
     private CircleImageView circleImageView;
     private TextView toolbarTitle, title, description;
     private Disaster disaster;
@@ -51,7 +40,6 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
     private void initInstance() {
         disaster = (Disaster) getIntent().getSerializableExtra("disaster");
 
-        toolbar = (Toolbar) findViewById(R.id.info_toolbar);
         llTitle = (LinearLayout) findViewById(R.id.info_linearlayout_title);
         appBar = (AppBarLayout) findViewById(R.id.info_appbar);
         circleImageView = (CircleImageView) findViewById(R.id.info_circleImageView); 

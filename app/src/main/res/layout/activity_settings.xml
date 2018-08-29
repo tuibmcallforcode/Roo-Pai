@@ -1,9 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".activity.SettingsActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSettingsBackground"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvGeneral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/settings_header_padding"
+            android:text="@string/general"
+            android:textSize="@dimen/text_settings_header" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_stroke_height"
+            android:background="@color/colorSettingsStroke" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/settings_text_padding">
+
+            <TextView
+                android:id="@+id/tvRadius"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nearby_radius"
+                android:textSize="@dimen/settings_text_size" />
+
+            <TextView
+                android:id="@+id/tvRadiusSelection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:textColor="@color/colorSettingsSelection"
+                android:textSize="@dimen/settings_text_size" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_stroke_height"
+            android:background="@color/colorSettingsStroke" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_stroke_height"
+            android:background="@color/colorSettingsStroke" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/settings_text_padding">
+
+            <TextView
+                android:id="@+id/tvUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unit_of_distance"
+                android:textSize="@dimen/settings_text_size" />
+
+            <TextView
+                android:id="@+id/tvUnitSelection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:textColor="@color/colorSettingsSelection"
+                android:textSize="@dimen/settings_text_size" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_stroke_height"
+            android:background="@color/colorSettingsStroke" />
+    </LinearLayout>
+</layout>

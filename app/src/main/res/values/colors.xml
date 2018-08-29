@@ -6,4 +6,7 @@
     <color name="colorFontTitle">#454F63</color>
     <color name="colorTextHint">#A2A2A2</color>
     <color name="colorMicrophone">#FF5353</color>
+    <color name="colorSettingsStroke">#eeeeee</color>
+    <color name="colorSettingsBackground">#F5F5F5</color>
+    <color name="colorSettingsSelection">#9E9E9E</color>
 </resources>

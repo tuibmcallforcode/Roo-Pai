@@ -60,8 +60,9 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.WebViewActivity"></activity>
+            android:theme="@style/AppThemeWithActionBar" />
+        <activity android:name=".activity.WebViewActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
