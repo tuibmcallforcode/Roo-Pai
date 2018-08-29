@@ -33,4 +33,6 @@
     <dimen name="settings_text_padding">18dp</dimen>
     <dimen name="settings_stroke_height">1dp</dimen>
     <dimen name="settings_text_size">18sp</dimen>
+    <dimen name="image_width">110dp</dimen>
+    <dimen name="image_small_width">32dp</dimen>
 </resources>

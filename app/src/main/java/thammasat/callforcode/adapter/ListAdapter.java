@@ -80,16 +80,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int distance = (int) distance(latitude, longitude, disasterList.get(position).getLoc().getCoordinates().get(0), disasterList.get(position).getLoc().getCoordinates().get(1)) / 1000;
-        holder.tvTitle.setText(disasterList.get(position).getTitle());
+        final long time = getDateDiff(date, now, TimeUnit.DAYS);
+        final int distance = (int) distance(latitude, longitude, disasterList.get(position).getLoc().getCoordinates().get(0), disasterList.get(position).getLoc().getCoordinates().get(1)) / 1000;
+        String[] partTwo = disasterList.get(position).getTitle().split(" - ");
+        String[] partOne = partTwo[0].split(":");
+        if(partOne.length > 1)
+            holder.tvTitle.setText("@" + partOne[0] + "  on  " + partTwo[1]);
+        else
+            holder.tvTitle.setText("@" + partTwo[0] + "  on  " + partTwo[1]);
         holder.tvTag.setText(disasterList.get(position).getSeverity());
-        holder.tvDuration.setText(getDateDiff(date, now, TimeUnit.DAYS) + " days ago | ");
+        holder.tvDuration.setText(time + " days ago | ");
         holder.tvDistance.setText(distance + " km away");
         holder.tvDescription.setText(disasterList.get(position).getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClick.onItemClick(disasterList.get(position));
+                onItemClick.onItemClick(disasterList.get(position), time, distance);
             }
         });
         switch (disasterList.get(position).getSeverity().toLowerCase()) {

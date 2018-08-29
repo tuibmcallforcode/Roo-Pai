@@ -50,9 +50,11 @@ public class NearByFragment extends BaseFragment {
         binding.recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClick(new OnItemClick() {
             @Override
-            public void onItemClick(Disaster disaster) {
+            public void onItemClick(Disaster disaster, long time, int distance) {
                 Intent intent = new Intent(getContext(), InfoActivity.class);
                 intent.putExtra("disaster", disaster);
+                intent.putExtra("time", time);
+                intent.putExtra("distance", distance);
                 getActivity().startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
             }
