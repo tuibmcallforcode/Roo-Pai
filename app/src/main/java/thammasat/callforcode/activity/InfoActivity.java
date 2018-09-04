@@ -1,20 +1,15 @@
 package thammasat.callforcode.activity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import thammasat.callforcode.R;
 import thammasat.callforcode.fragment.InfoFragment;
@@ -22,11 +17,9 @@ import thammasat.callforcode.model.Disaster;
 
 public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetChangedListener {
 
-    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
-    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
-    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
+    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f;
+    private static final int ALPHA_ANIMATIONS_DURATION = 200;
 
-    private boolean mIsTheTitleVisible          = false;
     private boolean mIsTheTitleContainerVisible = true;
 
     private AppBarLayout appbar;
@@ -51,9 +44,9 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
         time = getIntent().getLongExtra("time", 0);
         distance = getIntent().getIntExtra("distance", 0);
 
-        appbar = (AppBarLayout)findViewById( R.id.appbar );
-        coverImage = (ImageView)findViewById( R.id.imageview_placeholder );
-        linearlayoutTitle = (LinearLayout)findViewById( R.id.linearlayout_title );
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
+        coverImage = (ImageView) findViewById(R.id.imageview_placeholder);
+        linearlayoutTitle = (LinearLayout) findViewById(R.id.linearlayout_title);
         tvTitle = (TextView) findViewById(R.id.info_textview_title);
         tvDate = (TextView) findViewById(R.id.info_textview_date);
 
@@ -81,7 +74,6 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
     }
 
 
-
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         int maxScroll = appBarLayout.getTotalScrollRange();
@@ -92,7 +84,7 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
 
     private void handleAlphaOnTitle(float percentage) {
         if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
-            if(mIsTheTitleContainerVisible) {
+            if (mIsTheTitleContainerVisible) {
                 startAlphaAnimation(linearlayoutTitle, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
                 mIsTheTitleContainerVisible = false;
             }

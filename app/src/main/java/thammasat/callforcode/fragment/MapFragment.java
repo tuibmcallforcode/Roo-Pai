@@ -80,7 +80,7 @@ public class MapFragment extends BaseFragment {
             BitmapDrawable bitmap = (BitmapDrawable) getApplicationContext().getResources().getDrawable(disasterMap.getProfilePhoto());
             Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap.getBitmap(), 110, 110, false);
             BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(smallMarker);
-            markerOptions.icon(icon).title(disasterMap.getSeverity()).snippet(disasterMap.getTitle() + " -> " + disasterMap.getSource());
+            markerOptions.icon(icon).title(disasterMap.getTitle()).snippet(disasterMap.getSource());
 //            disasterMap.getSnippet()).title(disasterMap.getTitle()
 //            mImageView.setImageResource(disasterMap.profilePhoto);
 //            Bitmap icon = mIconGenerator.makeIcon();

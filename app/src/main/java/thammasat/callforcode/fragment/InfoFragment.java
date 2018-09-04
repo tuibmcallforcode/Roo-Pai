@@ -1,18 +1,24 @@
 package thammasat.callforcode.fragment;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import thammasat.callforcode.R;
 import thammasat.callforcode.activity.BaseActivity;
+import thammasat.callforcode.activity.InfoActivity;
+import thammasat.callforcode.adapter.ListAdapter;
+import thammasat.callforcode.adapter.RelatedListAdapter;
 import thammasat.callforcode.databinding.FragmentInfoBinding;
+import thammasat.callforcode.manager.OnItemClick;
 import thammasat.callforcode.model.Disaster;
 
 public class InfoFragment extends BaseFragment {
@@ -21,6 +27,8 @@ public class InfoFragment extends BaseFragment {
     private Disaster disaster;
     private long time;
     private int distance;
+    private RelatedListAdapter listAdapter;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,8 @@ public class InfoFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         setTypeface();
+        getDisasterList();
+        getRelatedList();
         initInstance();
     }
 
@@ -54,11 +64,30 @@ public class InfoFragment extends BaseFragment {
         binding.tvDuration.setTypeface(light);
         binding.tvTag.setTypeface(light);
         binding.tvDescription.setTypeface(regular);
+        binding.tvInterest.setTypeface(light);
 
         binding.tvTag.setText(disaster.getSeverity());
         binding.tvDescription.setText(disaster.getDescription());
         binding.tvDuration.setText(time + " days ago | ");
         binding.tvDistance.setText(distance + " km away");
+
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        listAdapter = new RelatedListAdapter(getContext(), relatedList);
+        binding.recyclerView.setLayoutManager(linearLayoutManager);
+        binding.recyclerView.setAdapter(listAdapter);
+        binding.recyclerView.setNestedScrollingEnabled(false);
+        listAdapter.setOnItemClick(new OnItemClick() {
+            @Override
+            public void onItemClick(Disaster disaster, long time, int distance) {
+                Intent intent = new Intent(getContext(), InfoActivity.class);
+                intent.putExtra("disaster", disaster);
+                intent.putExtra("time", time);
+                intent.putExtra("distance", distance);
+                getActivity().startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                getActivity().finish();
+            }
+        });
 
         switch (disaster.getSeverity().toLowerCase()) {
             case "cold wave":

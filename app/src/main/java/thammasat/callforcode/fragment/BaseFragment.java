@@ -39,7 +39,14 @@ public class BaseFragment extends Fragment {
     protected Singleton singleton = Singleton.getInstance();
     protected List<DisasterMap> disasterMapList = new ArrayList<>();
     protected List<Disaster> disasterList = new ArrayList<>();
+    protected List<Disaster> relatedList = new ArrayList<>();
 
+    protected void getRelatedList() {
+        for(int i = 0 ; i < 5 ; i++){
+            double focus = Math.random() * disasterList.size() + 1;
+            relatedList.add(disasterList.get((int) focus));
+        }
+    }
     protected void getDisasterMapList() {
         try{
             List<DisasterMap> disasterMapList = (List<DisasterMap>) InternalStorage.readObject(getContext(), "disasterMap");

@@ -2,17 +2,14 @@ package thammasat.callforcode.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.location.Location;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -24,12 +21,11 @@ import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import thammasat.callforcode.R;
-import thammasat.callforcode.manager.GlideApp;
 import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.OnItemClick;
 import thammasat.callforcode.model.Disaster;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class RelatedListAdapter extends RecyclerView.Adapter<RelatedListAdapter.ViewHolder> {
 
     private Context context;
     private List<Disaster> disasterList;
@@ -47,7 +43,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     private OnItemClick onItemClick;
 
-    public ListAdapter(Context context, List<Disaster> disasterList) {
+    public RelatedListAdapter(Context context, List<Disaster> disasterList) {
         this.context = context;
         this.disasterList = disasterList;
         try {
@@ -63,7 +59,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.related_list, parent, false);
             return new ViewHolder(view, 0);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.full_item_list, parent, false);
@@ -87,7 +83,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.tvDuration.setText(time + " days ago | ");
         holder.tvDistance.setText(distance + " km away");
         holder.tvDescription.setText(disasterList.get(position).getDescription());
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onItemClick.onItemClick(disasterList.get(position), time, distance);
@@ -202,7 +198,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cardView;
+        FrameLayout frameLayout;
         CircleImageView civProfile;
         ImageView ivCover;
         TextView tvTitle, tvDuration, tvDistance, tvTag, tvDescription;
@@ -214,7 +210,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             regular = Typeface.createFromAsset(context.getAssets(), "fonts/Regular.ttf");
             light = Typeface.createFromAsset(context.getAssets(), "fonts/Light.ttf");
 
-            cardView = (CardView) itemView.findViewById(R.id.cardView);
+            frameLayout = (FrameLayout) itemView.findViewById(R.id.frameLayout);
             civProfile = (CircleImageView) itemView.findViewById(R.id.civProfile);
             ivCover = (ImageView) itemView.findViewById(R.id.ivCover);
             tvDuration = (TextView) itemView.findViewById(R.id.tvDuration);

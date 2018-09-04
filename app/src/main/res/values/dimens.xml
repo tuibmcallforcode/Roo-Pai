@@ -35,4 +35,5 @@
     <dimen name="settings_text_size">18sp</dimen>
     <dimen name="image_width">110dp</dimen>
     <dimen name="image_small_width">32dp</dimen>
+    <dimen name="related_list_padding">8dp</dimen>
 </resources>

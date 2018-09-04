@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
@@ -71,6 +72,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView tvStatus;
     private AppBarLayout appBarLayout;
     private static final String TAG = MainActivity.class.getName();
+    private Integer[] selectedSeverity;
+    private String[] selectedSeverityId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,11 +134,36 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void eventListenerBinding() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.GONE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToActivity(FabActivity.class, R.anim.enter_from_left, R.anim.exit_to_right, false);
+                new MaterialDialog.Builder( MainActivity.this)
+                        .typeface("Bold.ttf", "Regular.ttf")
+                        .backgroundColor(Color.parseColor("#454F63"))
+                        .titleColor(Color.parseColor("#FFFFFF"))
+                        .negativeColor(Color.parseColor("#FFFFFF"))
+                        .positiveColor(Color.parseColor("#FFFFFF"))
+                        .contentColor(Color.parseColor("#FFFFFF"))
+                        .widgetColor(Color.parseColor("#FFFFFF"))
+                        .title(R.string.severity)
+                        .items(R.array.severity)
+                        .itemsCallbackMultiChoice(selectedSeverity, new MaterialDialog.ListCallbackMultiChoice() {
+                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                                String txt = "";
+                                selectedSeverity = new Integer[text.length];
+                                selectedSeverityId = new String[text.length];
+                                for (int i = 0; i < text.length; i++) {
+                                    txt = txt + text[i] + " ";
+                                    selectedSeverity[i] = which[i];
+                                    selectedSeverityId[i] = text[i].toString();
+                                }
+                                return false;
+                            }
+                        })
+                        .negativeText(R.string.cancel)
+                        .positiveText(R.string.confirm)
+                        .show();
+
             }
         });
 
