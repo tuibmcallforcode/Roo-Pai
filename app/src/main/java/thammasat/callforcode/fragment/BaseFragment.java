@@ -36,7 +36,6 @@ public class BaseFragment extends Fragment {
     protected BounceInterpolator interpolator;
     private static final int REQUEST_RECORD_AUDIO = 1;
     private static final int REQUEST_ACCESS_FINE_LOCATION = 2;
-    protected Singleton singleton = Singleton.getInstance();
     protected List<DisasterMap> disasterMapList = new ArrayList<>();
     protected List<Disaster> disasterList = new ArrayList<>();
     protected List<Disaster> relatedList = new ArrayList<>();

@@ -40,6 +40,7 @@
     <string name="nearby_radius">Nearby Radius</string>
     <string name="may_interest">MAY INTEREST</string>
     <string name="severity">Severity</string>
+    <string name="week">WEEK</string>
     <string-array name="severity">
         <item>Cold Wave</item>
         <item>Drought</item>
@@ -61,5 +62,9 @@
         <item>Tropical Cyclone</item>
         <item>Tsunami</item>
         <item>Volcano</item>
+    </string-array>
+    <string-array name="unit">
+        <item>km</item>
+        <item>miles</item>
     </string-array>
 </resources>

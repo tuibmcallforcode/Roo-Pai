@@ -66,7 +66,6 @@ public class BaseActivity extends AppCompatActivity {
     public static final String TAG = BaseActivity.class.getSimpleName();
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     protected ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-    protected Singleton singleton = Singleton.getInstance();
     protected double latitude = 0, longitude = 0;
 
     protected void getCurrentLocation() {

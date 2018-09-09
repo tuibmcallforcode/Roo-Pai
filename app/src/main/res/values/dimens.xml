@@ -36,4 +36,6 @@
     <dimen name="image_width">110dp</dimen>
     <dimen name="image_small_width">32dp</dimen>
     <dimen name="related_list_padding">8dp</dimen>
+    <dimen name="radius_button_stats">30dp</dimen>
+    <dimen name="padding_button_stats">8dp</dimen>
 </resources>
