@@ -27,7 +27,7 @@
                 android:background="@color/colorPrimaryDark"
                 android:gravity="center"
                 android:padding="4dp"
-                android:text="@string/nearby"
+                android:text="@string/NEWS"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_medium" />
 

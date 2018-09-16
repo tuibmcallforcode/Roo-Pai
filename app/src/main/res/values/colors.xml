@@ -9,4 +9,5 @@
     <color name="colorSettingsStroke">#eeeeee</color>
     <color name="colorSettingsBackground">#F5F5F5</color>
     <color name="colorSettingsSelection">#9E9E9E</color>
+    <color name="colorWhite">#FFFFFF</color>
 </resources>

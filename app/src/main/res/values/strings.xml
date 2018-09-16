@@ -41,6 +41,9 @@
     <string name="may_interest">MAY INTEREST</string>
     <string name="severity">Severity</string>
     <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
+    <string name="NEWS">NEWS</string>
     <string-array name="severity">
         <item>Cold Wave</item>
         <item>Drought</item>

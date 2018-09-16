@@ -18,6 +18,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.util.Log;
@@ -38,6 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -56,6 +58,7 @@ import es.dmoral.toasty.Toasty;
 import thammasat.callforcode.R;
 import thammasat.callforcode.adapter.PagerAdapter;
 import thammasat.callforcode.databinding.ActivityMainBinding;
+import thammasat.callforcode.fragment.NearByFragment;
 import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.Singleton;
 import thammasat.callforcode.manager.WeatherApi;
@@ -189,6 +192,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     appBarLayout.setExpanded(false);
                 } else if (tab.getPosition() == 3) {
                     tvStatus.setText("STATS");
+                    appBarLayout.setExpanded(false);
                 }
             }
 

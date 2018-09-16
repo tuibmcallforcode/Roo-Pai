@@ -3,6 +3,7 @@
     tools:context="thammasat.callforcode.fragment.NearByFragment">
 
     <FrameLayout
+        android:id="@+id/nearbyFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
