@@ -30,19 +30,20 @@ import thammasat.callforcode.activity.MainActivity;
 import thammasat.callforcode.manager.GlideApp;
 import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.OnItemClick;
+import thammasat.callforcode.manager.Singleton;
 import thammasat.callforcode.model.Disaster;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     private Context context;
-    private List<Disaster> disasterList;
+    private List<Disaster> disasterList = new ArrayList<>();
     private Typeface bold, regular, light;
     private Date now = new Date();
     private double latitude = 0, longitude = 0;
     private int selectedRadiusValue, selectedUnitIndex;
-    private String selectedUnitValue;
     private List<Integer> distance = new ArrayList<>();
     private boolean nearby;
+    private Singleton singleton = Singleton.getInstance();
 
     public OnItemClick getOnItemClick() {
         return onItemClick;
@@ -60,7 +61,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             longitude = (double) InternalStorage.readObject(context, "longitude");
             selectedRadiusValue = (int) InternalStorage.readObject(context, "selectedRadiusValue");
             selectedUnitIndex = (int) InternalStorage.readObject(context, "selectedUnitIndex");
-            selectedUnitValue = (String) InternalStorage.readObject(context, "selectedUnitValue");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -101,11 +101,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             e.printStackTrace();
         }
         final long time = getDateDiff(date, now, TimeUnit.DAYS);
-        holder.tvTitle.setText(disasterList.get(position).getTitle());
+        holder.tvTitle.setText(disasterList.get(position).getBriefBody());
         holder.tvTag.setText(disasterList.get(position).getSeverity());
         holder.tvDuration.setText(time + " days ago");
         if (nearby)
-            holder.tvDistance.setText(distance + selectedUnitValue + " | away");
+            holder.tvDistance.setText(" | " + distance.get(position) + "km away");
         holder.tvDescription.setText(disasterList.get(position).getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

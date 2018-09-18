@@ -44,6 +44,8 @@
     <string name="month">MONTH</string>
     <string name="year">YEAR</string>
     <string name="NEWS">NEWS</string>
+    <string name="categories">CATEGORIES</string>
+    <string name="tab_to_chart">Tab into chart to select severity.</string>
     <string-array name="severity">
         <item>Cold Wave</item>
         <item>Drought</item>
@@ -65,9 +67,5 @@
         <item>Tropical Cyclone</item>
         <item>Tsunami</item>
         <item>Volcano</item>
-    </string-array>
-    <string-array name="unit">
-        <item>km</item>
-        <item>miles</item>
     </string-array>
 </resources>

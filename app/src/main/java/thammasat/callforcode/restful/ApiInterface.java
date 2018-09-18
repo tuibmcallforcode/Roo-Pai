@@ -17,7 +17,7 @@ public interface ApiInterface {
 
     @GET("app/pdcs")
     Call<List<DisasterMap>> getDisasterMap();
-    @GET("app/relief_raws")
+    @GET("app/analysed")
     Call<List<Disaster>> getDisaster();
 }
 

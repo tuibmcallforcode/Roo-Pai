@@ -15,9 +15,18 @@ public class Disaster implements Serializable {
     @SerializedName("relief_id")
     @Expose
     private Integer reliefId;
+    @SerializedName("__v")
+    @Expose
+    private Integer v;
     @SerializedName("body")
     @Expose
     private String body;
+    @SerializedName("brief_body")
+    @Expose
+    private String briefBody;
+    @SerializedName("categories")
+    @Expose
+    private String categories;
     @SerializedName("description")
     @Expose
     private String description;
@@ -58,12 +67,36 @@ public class Disaster implements Serializable {
         this.reliefId = reliefId;
     }
 
+    public Integer getV() {
+        return v;
+    }
+
+    public void setV(Integer v) {
+        this.v = v;
+    }
+
     public String getBody() {
         return body;
     }
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getBriefBody() {
+        return briefBody;
+    }
+
+    public void setBriefBody(String briefBody) {
+        this.briefBody = briefBody;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 
     public String getDescription() {

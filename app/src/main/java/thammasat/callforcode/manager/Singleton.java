@@ -13,6 +13,16 @@ public class Singleton {
         return ourInstance;
     }
 
+    private Integer[] selectedSeverity;
+
     private Singleton() {
+    }
+
+    public Integer[] getSelectedSeverity() {
+        return selectedSeverity;
+    }
+
+    public void setSelectedSeverity(Integer[] selectedSeverity) {
+        this.selectedSeverity = selectedSeverity;
     }
 }

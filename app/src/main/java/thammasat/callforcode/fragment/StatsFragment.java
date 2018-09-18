@@ -1,9 +1,12 @@
 package thammasat.callforcode.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +18,39 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import thammasat.callforcode.R;
+import thammasat.callforcode.activity.InfoActivity;
+import thammasat.callforcode.adapter.ListAdapter;
+import thammasat.callforcode.adapter.StatsAdapter;
 import thammasat.callforcode.databinding.FragmentStatsBinding;
+import thammasat.callforcode.manager.OnItemClick;
+import thammasat.callforcode.model.Disaster;
 
 public class StatsFragment extends BaseFragment {
 
     private FragmentStatsBinding binding;
+    private List<Disaster> disasterListFlood = new ArrayList<>();
+    private List<Disaster> disasterListFlashFlood = new ArrayList<>();
+    private List<Disaster> disasterListEarthquake = new ArrayList<>();
+    private List<Disaster> disasterListVolcano = new ArrayList<>();
+    private List<Disaster> disasterListTropicalCyclone = new ArrayList<>();
+    private List<Disaster> disasterListOthers = new ArrayList<>();
+    private StatsAdapter statsAdapter;
+    private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,67 +120,88 @@ public class StatsFragment extends BaseFragment {
         for (int i = 0; i < disasterList.size(); i++) {
             switch (disasterList.get(i).getSeverity().toLowerCase()) {
                 case "cold wave":
-                    disasterNumber.set(0, disasterNumber.get(0) + 1);
+                    disasterNumber.set(20, disasterNumber.get(0) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "drought":
-                    disasterNumber.set(1, disasterNumber.get(1) + 1);
+                    disasterNumber.set(20, disasterNumber.get(1) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "earthquake":
                     disasterNumber.set(2, disasterNumber.get(2) + 1);
+                    disasterListEarthquake.add(disasterList.get(i));
                     break;
                 case "epidemic":
-                    disasterNumber.set(3, disasterNumber.get(3) + 1);
+                    disasterNumber.set(20, disasterNumber.get(3) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "extratropical cyclone":
-                    disasterNumber.set(4, disasterNumber.get(4) + 1);
+                    disasterNumber.set(20, disasterNumber.get(4) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "fire":
-                    disasterNumber.set(5, disasterNumber.get(5) + 1);
+                    disasterNumber.set(20, disasterNumber.get(5) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "wild fire":
-                    disasterNumber.set(6, disasterNumber.get(6) + 1);
+                    disasterNumber.set(20, disasterNumber.get(6) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "flash flood":
                     disasterNumber.set(7, disasterNumber.get(7) + 1);
+                    disasterListFlashFlood.add(disasterList.get(i));
                     break;
                 case "flood":
                     disasterNumber.set(8, disasterNumber.get(8) + 1);
+                    disasterListFlood.add(disasterList.get(i));
                     break;
                 case "heat wave":
-                    disasterNumber.set(9, disasterNumber.get(9) + 1);
+                    disasterNumber.set(20, disasterNumber.get(9) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "insect infestation":
-                    disasterNumber.set(10, disasterNumber.get(10) + 1);
+                    disasterNumber.set(20, disasterNumber.get(10) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "land slide":
-                    disasterNumber.set(11, disasterNumber.get(11) + 1);
+                    disasterNumber.set(20, disasterNumber.get(11) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "mud slide":
-                    disasterNumber.set(12, disasterNumber.get(12) + 1);
+                    disasterNumber.set(20, disasterNumber.get(12) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "severe local storm":
-                    disasterNumber.set(13, disasterNumber.get(13) + 1);
+                    disasterNumber.set(20, disasterNumber.get(13) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "snow avalanche":
-                    disasterNumber.set(14, disasterNumber.get(14) + 1);
+                    disasterNumber.set(20, disasterNumber.get(14) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "storm surge":
-                    disasterNumber.set(15, disasterNumber.get(15) + 1);
+                    disasterNumber.set(20, disasterNumber.get(15) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "technological disaster":
-                    disasterNumber.set(16, disasterNumber.get(16) + 1);
+                    disasterNumber.set(20, disasterNumber.get(16) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "tropical cyclone":
                     disasterNumber.set(17, disasterNumber.get(17) + 1);
+                    disasterListTropicalCyclone.add(disasterList.get(i));
                     break;
                 case "tsunami":
-                    disasterNumber.set(18, disasterNumber.get(18) + 1);
+                    disasterNumber.set(20, disasterNumber.get(18) + 1);
+                    disasterListOthers.add(disasterList.get(i));
                     break;
                 case "volcano":
                     disasterNumber.set(19, disasterNumber.get(19) + 1);
+                    disasterListVolcano.add(disasterList.get(i));
                     break;
                 default:
                     disasterNumber.set(20, disasterNumber.get(20) + 1);
+                    disasterListOthers.add(disasterList.get(i));
             }
         }
 
@@ -177,11 +218,8 @@ public class StatsFragment extends BaseFragment {
         dataSet.setSelectionShift(10);
         dataSet.setValueTextSize(14);
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setValueFormatter(new PercentFormatter());
-        dataSet.setValueLinePart1Length(0.7f);
-        dataSet.setValueLinePart2Length(0.3f);
+
 
         PieData data = new PieData(dataSet);
         binding.barChart.setData(data);
@@ -191,14 +229,134 @@ public class StatsFragment extends BaseFragment {
         binding.barChart.animateY(3000, Easing.EasingOption.EaseOutBounce);
         binding.barChart.setUsePercentValues(true);
 
-        binding.barChart.setEntryLabelTypeface(regular);
-        binding.barChart.setEntryLabelColor(getResources().getColor(R.color.colorFontTitle));
+        binding.barChart.setEntryLabelTypeface(bold);
+        binding.barChart.setEntryLabelColor(getResources().getColor(R.color.colorWhite));
+        binding.barChart.getDescription().setEnabled(false);
+        binding.barChart.setCenterTextTypeface(light);
+        binding.barChart.setCenterTextSize(16);
+
+        binding.barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                PieEntry pe = (PieEntry) e;
+                binding.tvTab.setVisibility(View.GONE);
+                switch (pe.getLabel().toLowerCase()) {
+                    case "flood":
+                        binding.barChart.setCenterText(disasterListFlood.size() + " Items");
+                        statsAdapter = new StatsAdapter(getContext(), disasterListFlood);
+                        binding.recyclerView.setLayoutManager(linearLayoutManager);
+                        binding.recyclerView.setAdapter(statsAdapter);
+                        statsAdapter.setOnItemClick(new OnItemClick() {
+                            @Override
+                            public void onItemClick(Disaster disaster, long time, int distance) {
+                                Intent intent = new Intent(getContext(), InfoActivity.class);
+                                intent.putExtra("disaster", disaster);
+                                intent.putExtra("time", time);
+                                intent.putExtra("distance", distance);
+                                getActivity().startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                            }
+                        });
+                        break;
+                    case "flash flood":
+                        binding.barChart.setCenterText(disasterListFlashFlood.size() + " Items");
+                        statsAdapter = new StatsAdapter(getContext(), disasterListFlashFlood);
+                        binding.recyclerView.setLayoutManager(linearLayoutManager);
+                        binding.recyclerView.setAdapter(statsAdapter);
+                        statsAdapter.setOnItemClick(new OnItemClick() {
+                            @Override
+                            public void onItemClick(Disaster disaster, long time, int distance) {
+                                Intent intent = new Intent(getContext(), InfoActivity.class);
+                                intent.putExtra("disaster", disaster);
+                                intent.putExtra("time", time);
+                                intent.putExtra("distance", distance);
+                                getActivity().startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                            }
+                        });
+                        break;
+                    case "earthquake":
+                        binding.barChart.setCenterText(disasterListEarthquake.size() + " Items");
+                        statsAdapter = new StatsAdapter(getContext(), disasterListEarthquake);
+                        binding.recyclerView.setLayoutManager(linearLayoutManager);
+                        binding.recyclerView.setAdapter(statsAdapter);
+                        statsAdapter.setOnItemClick(new OnItemClick() {
+                            @Override
+                            public void onItemClick(Disaster disaster, long time, int distance) {
+                                Intent intent = new Intent(getContext(), InfoActivity.class);
+                                intent.putExtra("disaster", disaster);
+                                intent.putExtra("time", time);
+                                intent.putExtra("distance", distance);
+                                getActivity().startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                            }
+                        });
+                        break;
+                    case "volcano":
+                        binding.barChart.setCenterText(disasterListVolcano.size() + " Items");
+                        statsAdapter = new StatsAdapter(getContext(), disasterListVolcano);
+                        binding.recyclerView.setLayoutManager(linearLayoutManager);
+                        binding.recyclerView.setAdapter(statsAdapter);
+                        statsAdapter.setOnItemClick(new OnItemClick() {
+                            @Override
+                            public void onItemClick(Disaster disaster, long time, int distance) {
+                                Intent intent = new Intent(getContext(), InfoActivity.class);
+                                intent.putExtra("disaster", disaster);
+                                intent.putExtra("time", time);
+                                intent.putExtra("distance", distance);
+                                getActivity().startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                            }
+                        });
+                        break;
+                    case "tropical cyclone":
+                        binding.barChart.setCenterText(disasterListTropicalCyclone.size() + " Items");
+                        statsAdapter = new StatsAdapter(getContext(), disasterListTropicalCyclone);
+                        binding.recyclerView.setLayoutManager(linearLayoutManager);
+                        binding.recyclerView.setAdapter(statsAdapter);
+                        statsAdapter.setOnItemClick(new OnItemClick() {
+                            @Override
+                            public void onItemClick(Disaster disaster, long time, int distance) {
+                                Intent intent = new Intent(getContext(), InfoActivity.class);
+                                intent.putExtra("disaster", disaster);
+                                intent.putExtra("time", time);
+                                intent.putExtra("distance", distance);
+                                getActivity().startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                            }
+                        });
+                        break;
+                    default:
+                        binding.barChart.setCenterText(disasterListOthers.size() + " Items");
+                        statsAdapter = new StatsAdapter(getContext(), disasterListOthers);
+                        binding.recyclerView.setLayoutManager(linearLayoutManager);
+                        binding.recyclerView.setAdapter(statsAdapter);
+                        statsAdapter.setOnItemClick(new OnItemClick() {
+                            @Override
+                            public void onItemClick(Disaster disaster, long time, int distance) {
+                                Intent intent = new Intent(getContext(), InfoActivity.class);
+                                intent.putExtra("disaster", disaster);
+                                intent.putExtra("time", time);
+                                intent.putExtra("distance", distance);
+                                getActivity().startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                            }
+                        });
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected() {
+            }
+        });
     }
 
     private void setTab() {
         binding.tvWeek.setTypeface(regular);
         binding.tvMonth.setTypeface(bold);
         binding.tvYear.setTypeface(regular);
+        binding.tvTab.setTypeface(regular);
 
         binding.tvWeek.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,30 +402,5 @@ public class StatsFragment extends BaseFragment {
                 binding.tvYear.setTypeface(bold);
             }
         });
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 }

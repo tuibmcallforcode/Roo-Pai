@@ -31,7 +31,6 @@ public class RelatedListAdapter extends RecyclerView.Adapter<RelatedListAdapter.
     private List<Disaster> disasterList;
     private Typeface bold, regular, light;
     private Date now = new Date();
-    private double latitude = 0, longitude = 0;
 
     public OnItemClick getOnItemClick() {
         return onItemClick;
@@ -46,14 +45,6 @@ public class RelatedListAdapter extends RecyclerView.Adapter<RelatedListAdapter.
     public RelatedListAdapter(Context context, List<Disaster> disasterList) {
         this.context = context;
         this.disasterList = disasterList;
-        try {
-            latitude = (double) InternalStorage.readObject(context, "latitude");
-            longitude = (double) InternalStorage.readObject(context, "longitude");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -77,16 +68,14 @@ public class RelatedListAdapter extends RecyclerView.Adapter<RelatedListAdapter.
             e.printStackTrace();
         }
         final long time = getDateDiff(date, now, TimeUnit.DAYS);
-        final int distance = (int) distance(latitude, longitude, disasterList.get(position).getLoc().getCoordinates().get(0), disasterList.get(position).getLoc().getCoordinates().get(1));
-        holder.tvTitle.setText(disasterList.get(position).getTitle());
+        holder.tvTitle.setText(disasterList.get(position).getBriefBody());
         holder.tvTag.setText(disasterList.get(position).getSeverity());
-        holder.tvDuration.setText(time + " days ago | ");
-        holder.tvDistance.setText(distance + " km away");
+        holder.tvDuration.setText(time + " days ago");
         holder.tvDescription.setText(disasterList.get(position).getDescription());
         holder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClick.onItemClick(disasterList.get(position), time, distance);
+                onItemClick.onItemClick(disasterList.get(position), time, 0);
             }
         });
         switch (disasterList.get(position).getSeverity().toLowerCase()) {

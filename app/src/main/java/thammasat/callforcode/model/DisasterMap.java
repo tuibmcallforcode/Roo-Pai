@@ -9,6 +9,9 @@ import java.io.Serializable;
 
 public class DisasterMap implements ClusterItem, Serializable {
 
+    @SerializedName("loc")
+    @Expose
+    private Loc loc;
     @SerializedName("_id")
     @Expose
     private String id;
@@ -21,12 +24,6 @@ public class DisasterMap implements ClusterItem, Serializable {
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("latitude")
-    @Expose
-    private String latitude;
-    @SerializedName("longitude")
-    @Expose
-    private String longitude;
     @SerializedName("severity")
     @Expose
     private String severity;
@@ -57,6 +54,32 @@ public class DisasterMap implements ClusterItem, Serializable {
         this.time = time;
         this.title = title;
         this.profilePhoto = profilePhoto;
+    }
+
+    @Override
+    public LatLng getPosition() {
+        return position;
+    }
+
+    @Override
+    public String getSnippet() {
+        return null;
+    }
+
+    public int getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(int profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
+    public Loc getLoc() {
+        return loc;
+    }
+
+    public void setLoc(Loc loc) {
+        this.loc = loc;
     }
 
     public String getId() {
@@ -91,22 +114,6 @@ public class DisasterMap implements ClusterItem, Serializable {
         this.description = description;
     }
 
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
     public String getSeverity() {
         return severity;
     }
@@ -131,29 +138,11 @@ public class DisasterMap implements ClusterItem, Serializable {
         this.time = time;
     }
 
-    @Override
-    public LatLng getPosition() {
-        return position;
-    }
-
     public String getTitle() {
         return title;
     }
 
-    @Override
-    public String getSnippet() {
-        return null;
-    }
-
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public int getProfilePhoto() {
-        return profilePhoto;
-    }
-
-    public void setProfilePhoto(int profilePhoto) {
-        this.profilePhoto = profilePhoto;
     }
 }

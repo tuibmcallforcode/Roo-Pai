@@ -30,6 +30,12 @@ public class NewsFragment extends BaseFragment {
     private LinearLayoutManager linearLayoutManager;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getDisasterList();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_news, container, false);
@@ -40,9 +46,6 @@ public class NewsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        getDisasterList();
-        initInstance();
     }
 
     private void initInstance() {
@@ -64,34 +67,15 @@ public class NewsFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+        initInstance();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        disasterList.clear();
         binding.recyclerView.setAdapter(null);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 }

@@ -22,12 +22,13 @@ import java.io.IOException;
 import thammasat.callforcode.R;
 import thammasat.callforcode.databinding.ActivitySettingsBinding;
 import thammasat.callforcode.manager.InternalStorage;
+import thammasat.callforcode.manager.Singleton;
 
 public class SettingsActivity extends BaseActivity {
 
     private ActivitySettingsBinding binding;
-    private int selectedUnitIndex = 0, selectedRadiusValue = 10000;
-    private String selectedUnitValue = "km";
+    private int selectedRadiusValue;
+    private Singleton singleton = Singleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,33 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void eventListenerBinding() {
+        binding.llSeverity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialDialog.Builder( SettingsActivity.this)
+                        .typeface("Bold.ttf", "Regular.ttf")
+                        .backgroundColor(Color.parseColor("#454F63"))
+                        .titleColor(Color.parseColor("#FFFFFF"))
+                        .negativeColor(Color.parseColor("#FFFFFF"))
+                        .positiveColor(Color.parseColor("#FFFFFF"))
+                        .contentColor(Color.parseColor("#FFFFFF"))
+                        .widgetColor(Color.parseColor("#FFFFFF"))
+                        .title(R.string.severity)
+                        .items(R.array.severity)
+                        .itemsCallbackMultiChoice(singleton.getSelectedSeverity(), new MaterialDialog.ListCallbackMultiChoice() {
+                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                                    binding.tvSeveritySelection.setText(text.length + " Types");
+//                                    selectedSeverity[i] = which[i];
+//                                    singleton.setSelectedSeverity(selectedSeverity);
+                                return false;
+                            }
+                        })
+                        .negativeText(R.string.cancel)
+                        .positiveText(R.string.confirm)
+                        .show();
+            }
+        });
+
         binding.llRadius.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,47 +133,6 @@ public class SettingsActivity extends BaseActivity {
                 nearby.show();
             }
         });
-
-        binding.llUnit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    selectedUnitIndex = (int) InternalStorage.readObject(SettingsActivity.this, "selectedUnitIndex");
-                    selectedUnitValue = (String) InternalStorage.readObject(SettingsActivity.this, "selectedUnitValue");
-                } catch (IOException e) {
-                    Log.e(TAG, e.getMessage());
-                } catch (ClassNotFoundException e) {
-                    Log.e(TAG, e.getMessage());
-                }
-                new MaterialDialog.Builder( SettingsActivity.this)
-                        .typeface("Bold.ttf", "Regular.ttf")
-                        .backgroundColor(Color.parseColor("#454F63"))
-                        .titleColor(Color.parseColor("#FFFFFF"))
-                        .negativeColor(Color.parseColor("#FFFFFF"))
-                        .positiveColor(Color.parseColor("#FFFFFF"))
-                        .contentColor(Color.parseColor("#FFFFFF"))
-                        .widgetColor(Color.parseColor("#FFFFFF"))
-                        .title(R.string.unit_of_distance)
-                        .items(R.array.unit)
-                        .itemsCallbackSingleChoice(selectedUnitIndex, new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                binding.tvUnitSelection.setText(text.toString());
-                                try {
-                                    InternalStorage.writeObject(SettingsActivity.this, "selectedUnitIndex", which);
-                                    InternalStorage.writeObject(SettingsActivity.this, "selectedUnitValue", text);
-                                } catch (IOException e) {
-                                    Log.e(TAG, e.getMessage());
-                                }
-                                return false;
-                            }
-                        })
-                        .negativeText(R.string.cancel)
-                        .positiveText(R.string.confirm)
-                        .show();
-
-            }
-        });
     }
 
     private void initInstance() {
@@ -153,20 +140,20 @@ public class SettingsActivity extends BaseActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         binding.tvGeneral.setTypeface(bold);
-        binding.tvUnit.setTypeface(regular);
+        binding.tvUnit.setTypeface(bold);
         binding.tvRadius.setTypeface(regular);
-        binding.tvUnitSelection.setTypeface(light);
         binding.tvRadiusSelection.setTypeface(light);
+        binding.tvCategories.setTypeface(bold);
+        binding.tvSeverity.setTypeface(regular);
+        binding.tvSeveritySelection.setTypeface(light);
 
         try {
             selectedRadiusValue = (int) InternalStorage.readObject(SettingsActivity.this, "selectedRadiusValue");
-            selectedUnitValue = (String) InternalStorage.readObject(SettingsActivity.this, "selectedUnitValue");
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         } catch (ClassNotFoundException e) {
             Log.e(TAG, e.getMessage());
         }
-        binding.tvUnitSelection.setText(selectedUnitValue + "");
         binding.tvRadiusSelection.setText(selectedRadiusValue + "");
     }
 

@@ -280,7 +280,7 @@ public class MapFragment extends BaseFragment {
                 profilePhoto = R.drawable.cold_wave;
 
             mClusterManager.addItem(new DisasterMap(
-                    new LatLng(Double.parseDouble(disasterMapList.get(i).getLatitude()), Double.parseDouble(disasterMapList.get(i).getLongitude())),
+                    new LatLng(disasterMapList.get(i).getLoc().getCoordinates().get(0), disasterMapList.get(i).getLoc().getCoordinates().get(1)),
                     disasterMapList.get(i).getId(),
                     disasterMapList.get(i).getPdcId(),
                     disasterMapList.get(i).getV(),
