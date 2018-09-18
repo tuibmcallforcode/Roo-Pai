@@ -367,4 +367,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onProviderDisabled(String s) {
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }

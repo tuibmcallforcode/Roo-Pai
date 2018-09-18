@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import thammasat.callforcode.R;
+import thammasat.callforcode.activity.MainActivity;
 import thammasat.callforcode.manager.GlideApp;
 import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.OnItemClick;
@@ -36,6 +39,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private Typeface bold, regular, light;
     private Date now = new Date();
     private double latitude = 0, longitude = 0;
+    private int selectedRadiusValue, selectedUnitIndex;
+    private String selectedUnitValue;
+    private List<Integer> distance = new ArrayList<>();
+    private boolean nearby;
 
     public OnItemClick getOnItemClick() {
         return onItemClick;
@@ -47,17 +54,30 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     private OnItemClick onItemClick;
 
-    public ListAdapter(Context context, List<Disaster> disasterList) {
-        this.context = context;
-        this.disasterList = disasterList;
+    public ListAdapter(Context context, List<Disaster> disasterList, boolean nearby) {
         try {
             latitude = (double) InternalStorage.readObject(context, "latitude");
             longitude = (double) InternalStorage.readObject(context, "longitude");
+            selectedRadiusValue = (int) InternalStorage.readObject(context, "selectedRadiusValue");
+            selectedUnitIndex = (int) InternalStorage.readObject(context, "selectedUnitIndex");
+            selectedUnitValue = (String) InternalStorage.readObject(context, "selectedUnitValue");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        this.context = context;
+        this.nearby = nearby;
+        if (nearby) {
+            for (int i = 0; i < disasterList.size(); i++) {
+                final int distance = (int) distance(latitude, longitude, disasterList.get(i).getLoc().getCoordinates().get(0), disasterList.get(i).getLoc().getCoordinates().get(1));
+                if (distance <= selectedRadiusValue) {
+                    this.disasterList.add(disasterList.get(i));
+                    this.distance.add(distance);
+                }
+            }
+        } else
+            this.disasterList = disasterList;
     }
 
     @Override
@@ -81,16 +101,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             e.printStackTrace();
         }
         final long time = getDateDiff(date, now, TimeUnit.DAYS);
-        final int distance = (int) distance(latitude, longitude, disasterList.get(position).getLoc().getCoordinates().get(0), disasterList.get(position).getLoc().getCoordinates().get(1));
         holder.tvTitle.setText(disasterList.get(position).getTitle());
         holder.tvTag.setText(disasterList.get(position).getSeverity());
-        holder.tvDuration.setText(time + " days ago | ");
-        holder.tvDistance.setText(distance + " km away");
+        holder.tvDuration.setText(time + " days ago");
+        if (nearby)
+            holder.tvDistance.setText(distance + selectedUnitValue + " | away");
         holder.tvDescription.setText(disasterList.get(position).getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClick.onItemClick(disasterList.get(position), time, distance);
+                if (nearby)
+                    onItemClick.onItemClick(disasterList.get(position), time, distance.get(position));
+                else
+                    onItemClick.onItemClick(disasterList.get(position), time, 0);
             }
         });
         switch (disasterList.get(position).getSeverity().toLowerCase()) {
@@ -157,15 +180,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             default:
                 holder.civProfile.setImageResource(R.drawable.microphone);
         }
-
-//        if (holder.getItemViewType() == 1) {
-//            GlideApp.with(context)
-//                    .load(disasterList.get(position).getUrl_thumb())
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .fitCenter()
-//                    .transition(DrawableTransitionOptions.withCrossFade()) //Optional
-//                    .into(holder.ivCover);
-//        }
     }
 
     @Override

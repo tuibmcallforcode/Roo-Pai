@@ -1,5 +1,6 @@
 package thammasat.callforcode.fragment;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -166,7 +167,7 @@ public class StatsFragment extends BaseFragment {
         final ArrayList<PieEntry> entries = new ArrayList<>();
         int n = 0;
         for (int i = 0; i < disasterName.size(); i++) {
-            if(disasterNumber.get(i) != 0){
+            if (disasterNumber.get(i) != 0) {
                 entries.add(new PieEntry(disasterNumber.get(i), disasterName.get(i)));
                 n++;
             }
@@ -243,5 +244,30 @@ public class StatsFragment extends BaseFragment {
                 binding.tvYear.setTypeface(bold);
             }
         });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }

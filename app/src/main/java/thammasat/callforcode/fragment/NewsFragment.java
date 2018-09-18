@@ -1,5 +1,6 @@
 package thammasat.callforcode.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -42,12 +43,11 @@ public class NewsFragment extends BaseFragment {
 
         getDisasterList();
         initInstance();
-        eventListenerBinding();
     }
 
     private void initInstance() {
         linearLayoutManager = new LinearLayoutManager(getContext());
-        listAdapter = new ListAdapter(getContext(), disasterList);
+        listAdapter = new ListAdapter(getContext(), disasterList, false);
         binding.recyclerView.setLayoutManager(linearLayoutManager);
         binding.recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClick(new OnItemClick() {
@@ -63,7 +63,35 @@ public class NewsFragment extends BaseFragment {
         });
     }
 
-    private void eventListenerBinding() {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        disasterList.clear();
+        binding.recyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

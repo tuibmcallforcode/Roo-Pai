@@ -1,5 +1,6 @@
 package thammasat.callforcode.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -45,7 +46,7 @@ public class NearByFragment extends BaseFragment {
 
     private void initInstance() {
         linearLayoutManager = new LinearLayoutManager(getContext());
-        listAdapter = new ListAdapter(getContext(), disasterList);
+        listAdapter = new ListAdapter(getContext(), disasterList, true);
         binding.recyclerView.setLayoutManager(linearLayoutManager);
         binding.recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClick(new OnItemClick() {
@@ -61,7 +62,35 @@ public class NearByFragment extends BaseFragment {
         });
     }
 
-    public void reRenderList() {
-        Toast.makeText(getContext(), "HELLO", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        disasterList.clear();
+        binding.recyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }
