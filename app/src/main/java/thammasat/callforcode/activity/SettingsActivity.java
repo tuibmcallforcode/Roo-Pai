@@ -35,6 +35,13 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
 
+        String[] array = getResources().getStringArray(R.array.severity);
+        Integer[] severity = new Integer[array.length];
+        for(int i = 0 ; i < severity.length ; i++) {
+            severity[i] = i;
+        }
+        singleton.setSelectedSeverity(severity);
+
         setTypeface();
         initInstance();
         eventListenerBinding();

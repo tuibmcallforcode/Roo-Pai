@@ -140,9 +140,8 @@ public class MapFragment extends BaseFragment {
                 googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
-                        String[] items = marker.getSnippet().split(" -> ");
                         Intent i = new Intent(getContext(), WebViewActivity.class);
-                        i.putExtra("path", items[1]);
+                        i.putExtra("path", marker.getSnippet());
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
                     }
@@ -230,7 +229,7 @@ public class MapFragment extends BaseFragment {
 
     private void addItems() {
         getDisasterMapList();
-        int profilePhoto = R.drawable.microphone;
+        int profilePhoto = R.drawable.others;
         for (int i = 0; i < disasterMapList.size(); i++) {
             String[] items = disasterMapList.get(i).getTitle().split(" ");
             switch (items[0].toLowerCase()) {
@@ -271,7 +270,7 @@ public class MapFragment extends BaseFragment {
                     profilePhoto = R.drawable.volcano;
                     break;
                 default:
-                    profilePhoto = R.drawable.microphone;
+                    profilePhoto = R.drawable.others;
                     break;
             }
             if (items[1] == "heat")

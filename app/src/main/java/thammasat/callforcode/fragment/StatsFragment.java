@@ -259,7 +259,7 @@ public class StatsFragment extends BaseFragment {
                         });
                         break;
                     case "flash flood":
-                        binding.barChart.setCenterText(disasterListFlashFlood.size() + " Items");
+                        binding.barChart.setCenterText(disasterListFlashFlood.size() + " Events");
                         statsAdapter = new StatsAdapter(getContext(), disasterListFlashFlood);
                         binding.recyclerView.setLayoutManager(linearLayoutManager);
                         binding.recyclerView.setAdapter(statsAdapter);

@@ -40,7 +40,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private Typeface bold, regular, light;
     private Date now = new Date();
     private double latitude = 0, longitude = 0;
-    private int selectedRadiusValue, selectedUnitIndex;
+    private int selectedRadiusValue;
     private List<Integer> distance = new ArrayList<>();
     private boolean nearby;
     private Singleton singleton = Singleton.getInstance();
@@ -60,7 +60,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             latitude = (double) InternalStorage.readObject(context, "latitude");
             longitude = (double) InternalStorage.readObject(context, "longitude");
             selectedRadiusValue = (int) InternalStorage.readObject(context, "selectedRadiusValue");
-            selectedUnitIndex = (int) InternalStorage.readObject(context, "selectedUnitIndex");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

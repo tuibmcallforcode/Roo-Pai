@@ -15,6 +15,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -40,12 +41,24 @@ import com.google.android.gms.tasks.Task;
 import com.twitter.sdk.android.core.TwitterCore;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.Callable;
 
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import thammasat.callforcode.R;
 import thammasat.callforcode.adapter.PagerAdapter;
 import thammasat.callforcode.databinding.ActivityMainBinding;
+import thammasat.callforcode.fragment.PermissionFragment;
 import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.Singleton;
+import thammasat.callforcode.model.Disaster;
+import thammasat.callforcode.model.DisasterMap;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
@@ -58,36 +71,142 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView tvStatus;
     private AppBarLayout appBarLayout;
     private static final String TAG = MainActivity.class.getName();
-    private Singleton singleton = Singleton.getInstance();
+    private boolean displayed = false, disaster = false, disasterMap = false;
+    private MaterialProgressBar progressBar;
+    private static final int ACCESS_LOCATION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        String[] array = getResources().getStringArray(R.array.severity);
-        Integer[] severity = new Integer[array.length];
-        for(int i = 0 ; i < severity.length ; i++) {
-            severity[i] = i;
-        }
-        singleton.setSelectedSeverity(severity);
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        } else {
-
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
-
-        getCurrentLocation();
-        weatherDialog();
-        getDisaster();
-        getDisasterMap();
         setAnimation();
         setTypeface();
-        initInstance();
-        eventListenerBinding();
+        TextView tvProjectName = (TextView) findViewById(R.id.tvProjectName);
+        tvProjectName.setTypeface(bold);
+
+        progressBar = (MaterialProgressBar) findViewById(R.id.progressBar);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        displayLocationSettingsRequest(MainActivity.this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, ACCESS_LOCATION);
+        } else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+
+            try {
+                boolean firstTime = (boolean) InternalStorage.readObject(MainActivity.this, "firstTime");
+                initial();
+            } catch (IOException e) {
+                e.printStackTrace();
+                initial();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void initial() {
+        rx.Observable.fromCallable(new Callable<Call<List<DisasterMap>>>() {
+            @Override
+            public Call<List<DisasterMap>> call() throws Exception {
+                return apiService.getDisasterMap();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Call<List<DisasterMap>>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Call<List<DisasterMap>> listCall) {
+                        listCall.enqueue(new Callback<List<DisasterMap>>() {
+                            @Override
+                            public void onResponse(Call<List<DisasterMap>> call, Response<List<DisasterMap>> response) {
+                                try {
+                                    InternalStorage.writeObject(MainActivity.this, "disasterMap", response.body());
+                                    InternalStorage.writeObject(MainActivity.this, "firstTime", false);
+                                    disasterMap = true;
+                                    if (disaster && disasterMap) {
+                                        initInstance();
+                                        eventListenerBinding();
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                } catch (IOException e) {
+                                    Log.e(TAG, e.getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<DisasterMap>> call, Throwable t) {
+                                disaster = true;
+                                if (disaster && disasterMap) {
+                                    initInstance();
+                                    eventListenerBinding();
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                });
+
+        rx.Observable.fromCallable(new Callable<Call<List<Disaster>>>() {
+            @Override
+            public Call<List<Disaster>> call() throws Exception {
+                return apiService.getDisaster();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Call<List<Disaster>>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Call<List<Disaster>> listCall) {
+                        listCall.enqueue(new Callback<List<Disaster>>() {
+                            @Override
+                            public void onResponse(Call<List<Disaster>> call, Response<List<Disaster>> response) {
+                                try {
+                                    InternalStorage.writeObject(MainActivity.this, "disaster", response.body());
+                                    InternalStorage.writeObject(MainActivity.this, "firstTime", false);
+                                    disaster = true;
+                                    if (disaster && disasterMap) {
+                                        initInstance();
+                                        eventListenerBinding();
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                } catch (IOException e) {
+                                    Log.e(TAG, e.getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Disaster>> call, Throwable t) {
+                                disaster = true;
+                                if (disaster && disasterMap) {
+                                    initInstance();
+                                    eventListenerBinding();
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                });
     }
 
     private void initInstance() {
@@ -101,9 +220,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        TextView tvProjectName = (TextView) findViewById(R.id.tvProjectName);
-        tvProjectName.setTypeface(bold);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("NEARBY"));
@@ -125,36 +241,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void eventListenerBinding() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MaterialDialog.Builder( MainActivity.this)
-                        .typeface("Bold.ttf", "Regular.ttf")
-                        .backgroundColor(Color.parseColor("#454F63"))
-                        .titleColor(Color.parseColor("#FFFFFF"))
-                        .negativeColor(Color.parseColor("#FFFFFF"))
-                        .positiveColor(Color.parseColor("#FFFFFF"))
-                        .contentColor(Color.parseColor("#FFFFFF"))
-                        .widgetColor(Color.parseColor("#FFFFFF"))
-                        .title(R.string.severity)
-                        .items(R.array.severity)
-                        .itemsCallbackMultiChoice(singleton.getSelectedSeverity(), new MaterialDialog.ListCallbackMultiChoice() {
-                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                                for (int i = 0; i < text.length; i++) {
-//                                    selectedSeverity[i] = which[i];
-//                                    singleton.setSelectedSeverity(selectedSeverity);
-                                }
-                                return false;
-                            }
-                        })
-                        .negativeText(R.string.cancel)
-                        .positiveText(R.string.confirm)
-                        .show();
-
-            }
-        });
-
         final ImageView ivMenu = (ImageView) findViewById(R.id.ivMenu);
         ivMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,6 +419,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         try {
             InternalStorage.writeObject(this, "latitude", location.getLatitude());
             InternalStorage.writeObject(this, "longitude", location.getLongitude());
+            if (!displayed) {
+                displayed = true;
+            }
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         }
@@ -351,5 +440,49 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case ACCESS_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+
+                    try {
+                        boolean firstTime = (boolean) InternalStorage.readObject(MainActivity.this, "firstTime");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        try {
+                            double latitude = 13.736717;
+                            double longitude = 100.523186;
+                            int radius = 10000;
+                            InternalStorage.writeObject(MainActivity.this, "latitude", latitude);
+                            InternalStorage.writeObject(MainActivity.this, "longitude", longitude);
+                            InternalStorage.writeObject(MainActivity.this, "selectedRadiusValue", radius);
+                        } catch (IOException ex) {
+                            Log.e(TAG, e.getMessage());
+                        }
+                        initial();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    PermissionFragment permissionFragment = new PermissionFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("permission", "Please allow access location.");
+                    bundle.putInt("type", 1);
+                    permissionFragment.setArguments(bundle);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainer, permissionFragment);
+                    transaction.commit();
+                }
+                break;
+        }
     }
 }

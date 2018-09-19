@@ -45,13 +45,13 @@ public class WelcomeActivity extends BaseActivity {
 
         if (isFacebookLoggedIn) {
             Log.d(TAG, "Authenticated with Facebook");
-            goToMainActivity();
+            goToActivity(MainActivity.class, 0, 0, true);
         } else if (isTwitterLoggedIn) {
             Log.d(TAG, "Authenticated with Twitter");
-            goToMainActivity();
+            goToActivity(MainActivity.class, 0, 0, true);
         } else if (isGoogleLoggedIn) {
             Log.d(TAG, "Authenticated with Google");
-            goToMainActivity();
+            goToActivity(MainActivity.class, 0, 0, true);
         } else {
             LoginFragment loginFragment = new LoginFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -62,8 +62,8 @@ public class WelcomeActivity extends BaseActivity {
 
     private void goToMainActivity() {
         toasty("success", "Logged in");
-        if(checkRecordAccessFineLocationPermission()) {
-            if(checkGPSStatus())
+        if (checkRecordAccessFineLocationPermission()) {
+            if (checkGPSStatus())
                 goToActivity(MainActivity.class, 0, 0, true);
             else
                 displayLocationSettingsRequest(this);
@@ -72,12 +72,4 @@ public class WelcomeActivity extends BaseActivity {
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        FragmentManager fragment = getSupportFragmentManager();
-//        if (fragment != null) {
-//            fragment.findFragmentByTag("LoginFragment").onActivityResult(requestCode, resultCode, data);
-//        }
-//    }
 }

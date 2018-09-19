@@ -42,8 +42,13 @@ public class BaseFragment extends Fragment {
 
     protected void getRelatedList() {
         for(int i = 0 ; i < 5 ; i++){
-            double focus = Math.random() * disasterList.size() + 1;
-            relatedList.add(disasterList.get((int) focus));
+            try{
+                double focus = Math.random() * disasterList.size() + 1;
+                relatedList.add(disasterList.get((int) focus));
+            } catch (Exception e) {
+
+            }
+
         }
     }
     protected void getDisasterMapList() {
@@ -104,83 +109,6 @@ public class BaseFragment extends Fragment {
             }
             default: {
                 break;
-            }
-        }
-    }
-
-    protected boolean checkRecordAudioPermission() {
-        if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
-            return false;
-        }
-
-        return true;
-    }
-
-    protected boolean checkRecordAccessFineLocationPermission() {
-        if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            return false;
-        }
-
-        return true;
-    }
-
-    protected void requestAccessFineLocationPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                REQUEST_ACCESS_FINE_LOCATION);
-    }
-
-    protected void requestRecordAudioPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.RECORD_AUDIO},
-                REQUEST_RECORD_AUDIO);
-    }
-
-    public boolean checkGPSStatus() {
-        LocationManager manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST_RECORD_AUDIO: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    MicrophoneFragment microphoneFragment = new MicrophoneFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, microphoneFragment);
-                    transaction.commit();
-                } else {
-                    PermissionFragment permissionFragment = new PermissionFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("permission", "Allow Record Audio");
-                    bundle.putInt("type", 2);
-                    permissionFragment.setArguments(bundle);
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, permissionFragment);
-                    transaction.commit();
-                }
-            }
-            case REQUEST_ACCESS_FINE_LOCATION: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    goToActivity(MainActivity.class, 0, 0, true);
-                } else {
-                    PermissionFragment permissionFragment = new PermissionFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("permission", "Allow Location");
-                    bundle.putInt("type", 1);
-                    permissionFragment.setArguments(bundle);
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, permissionFragment);
-                    transaction.commit();
-                }
             }
         }
     }

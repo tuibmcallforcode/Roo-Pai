@@ -79,87 +79,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void getDisasterMap() {
-        rx.Observable.fromCallable(new Callable<Call<List<DisasterMap>>>() {
-            @Override
-            public Call<List<DisasterMap>> call() throws Exception {
-                return apiService.getDisasterMap();
-            }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Call<List<DisasterMap>>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Call<List<DisasterMap>> listCall) {
-                        listCall.enqueue(new Callback<List<DisasterMap>>() {
-                            @Override
-                            public void onResponse(Call<List<DisasterMap>> call, Response<List<DisasterMap>> response) {
-                                try {
-                                    InternalStorage.writeObject(BaseActivity.this, "disasterMap", response.body());
-                                } catch (IOException e) {
-                                    Log.e(TAG, e.getMessage());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<List<DisasterMap>> call, Throwable t) {
-
-                            }
-                        });
-                    }
-                });
-    }
-
-    protected void getDisaster() {
-        rx.Observable.fromCallable(new Callable<Call<List<Disaster>>>() {
-            @Override
-            public Call<List<Disaster>> call() throws Exception {
-                return apiService.getDisaster();
-            }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Call<List<Disaster>>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Call<List<Disaster>> listCall) {
-                        listCall.enqueue(new Callback<List<Disaster>>() {
-                            @Override
-                            public void onResponse(Call<List<Disaster>> call, Response<List<Disaster>> response) {
-                                try {
-                                    InternalStorage.writeObject(BaseActivity.this, "disaster", response.body());
-                                } catch (IOException e) {
-                                    Log.e(TAG, e.getMessage());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<List<Disaster>> call, Throwable t) {
-
-                            }
-                        });
-                    }
-                });
-    }
-
-
     protected void setAnimation() {
         anim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         interpolator = new BounceInterpolator();
@@ -315,49 +234,9 @@ public class BaseActivity extends AppCompatActivity {
                 weatherIcon.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf"));
             }
         });
-        asyncTask.execute(latitude + "", longitude + ""); //  asyncTask.execute("Latitude", "Longitude")
+        asyncTask.execute(latitude + "", longitude + "");
 
         weatherDialog.show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST_RECORD_AUDIO: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    MicrophoneFragment microphoneFragment = new MicrophoneFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, microphoneFragment);
-                    transaction.commit();
-                } else {
-                    PermissionFragment permissionFragment = new PermissionFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("permission", "Allow Record Audio");
-                    bundle.putInt("type", 2);
-                    permissionFragment.setArguments(bundle);
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, permissionFragment);
-                    transaction.commit();
-                }
-            }
-            case REQUEST_ACCESS_FINE_LOCATION: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    goToActivity(MainActivity.class, 0, 0, true);
-                } else {
-                    PermissionFragment permissionFragment = new PermissionFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("permission", "Allow Location");
-                    bundle.putInt("type", 1);
-                    permissionFragment.setArguments(bundle);
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, permissionFragment);
-                    transaction.commit();
-                }
-            }
-        }
     }
 
     @Override
