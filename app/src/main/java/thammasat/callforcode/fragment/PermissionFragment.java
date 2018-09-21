@@ -52,9 +52,6 @@ public class PermissionFragment extends BaseFragment {
                         binding.tvPermission.startAnimation(anim);
                         goToActivity(MainActivity.class, 0, 0, true);
                         break;
-                    case 2:
-                        break;
-
                 }
             }
         });

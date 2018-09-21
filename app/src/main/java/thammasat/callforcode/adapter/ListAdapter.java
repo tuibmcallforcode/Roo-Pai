@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 import de.hdodenhof.circleimageview.CircleImageView;
 import thammasat.callforcode.R;
 import thammasat.callforcode.activity.MainActivity;
+import thammasat.callforcode.activity.SettingsActivity;
 import thammasat.callforcode.manager.GlideApp;
 import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.OnItemClick;
@@ -44,6 +45,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private List<Integer> distance = new ArrayList<>();
     private boolean nearby;
     private Singleton singleton = Singleton.getInstance();
+    private String[] severityList;
+    private Integer[] severityFilter;
 
     public OnItemClick getOnItemClick() {
         return onItemClick;
@@ -56,9 +59,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private OnItemClick onItemClick;
 
     public ListAdapter(Context context, List<Disaster> disasterList, boolean nearby) {
+        severityList = context.getResources().getStringArray(R.array.severity);
         try {
             latitude = (double) InternalStorage.readObject(context, "latitude");
             longitude = (double) InternalStorage.readObject(context, "longitude");
+            severityFilter = (Integer[]) InternalStorage.readObject(context, "severity");
             selectedRadiusValue = (int) InternalStorage.readObject(context, "selectedRadiusValue");
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,14 +74,25 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         this.nearby = nearby;
         if (nearby) {
             for (int i = 0; i < disasterList.size(); i++) {
-                final int distance = (int) distance(latitude, longitude, disasterList.get(i).getLoc().getCoordinates().get(0), disasterList.get(i).getLoc().getCoordinates().get(1));
-                if (distance <= selectedRadiusValue) {
-                    this.disasterList.add(disasterList.get(i));
-                    this.distance.add(distance);
+                for (int n = 0; n < severityFilter.length; n++) {
+                    if (disasterList.get(i).getSeverity().toLowerCase().equals(severityList[severityFilter[n]].toLowerCase())) {
+                        final int distance = (int) distance(latitude, longitude, disasterList.get(i).getLoc().getCoordinates().get(0), disasterList.get(i).getLoc().getCoordinates().get(1));
+                        if (distance <= selectedRadiusValue) {
+                            this.disasterList.add(disasterList.get(i));
+                            this.distance.add(distance);
+                        }
+                    }
                 }
             }
-        } else
-            this.disasterList = disasterList;
+        } else {
+            for (int i = 0; i < disasterList.size(); i++) {
+                for (int n = 0; n < severityFilter.length; n++) {
+                    if (disasterList.get(i).getSeverity().toLowerCase().equals(severityList[severityFilter[n]].toLowerCase())) {
+                        this.disasterList.add(disasterList.get(i));
+                    }
+                }
+            }
+        }
     }
 
     @Override

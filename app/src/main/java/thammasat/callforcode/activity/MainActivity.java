@@ -97,14 +97,36 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             try {
                 boolean firstTime = (boolean) InternalStorage.readObject(MainActivity.this, "firstTime");
-                initial();
+                List<Disaster> disasterList = (List<Disaster>) InternalStorage.readObject(MainActivity.this, "disaster");
+                List<DisasterMap> disasterMapList = (List<DisasterMap>) InternalStorage.readObject(MainActivity.this, "disasterMap");
+                if (isNetworkConnected() && (disasterList != null || disasterMapList != null))
+                    initial();
+                else {
+                    permissionRequest("Please connect to the internet.");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
-                initial();
+                if (isNetworkConnected())
+                    initial();
+                else {
+                    permissionRequest("Please connect to the internet.");
+                }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void permissionRequest(String message) {
+        progressBar.setVisibility(View.GONE);
+        PermissionFragment permissionFragment = new PermissionFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("permission", message);
+        bundle.putInt("type", 1);
+        permissionFragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, permissionFragment);
+        transaction.commit();
     }
 
     private void initial() {
@@ -461,6 +483,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             double latitude = 13.736717;
                             double longitude = 100.523186;
                             int radius = 10000;
+                            Integer[] severity = new Integer[getResources().getStringArray(R.array.severity).length];
+                            for (int i = 0; i < severity.length; i++) {
+                                severity[i] = i;
+                            }
+                            InternalStorage.writeObject(this, "severity", severity);
                             InternalStorage.writeObject(MainActivity.this, "latitude", latitude);
                             InternalStorage.writeObject(MainActivity.this, "longitude", longitude);
                             InternalStorage.writeObject(MainActivity.this, "selectedRadiusValue", radius);
@@ -472,15 +499,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         e.printStackTrace();
                     }
                 } else {
-                    progressBar.setVisibility(View.GONE);
-                    PermissionFragment permissionFragment = new PermissionFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("permission", "Please allow access location.");
-                    bundle.putInt("type", 1);
-                    permissionFragment.setArguments(bundle);
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, permissionFragment);
-                    transaction.commit();
+                    permissionRequest("Please allow access location.");
                 }
                 break;
         }

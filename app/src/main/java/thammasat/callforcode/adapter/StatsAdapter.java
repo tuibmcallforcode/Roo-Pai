@@ -71,6 +71,7 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
         final long time = getDateDiff(date, now, TimeUnit.DAYS);
         holder.tvTitle.setText(disasterList.get(position).getTitle());
         holder.tvDate.setText(time + " days ago");
+        holder.tvSequence.setText(position + 1 + "");
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +115,7 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-        TextView tvTitle, tvDate;
+        TextView tvTitle, tvDate, tvSequence;
 
         public ViewHolder(View itemView, int type) {
             super(itemView);
@@ -126,8 +127,10 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
             cardView = (CardView) itemView.findViewById(R.id.cardView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
+            tvSequence = (TextView) itemView.findViewById(R.id.tvSequence);
             tvTitle.setTypeface(regular);
             tvDate.setTypeface(light);
+            tvSequence.setTypeface(bold);
         }
     }
 }

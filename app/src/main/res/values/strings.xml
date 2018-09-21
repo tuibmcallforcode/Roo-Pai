@@ -35,9 +35,10 @@
     <string name="login_with_google">LOGIN WITH GOOGLE</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_info">InfoActivity</string>
-    <string name="general">General</string>
+    <string name="general">GENERAL</string>
     <string name="unit_of_distance">Unit of Distance</string>
     <string name="nearby_radius">Nearby Radius</string>
+    <string name="service_url">Service URL</string>
     <string name="may_interest">MAY INTEREST</string>
     <string name="severity">Severity</string>
     <string name="week">WEEK</string>
@@ -46,6 +47,9 @@
     <string name="NEWS">NEWS</string>
     <string name="categories">CATEGORIES</string>
     <string name="tab_to_chart">Tab into chart to select severity.</string>
+    <string name="url">URL</string>
+    <string name="languages">Languages</string>
+    <string name="service">SERVICE</string>
     <string-array name="severity">
         <item>Cold Wave</item>
         <item>Drought</item>
@@ -67,5 +71,10 @@
         <item>Tropical Cyclone</item>
         <item>Tsunami</item>
         <item>Volcano</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
     </string-array>
 </resources>

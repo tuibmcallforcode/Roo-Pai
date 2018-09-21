@@ -68,9 +68,9 @@ public class InfoFragment extends BaseFragment {
 
         binding.tvTag.setText(disaster.getSeverity());
         binding.tvDescription.setText(disaster.getDescription());
-        binding.tvDuration.setText(time + " days ago | ");
-        binding.tvDistance.setText(distance + " km away");
-
+        binding.tvDuration.setText(time + " days ago");
+        if (distance != 0)
+            binding.tvDistance.setText(" | " + distance + " km away");
         linearLayoutManager = new LinearLayoutManager(getContext());
         listAdapter = new RelatedListAdapter(getContext(), relatedList);
         binding.recyclerView.setLayoutManager(linearLayoutManager);
