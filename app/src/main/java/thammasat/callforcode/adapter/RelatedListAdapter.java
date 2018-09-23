@@ -31,6 +31,7 @@ public class RelatedListAdapter extends RecyclerView.Adapter<RelatedListAdapter.
     private List<Disaster> disasterList;
     private Typeface bold, regular, light;
     private Date now = new Date();
+    private String dayAgo;
 
     public OnItemClick getOnItemClick() {
         return onItemClick;
@@ -43,6 +44,7 @@ public class RelatedListAdapter extends RecyclerView.Adapter<RelatedListAdapter.
     private OnItemClick onItemClick;
 
     public RelatedListAdapter(Context context, List<Disaster> disasterList) {
+        dayAgo = context.getResources().getString(R.string.days_ago);
         this.context = context;
         this.disasterList = disasterList;
     }
@@ -70,7 +72,7 @@ public class RelatedListAdapter extends RecyclerView.Adapter<RelatedListAdapter.
         final long time = getDateDiff(date, now, TimeUnit.DAYS);
         holder.tvTitle.setText(disasterList.get(position).getBriefBody());
         holder.tvTag.setText(disasterList.get(position).getSeverity());
-        holder.tvDuration.setText(time + " days ago");
+        holder.tvDuration.setText(time + " " + dayAgo);
         holder.tvDescription.setText(disasterList.get(position).getDescription());
         holder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override

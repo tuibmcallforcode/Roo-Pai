@@ -12,7 +12,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -30,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -41,6 +41,7 @@ import com.google.android.gms.tasks.Task;
 import com.twitter.sdk.android.core.TwitterCore;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -56,9 +57,9 @@ import thammasat.callforcode.adapter.PagerAdapter;
 import thammasat.callforcode.databinding.ActivityMainBinding;
 import thammasat.callforcode.fragment.PermissionFragment;
 import thammasat.callforcode.manager.InternalStorage;
-import thammasat.callforcode.manager.Singleton;
 import thammasat.callforcode.model.Disaster;
 import thammasat.callforcode.model.DisasterMap;
+import thammasat.callforcode.model.Prepareness;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
@@ -71,15 +72,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView tvStatus;
     private AppBarLayout appBarLayout;
     private static final String TAG = MainActivity.class.getName();
-    private boolean displayed = false, disaster = false, disasterMap = false;
+    private boolean displayed = false, disaster = false, disasterMap = false, prepare = false;
     private MaterialProgressBar progressBar;
     private static final int ACCESS_LOCATION = 0;
+    private String languages;
+    private String [] prepareness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        prepareness = getResources().getStringArray(R.array.prepareness);
         setAnimation();
         setTypeface();
         TextView tvProjectName = (TextView) findViewById(R.id.tvProjectName);
@@ -99,9 +103,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 boolean firstTime = (boolean) InternalStorage.readObject(MainActivity.this, "firstTime");
                 List<Disaster> disasterList = (List<Disaster>) InternalStorage.readObject(MainActivity.this, "disaster");
                 List<DisasterMap> disasterMapList = (List<DisasterMap>) InternalStorage.readObject(MainActivity.this, "disasterMap");
-                if (isNetworkConnected() && (disasterList != null || disasterMapList != null))
+                languages = (String) InternalStorage.readObject(MainActivity.this, "languages");
+                if (isNetworkConnected())
                     initial();
-                else {
+                else if ((disasterList != null && disasterMapList != null)) {
+                    initInstance();
+                    eventListenerBinding();
+                    progressBar.setVisibility(View.GONE);
+                } else {
                     permissionRequest("Please connect to the internet.");
                 }
             } catch (IOException e) {
@@ -157,7 +166,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                     InternalStorage.writeObject(MainActivity.this, "disasterMap", response.body());
                                     InternalStorage.writeObject(MainActivity.this, "firstTime", false);
                                     disasterMap = true;
-                                    if (disaster && disasterMap) {
+                                    if (disaster && disasterMap && prepare) {
                                         initInstance();
                                         eventListenerBinding();
                                         progressBar.setVisibility(View.GONE);
@@ -183,7 +192,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         rx.Observable.fromCallable(new Callable<Call<List<Disaster>>>() {
             @Override
             public Call<List<Disaster>> call() throws Exception {
-                return apiService.getDisaster();
+                return languages.equals("en") ? apiService.getDisasterEn() : apiService.getDisasterOthers(100, 1, languages);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -207,7 +216,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                     InternalStorage.writeObject(MainActivity.this, "disaster", response.body());
                                     InternalStorage.writeObject(MainActivity.this, "firstTime", false);
                                     disaster = true;
-                                    if (disaster && disasterMap) {
+                                    if (disaster && disasterMap && prepare) {
                                         initInstance();
                                         eventListenerBinding();
                                         progressBar.setVisibility(View.GONE);
@@ -229,6 +238,58 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         });
                     }
                 });
+
+        for(int i = 0 ; i < prepareness.length ; i++){
+            final int n = i;
+            Log.i("hello", prepareness[n]);
+            rx.Observable.fromCallable(new Callable<Call<List<Prepareness>>>() {
+                @Override
+                public Call<List<Prepareness>> call() throws Exception {
+                    return apiService.getPrepareness(prepareness[n]);
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<Call<List<Prepareness>>>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Call<List<Prepareness>> listCall) {
+                            listCall.enqueue(new Callback<List<Prepareness>>() {
+                                @Override
+                                public void onResponse(Call<List<Prepareness>> call, Response<List<Prepareness>> response) {
+                                    try {
+                                        InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Tips", response.body().get(0).getTipsHTML());
+                                        InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Prepare", response.body().get(0).getPrepareHTML());
+                                        InternalStorage.writeObject(MainActivity.this, prepareness[n] + "After", response.body().get(0).getAfterHTML());
+                                        InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Description", response.body().get(0).getDescriptionHTML());
+                                        if(n == prepareness.length - 1)
+                                            prepare = true;
+                                        if (disaster && disasterMap && prepare) {
+                                            initInstance();
+                                            eventListenerBinding();
+                                            progressBar.setVisibility(View.GONE);
+                                        }
+                                    } catch (IOException e) {
+                                        Log.e(TAG, e.getMessage());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<Prepareness>> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    });
+        }
     }
 
     private void initInstance() {
@@ -244,10 +305,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("NEARBY"));
-        tabLayout.addTab(tabLayout.newTab().setText("NEWS"));
-        tabLayout.addTab(tabLayout.newTab().setText("MAP"));
-        tabLayout.addTab(tabLayout.newTab().setText("STATS"));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.nearby)));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.news)));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.map)));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.stats)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -277,14 +338,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0) {
-                    tvStatus.setText("NEARBY");
+                    tvStatus.setText(getResources().getString(R.string.nearby));
                 } else if (tab.getPosition() == 1) {
-                    tvStatus.setText("NEWS");
+                    tvStatus.setText(getResources().getString(R.string.news));
                 } else if (tab.getPosition() == 2) {
-                    tvStatus.setText("MAP");
+                    tvStatus.setText(getResources().getString(R.string.map));
                     appBarLayout.setExpanded(false);
                 } else if (tab.getPosition() == 3) {
-                    tvStatus.setText("STATS");
+                    tvStatus.setText(getResources().getString(R.string.stats));
                     appBarLayout.setExpanded(false);
                 }
             }
@@ -364,7 +425,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            new MaterialDialog.Builder(MainActivity.this)
+                    .typeface("Bold.ttf", "Regular.ttf")
+                    .backgroundColor(Color.parseColor("#454F63"))
+                    .titleColor(Color.parseColor("#FFFFFF"))
+                    .negativeColor(Color.parseColor("#FFFFFF"))
+                    .positiveColor(Color.parseColor("#FFFFFF"))
+                    .contentColor(Color.parseColor("#FFFFFF"))
+                    .widgetColor(Color.parseColor("#FFFFFF"))
+                    .title(R.string.confirmation)
+                    .content(R.string.exit_app)
+                    .negativeText(R.string.cancel)
+                    .positiveText(R.string.confirm)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            finish();
+                        }
+                    })
+                    .show();
         }
     }
 
@@ -487,12 +566,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             for (int i = 0; i < severity.length; i++) {
                                 severity[i] = i;
                             }
+                            String url = "172.20.10.13:8080";
                             InternalStorage.writeObject(this, "severity", severity);
+                            InternalStorage.writeObject(this, "url", url);
                             InternalStorage.writeObject(MainActivity.this, "latitude", latitude);
                             InternalStorage.writeObject(MainActivity.this, "longitude", longitude);
                             InternalStorage.writeObject(MainActivity.this, "selectedRadiusValue", radius);
+                            languages = (String) InternalStorage.readObject(MainActivity.this, "languages");
                         } catch (IOException ex) {
                             Log.e(TAG, e.getMessage());
+                        } catch (ClassNotFoundException e1) {
+                            e1.printStackTrace();
                         }
                         initial();
                     } catch (ClassNotFoundException e) {

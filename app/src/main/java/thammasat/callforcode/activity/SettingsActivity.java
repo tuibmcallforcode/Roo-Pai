@@ -1,14 +1,16 @@
 package thammasat.callforcode.activity;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -18,13 +20,11 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.IOException;
-import java.util.List;
 
 import thammasat.callforcode.R;
 import thammasat.callforcode.databinding.ActivitySettingsBinding;
 import thammasat.callforcode.manager.InternalStorage;
-import thammasat.callforcode.manager.Singleton;
-import thammasat.callforcode.model.DisasterMap;
+import thammasat.callforcode.manager.TypefaceSpan;
 
 public class SettingsActivity extends BaseActivity {
 
@@ -37,6 +37,12 @@ public class SettingsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
+
+        SpannableString s = new SpannableString(getResources().getString(R.string.settings));
+        s.setSpan(new TypefaceSpan(this, "Regular.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        getSupportActionBar().setTitle(s);
 
         setTypeface();
         initInstance();
@@ -150,37 +156,10 @@ public class SettingsActivity extends BaseActivity {
         binding.llLanguages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    languages = (String) InternalStorage.readObject(SettingsActivity.this, "languages");
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                new MaterialDialog.Builder(SettingsActivity.this)
-                        .typeface("Bold.ttf", "Regular.ttf")
-                        .backgroundColor(Color.parseColor("#454F63"))
-                        .titleColor(Color.parseColor("#FFFFFF"))
-                        .negativeColor(Color.parseColor("#FFFFFF"))
-                        .positiveColor(Color.parseColor("#FFFFFF"))
-                        .contentColor(Color.parseColor("#FFFFFF"))
-                        .widgetColor(Color.parseColor("#FFFFFF"))
-                        .title(R.string.languages)
-                        .items(R.array.languages)
-                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                binding.tvLanguagesSelection.setText(text.toString());
-                                try {
-                                    InternalStorage.writeObject(SettingsActivity.this, "languages", text.toString());
-                                } catch (IOException e) {
-                                    Log.e(TAG, e.getMessage());
-                                }
-                                return false;
-                            }
-                        })
-                        .negativeText(R.string.cancel)
-                        .show();
+                Intent intent = new Intent(SettingsActivity.this, LanguagesActivity.class);
+                intent.putExtra("settings", true);
+                startActivity(intent);
+                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
             }
         });
 
@@ -266,13 +245,32 @@ public class SettingsActivity extends BaseActivity {
 
         try {
             severity = (Integer[]) InternalStorage.readObject(SettingsActivity.this, "severity");
-            binding.tvSeveritySelection.setText(severity.length + " Events");
+            binding.tvSeveritySelection.setText(severity.length + " " + getResources().getString(R.string.events));
             selectedRadiusValue = (int) InternalStorage.readObject(SettingsActivity.this, "selectedRadiusValue");
             binding.tvRadiusSelection.setText(selectedRadiusValue + "");
             url = (String) InternalStorage.readObject(SettingsActivity.this, "url");
             binding.tvUrlSelection.setText(url);
             languages = (String) InternalStorage.readObject(SettingsActivity.this, "languages");
-            binding.tvLanguagesSelection.setText(languages);
+            switch (languages) {
+                case "en":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.english));
+                    break;
+                case "es":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.spanish));
+                    break;
+                case "nl":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.dutch));
+                    break;
+                case "da":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.danish));
+                    break;
+                case "hi":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.hindi));
+                    break;
+                case "tr":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.turkish));
+                    break;
+            }
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -288,5 +286,37 @@ public class SettingsActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try {
+            languages = (String) InternalStorage.readObject(SettingsActivity.this, "languages");
+            switch (languages) {
+                case "en":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.english));
+                    break;
+                case "es":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.spanish));
+                    break;
+                case "nl":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.dutch));
+                    break;
+                case "da":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.danish));
+                    break;
+                case "hi":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.hindi));
+                    break;
+                case "tr":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.turkish));
+                    break;
+            }
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        } catch (ClassNotFoundException e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 }

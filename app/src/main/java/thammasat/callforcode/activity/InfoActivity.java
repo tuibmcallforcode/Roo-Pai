@@ -53,10 +53,14 @@ public class InfoActivity extends BaseActivity implements AppBarLayout.OnOffsetC
         setTypeface();
         tvTitle.setTypeface(light);
         tvDate.setTypeface(bold);
+        try {
+            String[] text = disaster.getTitle().split(" - ");
+            tvTitle.setText(text[0]);
+            tvDate.setText(text[1]);
+        } catch (Exception e) {
 
-        String[] text = disaster.getTitle().split(" - ");
-        tvTitle.setText(text[0]);
-        tvDate.setText(text[1]);
+        }
+
 
         appbar.addOnOffsetChangedListener(this);
 

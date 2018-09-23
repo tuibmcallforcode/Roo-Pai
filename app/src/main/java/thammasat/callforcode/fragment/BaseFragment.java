@@ -29,6 +29,8 @@ import thammasat.callforcode.manager.InternalStorage;
 import thammasat.callforcode.manager.Singleton;
 import thammasat.callforcode.model.Disaster;
 import thammasat.callforcode.model.DisasterMap;
+import thammasat.callforcode.restful.ApiClient;
+import thammasat.callforcode.restful.ApiInterface;
 
 public class BaseFragment extends Fragment {
     protected Typeface bold, regular, light;
@@ -39,6 +41,19 @@ public class BaseFragment extends Fragment {
     protected List<DisasterMap> disasterMapList = new ArrayList<>();
     protected List<Disaster> disasterList = new ArrayList<>();
     protected List<Disaster> relatedList = new ArrayList<>();
+    protected ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+    protected String languages;
+
+    protected void getLocale() {
+        try {
+            languages = (String) InternalStorage.readObject(getContext(), "languages");
+        } catch (IOException e) {
+
+        } catch (ClassNotFoundException e) {
+
+        }
+
+    }
 
     protected void getRelatedList() {
         for(int i = 0 ; i < 5 ; i++){

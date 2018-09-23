@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">ROO PAI</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">सेटिंग्स</string>
+    <string name="project_name">ROO PAI</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nearby">पास ही</string>
+    <string name="news">समाचार</string>
+    <string name="map">नक्शा</string>
+    <string name="stats">आँकड़े</string>
+    <string name="login">लॉग इन करें</string>
+    <string name="sign_up_now">अभी साइनअप करें</string>
+    <string name="login_with_facebook">फेसबुक में जाये</string>
+    <string name="login_with_twitter">ट्विटर के साथ लॉगिन करें</string>
+    <string name="don_t_have_account">खाता नहीं है?</string>
+    <string name="or">या</string>
+    <string name="email">ईमेल</string>
+    <string name="password">पारण शब्द</string>
+    <string name="forgot_password">पासवर्ड भूल गए ?</string>
+    <string name="sign_in">साइन इन करें</string>
+    <string name="sign_up">साइन अप करें</string>
+    <string name="create">सर्जन करना</string>
+    <string name="already_have_account">पहले से ही खाता है?</string>
+    <string name="confirm">की पुष्टि करें</string>
+    <string name="cancel">रद्द करना</string>
+    <string name="facebook_app_id">1296034127197265</string>
+    <string name="fb_login_protocol_scheme">fb1296034127197265</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vw6JPJ09JenbmH4By3du4fItl</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">	0WAKz4hw72wKCWNvi8zPfMdKqVEM8bOQ4TbJZbZwOdPQKhVnYy</string>
+    <string name="login_with_google">के साथ लॉगिन करें</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="general">सामान्य</string>
+    <string name="unit_of_distance">दूरी की इकाई</string>
+    <string name="nearby_radius">पास के त्रिज्या</string>
+    <string name="service_url">सेवा यूआरएल</string>
+    <string name="may_interest">मई ब्याज</string>
+    <string name="severity">तीव्रता</string>
+    <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
+    <string name="NEWS">समाचार</string>
+    <string name="categories">श्रेणियाँ</string>
+    <string name="tab_to_chart">गंभीरता का चयन करने के लिए चार्ट में टैब।</string>
+    <string name="url">यूआरएल</string>
+    <string name="languages">बोली</string>
+    <string name="service">सर्विस</string>
+    <string name="events">आयोजन</string>
+    <string name="days_ago">दिन पहले</string>
+    <string name="km_away">किमी दूर</string>
+    <string name="select_languages">भाषा चुनें</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="confirmation">पुष्टीकरण</string>
+    <string name="exit_app">क्या आप आवेदन से बाहर निकलना सुनिश्चित कर रहे हैं?</string>
+    <string name="tips">टिप्स</string>
+    <string name="prepare">तैयारी</string>
+    <string name="source">स्रोत पर जाएं</string>
+    <string name="english">अंग्रेज़ी</string>
+    <string name="spanish">स्पेनिश</string>
+    <string name="dutch">डच</string>
+    <string name="hindi">हिंदी</string>
+    <string name="danish">डेनिश</string>
+    <string name="turkish">तुर्की</string>
+    <string-array name="severity">
+        <item>Cold Wave</item>
+        <item>Drought</item>
+        <item>Earthquake</item>
+        <item>Epidemic</item>
+        <item>Extratropical Cyclone</item>
+        <item>Fire</item>
+        <item>Wild Fire</item>
+        <item>Flash Flood</item>
+        <item>Flood</item>
+        <item>Heat Wave</item>
+        <item>Insect Infestation</item>
+        <item>Land Slide</item>
+        <item>Mud Slide</item>
+        <item>Severe Local Storm</item>
+        <item>Snow Avalanche</item>
+        <item>Storm Surge</item>
+        <item>Technological</item>
+        <item>Tropical Cyclone</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+    <string-array name="prepareness">
+        <item>flood</item>
+        <item>earthquake</item>
+        <item>hurricane</item>
+        <item>tornado</item>
+    </string-array>
+</resources>

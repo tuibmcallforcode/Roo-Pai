@@ -10,4 +10,7 @@
     <color name="colorSettingsBackground">#F5F5F5</color>
     <color name="colorSettingsSelection">#9E9E9E</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGreen">#00C853</color>
+    <color name="colorBlue">#00B0FF</color>
+    <color name="colorOrange">#FF8F00</color>
 </resources>

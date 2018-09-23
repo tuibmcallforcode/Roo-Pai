@@ -242,7 +242,7 @@ public class StatsFragment extends BaseFragment {
                 binding.tvTab.setVisibility(View.GONE);
                 switch (pe.getLabel().toLowerCase()) {
                     case "flood":
-                        binding.barChart.setCenterText(disasterListFlood.size() + " Items");
+                        binding.barChart.setCenterText(disasterListFlood.size() + " " + getResources().getString(R.string.events));
                         statsAdapter = new StatsAdapter(getContext(), disasterListFlood);
                         binding.recyclerView.setLayoutManager(linearLayoutManager);
                         binding.recyclerView.setAdapter(statsAdapter);
@@ -259,7 +259,7 @@ public class StatsFragment extends BaseFragment {
                         });
                         break;
                     case "flash flood":
-                        binding.barChart.setCenterText(disasterListFlashFlood.size() + " Events");
+                        binding.barChart.setCenterText(disasterListFlashFlood.size() + " " + getResources().getString(R.string.events));
                         statsAdapter = new StatsAdapter(getContext(), disasterListFlashFlood);
                         binding.recyclerView.setLayoutManager(linearLayoutManager);
                         binding.recyclerView.setAdapter(statsAdapter);
@@ -276,7 +276,7 @@ public class StatsFragment extends BaseFragment {
                         });
                         break;
                     case "earthquake":
-                        binding.barChart.setCenterText(disasterListEarthquake.size() + " Items");
+                        binding.barChart.setCenterText(disasterListEarthquake.size() + " " + getResources().getString(R.string.events));
                         statsAdapter = new StatsAdapter(getContext(), disasterListEarthquake);
                         binding.recyclerView.setLayoutManager(linearLayoutManager);
                         binding.recyclerView.setAdapter(statsAdapter);
@@ -293,7 +293,7 @@ public class StatsFragment extends BaseFragment {
                         });
                         break;
                     case "volcano":
-                        binding.barChart.setCenterText(disasterListVolcano.size() + " Items");
+                        binding.barChart.setCenterText(disasterListVolcano.size() + " " + getResources().getString(R.string.events));
                         statsAdapter = new StatsAdapter(getContext(), disasterListVolcano);
                         binding.recyclerView.setLayoutManager(linearLayoutManager);
                         binding.recyclerView.setAdapter(statsAdapter);
@@ -310,7 +310,7 @@ public class StatsFragment extends BaseFragment {
                         });
                         break;
                     case "tropical cyclone":
-                        binding.barChart.setCenterText(disasterListTropicalCyclone.size() + " Items");
+                        binding.barChart.setCenterText(disasterListTropicalCyclone.size() + " " + getResources().getString(R.string.events));
                         statsAdapter = new StatsAdapter(getContext(), disasterListTropicalCyclone);
                         binding.recyclerView.setLayoutManager(linearLayoutManager);
                         binding.recyclerView.setAdapter(statsAdapter);
@@ -327,7 +327,7 @@ public class StatsFragment extends BaseFragment {
                         });
                         break;
                     default:
-                        binding.barChart.setCenterText(disasterListOthers.size() + " Items");
+                        binding.barChart.setCenterText(disasterListOthers.size() + " " + getResources().getString(R.string.events));
                         statsAdapter = new StatsAdapter(getContext(), disasterListOthers);
                         binding.recyclerView.setLayoutManager(linearLayoutManager);
                         binding.recyclerView.setAdapter(statsAdapter);

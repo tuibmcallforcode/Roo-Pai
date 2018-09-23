@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">ROO PAI</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Indstillinger</string>
+    <string name="project_name">ROO PAI</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nearby">I NÆRHEDEN</string>
+    <string name="news">NYHEDER</string>
+    <string name="map">KORT</string>
+    <string name="stats">STATISTIK</string>
+    <string name="login">LOG PÅ</string>
+    <string name="sign_up_now">TILMELD DIG NU</string>
+    <string name="login_with_facebook">LOGIN MED FACEBOOK</string>
+    <string name="login_with_twitter">LOG IND MED TWITTER</string>
+    <string name="don_t_have_account">Har du ikke konto?</string>
+    <string name="or">Eller</string>
+    <string name="email">E-mail</string>
+    <string name="password">Adgangskode</string>
+    <string name="forgot_password">Glemt kodeord ?</string>
+    <string name="sign_in">LOG IND</string>
+    <string name="sign_up">TILMELDE</string>
+    <string name="create">SKAB</string>
+    <string name="already_have_account">Har du allerede en konto?</string>
+    <string name="confirm">BEKRÆFTE</string>
+    <string name="cancel">AFBESTILLE</string>
+    <string name="facebook_app_id">1296034127197265</string>
+    <string name="fb_login_protocol_scheme">fb1296034127197265</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vw6JPJ09JenbmH4By3du4fItl</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">	0WAKz4hw72wKCWNvi8zPfMdKqVEM8bOQ4TbJZbZwOdPQKhVnYy</string>
+    <string name="login_with_google">LOG IND MED GOOGLE</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="general">GENEREL</string>
+    <string name="unit_of_distance">Enhed af afstand</string>
+    <string name="nearby_radius">Nærliggende radius</string>
+    <string name="service_url">Service URL</string>
+    <string name="may_interest">Kan interessere</string>
+    <string name="severity">Alvorlighed</string>
+    <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
+    <string name="NEWS">NYHEDER</string>
+    <string name="categories">KATEGORIER</string>
+    <string name="tab_to_chart">Tab i diagrammet for at vælge sværhedsgrad.</string>
+    <string name="url">URL</string>
+    <string name="languages">Sprog</string>
+    <string name="service">SERVICE</string>
+    <string name="events">Begivenheder</string>
+    <string name="days_ago">dage siden</string>
+    <string name="km_away">km væk</string>
+    <string name="select_languages">VÆLG SPROG</string>
+    <string name="settings">Indstillinger</string>
+    <string name="confirmation">Bekræftelse</string>
+    <string name="exit_app">Er du sikker på at afslutte programmet?</string>
+    <string name="tips">Tips</string>
+    <string name="prepare">Forberedelse</string>
+    <string name="source">Gå til kilden</string>
+    <string name="english">Engelsk</string>
+    <string name="spanish">Spansk</string>
+    <string name="dutch">Hollandsk</string>
+    <string name="hindi">Hindi</string>
+    <string name="danish">Dansk</string>
+    <string name="turkish">Tyrkisk</string>
+    <string-array name="severity">
+        <item>Cold Wave</item>
+        <item>Drought</item>
+        <item>Earthquake</item>
+        <item>Epidemic</item>
+        <item>Extratropical Cyclone</item>
+        <item>Fire</item>
+        <item>Wild Fire</item>
+        <item>Flash Flood</item>
+        <item>Flood</item>
+        <item>Heat Wave</item>
+        <item>Insect Infestation</item>
+        <item>Land Slide</item>
+        <item>Mud Slide</item>
+        <item>Severe Local Storm</item>
+        <item>Snow Avalanche</item>
+        <item>Storm Surge</item>
+        <item>Technological</item>
+        <item>Tropical Cyclone</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+    <string-array name="prepareness">
+        <item>flood</item>
+        <item>earthquake</item>
+        <item>hurricane</item>
+        <item>tornado</item>
+    </string-array>
+</resources>

@@ -16,14 +16,20 @@
         android:orientation="horizontal"
         android:padding="@dimen/card_text_padding">
 
-        <TextView
-            android:id="@+id/tvSequence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_round"
-            android:padding="2dp"
-            android:textColor="@android:color/white"
-            android:textSize="9sp" />
+        <FrameLayout
+            android:layout_width="16dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_round">
+
+            <TextView
+                android:id="@+id/tvSequence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="2dp"
+                android:textColor="@android:color/white"
+                android:textSize="9sp" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tvTitle"

@@ -32,6 +32,7 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
     private List<Disaster> disasterList = new ArrayList<>();
     private Typeface bold, regular, light;
     private Date now = new Date();
+    private String dayAgo;
 
     public OnItemClick getOnItemClick() {
         return onItemClick;
@@ -44,6 +45,7 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
     private OnItemClick onItemClick;
 
     public StatsAdapter(Context context, List<Disaster> disasterList) {
+        dayAgo = context.getResources().getString(R.string.days_ago);
         this.context = context;
         this.disasterList = disasterList;
     }
@@ -70,7 +72,7 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
         }
         final long time = getDateDiff(date, now, TimeUnit.DAYS);
         holder.tvTitle.setText(disasterList.get(position).getTitle());
-        holder.tvDate.setText(time + " days ago");
+        holder.tvDate.setText(time + " " + dayAgo);
         holder.tvSequence.setText(position + 1 + "");
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

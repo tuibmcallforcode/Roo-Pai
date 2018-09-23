@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">ROO PAI</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Instellingen</string>
+    <string name="project_name">ROO PAI</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nearby">IN DE BUURT</string>
+    <string name="news">NIEUWS</string>
+    <string name="map">KAART</string>
+    <string name="stats">STATISTIEKEN</string>
+    <string name="login">LOG IN</string>
+    <string name="sign_up_now">SCHRIJF NU IN</string>
+    <string name="login_with_facebook">INLOGGEN MET FACEBOOK</string>
+    <string name="login_with_twitter">AANMELDEN MET TWITTER</string>
+    <string name="don_t_have_account">Heb je geen account?</string>
+    <string name="or">Of</string>
+    <string name="email">E-mail</string>
+    <string name="password">Wachtwoord</string>
+    <string name="forgot_password">Wachtwoord vergeten ?</string>
+    <string name="sign_in">AANMELDEN</string>
+    <string name="sign_up">AANMELDEN</string>
+    <string name="create">CREATE</string>
+    <string name="already_have_account">Heb je al een account?</string>
+    <string name="confirm">BEVESTIGEN</string>
+    <string name="cancel">ANNULEER</string>
+    <string name="facebook_app_id">1296034127197265</string>
+    <string name="fb_login_protocol_scheme">fb1296034127197265</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vw6JPJ09JenbmH4By3du4fItl</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">	0WAKz4hw72wKCWNvi8zPfMdKqVEM8bOQ4TbJZbZwOdPQKhVnYy</string>
+    <string name="login_with_google">AANMELDEN BIJ GOOGLE</string>
+    <string name="title_activity_maps">Kaart</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="general">ALGEMEEN</string>
+    <string name="unit_of_distance">Eenheid van afstand</string>
+    <string name="nearby_radius">Radius in de buurt</string>
+    <string name="service_url">Service URL</string>
+    <string name="may_interest">Service URL</string>
+    <string name="severity">strengheid</string>
+    <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
+    <string name="NEWS">NIEUWS</string>
+    <string name="categories">CATEGORIEËN</string>
+    <string name="tab_to_chart">Maak een tabel in het diagram om de ernst te selecteren.</string>
+    <string name="url">URL</string>
+    <string name="languages">Talen</string>
+    <string name="service">SERVICE</string>
+    <string name="events">Evenementen</string>
+    <string name="days_ago">dagen geleden</string>
+    <string name="km_away">km afstand</string>
+    <string name="select_languages">SELECTEER TALEN</string>
+    <string name="settings">Instellingen</string>
+    <string name="confirmation">Bevestiging</string>
+    <string name="exit_app">Weet je zeker dat je de applicatie moet afsluiten?</string>
+    <string name="tips">Tips</string>
+    <string name="prepare">Voorbereiding</string>
+    <string name="source">Ga naar de bron</string>
+    <string name="english">Engels</string>
+    <string name="spanish">Spaans</string>
+    <string name="dutch">Dutch</string>
+    <string name="hindi">Hindi</string>
+    <string name="danish">Deens</string>
+    <string name="turkish">Turks</string>
+    <string-array name="severity">
+        <item>Cold Wave</item>
+        <item>Drought</item>
+        <item>Earthquake</item>
+        <item>Epidemic</item>
+        <item>Extratropical Cyclone</item>
+        <item>Fire</item>
+        <item>Wild Fire</item>
+        <item>Flash Flood</item>
+        <item>Flood</item>
+        <item>Heat Wave</item>
+        <item>Insect Infestation</item>
+        <item>Land Slide</item>
+        <item>Mud Slide</item>
+        <item>Severe Local Storm</item>
+        <item>Snow Avalanche</item>
+        <item>Storm Surge</item>
+        <item>Technological</item>
+        <item>Tropical Cyclone</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+    <string-array name="prepareness">
+        <item>flood</item>
+        <item>earthquake</item>
+        <item>hurricane</item>
+        <item>tornado</item>
+    </string-array>
+</resources>

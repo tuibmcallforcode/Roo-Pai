@@ -57,7 +57,6 @@
                             android:id="@+id/tvDuration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="36 mins ago | "
                             android:textSize="@dimen/text_small" />
 
                         <TextView
@@ -65,8 +64,77 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="right"
-                            android:text="3 km away"
                             android:textSize="@dimen/text_small" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPrepareness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:id="@+id/llPrepare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/selector_prepare_background"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="4dp"
+                            android:src="@drawable/prepare" />
+
+                        <TextView
+                            android:id="@+id/tvPrepare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/prepare"
+                            android:textColor="@drawable/selector_prepare_font"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llTips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_tips_background"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="4dp"
+                            android:src="@drawable/tips" />
+
+                        <TextView
+                            android:id="@+id/tvTips"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/tips"
+                            android:textColor="@drawable/selector_tips_font"
+                            android:textSize="11sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -86,6 +154,38 @@
                             android:layout_marginTop="16dp"
                             android:textColor="@color/colorFontTitle"
                             android:textSize="@dimen/text_medium" />
+
+                        <LinearLayout
+                            android:id="@+id/llSource"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|left"
+                            android:layout_marginTop="24dp"
+                            android:background="@drawable/selector_source_background"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="8dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="4dp"
+                                android:src="@drawable/source" />
+
+                            <TextView
+                                android:id="@+id/tvSource"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/source"
+                                android:textColor="@drawable/selector_source_font"
+                                android:textSize="16sp" />
+                        </LinearLayout>
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>
