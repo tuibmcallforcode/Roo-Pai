@@ -6,6 +6,7 @@ android {
         applicationId "thammasat.callforcode"
         minSdkVersion 19
         targetSdkVersion 26
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -39,6 +40,7 @@ dependencies {
         exclude group: "com.android.support"
     }
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.google.maps.android:android-maps-utils:0.5+'
     implementation 'com.google.android.gms:play-services-location:+'
