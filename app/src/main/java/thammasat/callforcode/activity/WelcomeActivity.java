@@ -30,6 +30,7 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
+        goToActivity(MainActivity.class, 0, 0, true);
         setLanguages();
     }
 

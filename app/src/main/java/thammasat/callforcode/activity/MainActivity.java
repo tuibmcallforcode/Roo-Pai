@@ -154,7 +154,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     @Override
                     public void onError(Throwable e) {
-
+                        progressBar.setVisibility(View.GONE);
+                        permissionRequest("Couldn't connect to server.");
                     }
 
                     @Override
@@ -178,12 +179,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                             @Override
                             public void onFailure(Call<List<DisasterMap>> call, Throwable t) {
-                                disaster = true;
-                                if (disaster && disasterMap) {
-                                    initInstance();
-                                    eventListenerBinding();
-                                    progressBar.setVisibility(View.GONE);
-                                }
+                                progressBar.setVisibility(View.GONE);
+                                permissionRequest("Couldn't connect to server.");
                             }
                         });
                     }
@@ -204,7 +201,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     @Override
                     public void onError(Throwable e) {
-
+                        progressBar.setVisibility(View.GONE);
+                        permissionRequest("Couldn't connect to server.");
                     }
 
                     @Override
@@ -228,12 +226,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                             @Override
                             public void onFailure(Call<List<Disaster>> call, Throwable t) {
-                                disaster = true;
-                                if (disaster && disasterMap) {
-                                    initInstance();
-                                    eventListenerBinding();
-                                    progressBar.setVisibility(View.GONE);
-                                }
+                                progressBar.setVisibility(View.GONE);
+                                permissionRequest("Couldn't connect to server.");
                             }
                         });
                     }
@@ -257,7 +251,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                         @Override
                         public void onError(Throwable e) {
-
+                            progressBar.setVisibility(View.GONE);
+                            permissionRequest("Couldn't connect to server.");
                         }
 
                         @Override
@@ -284,7 +279,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                                 @Override
                                 public void onFailure(Call<List<Prepareness>> call, Throwable t) {
-
+                                    progressBar.setVisibility(View.GONE);
+                                    permissionRequest("Couldn't connect to server.");
                                 }
                             });
                         }
