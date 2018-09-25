@@ -9,10 +9,11 @@
 
         <TextView
             android:id="@+id/tvPermission"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_permission"
-            android:padding="@dimen/padding_permission" />
+            android:layout_centerInParent="true"
+            android:background="@drawable/selector_permission_background"
+            android:padding="@dimen/padding_permission"
+            android:textColor="@drawable/selector_permisson_font" />
     </RelativeLayout>
 </layout>

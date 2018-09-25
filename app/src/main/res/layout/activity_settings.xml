@@ -159,12 +159,14 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/settings_header_padding"
             android:text="@string/service"
-            android:textSize="@dimen/text_settings_header" />
+            android:textSize="@dimen/text_settings_header"
+            android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/settings_stroke_height"
-            android:background="@color/colorSettingsStroke" />
+            android:background="@color/colorSettingsStroke"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/llUrl"
@@ -172,7 +174,8 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:orientation="horizontal"
-            android:padding="@dimen/settings_text_padding">
+            android:padding="@dimen/settings_text_padding"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tvUrl"
@@ -195,6 +198,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/settings_stroke_height"
-            android:background="@color/colorSettingsStroke" />
+            android:background="@color/colorSettingsStroke"
+            android:visibility="gone" />
     </LinearLayout>
 </layout>

@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private MaterialProgressBar progressBar;
     private static final int ACCESS_LOCATION = 0;
     private String languages;
-    private String [] prepareness;
+    private String[] prepareness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,9 +115,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                if (isNetworkConnected())
+                if (isNetworkConnected()) {
+                    try {
+                        double latitude = 13.736717;
+                        double longitude = 100.523186;
+                        int radius = 10000;
+                        Integer[] severity = new Integer[getResources().getStringArray(R.array.severity).length];
+                        for (int i = 0; i < severity.length; i++) {
+                            severity[i] = i;
+                        }
+                        String url = "172.20.10.13:8080";
+                        InternalStorage.writeObject(this, "severity", severity);
+                        InternalStorage.writeObject(this, "url", url);
+                        InternalStorage.writeObject(MainActivity.this, "latitude", latitude);
+                        InternalStorage.writeObject(MainActivity.this, "longitude", longitude);
+                        InternalStorage.writeObject(MainActivity.this, "selectedRadiusValue", radius);
+                        languages = (String) InternalStorage.readObject(MainActivity.this, "languages");
+                    } catch (IOException ex) {
+                        Log.e(TAG, e.getMessage());
+                    } catch (ClassNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
                     initial();
-                else {
+                } else {
                     permissionRequest("Please connect to the internet.");
                 }
             } catch (ClassNotFoundException e) {
@@ -233,7 +253,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
                 });
 
-        for(int i = 0 ; i < prepareness.length ; i++){
+        for (int i = 0; i < prepareness.length; i++) {
             final int n = i;
             Log.i("hello", prepareness[n]);
             rx.Observable.fromCallable(new Callable<Call<List<Prepareness>>>() {
@@ -265,7 +285,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                         InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Prepare", response.body().get(0).getPrepareHTML());
                                         InternalStorage.writeObject(MainActivity.this, prepareness[n] + "After", response.body().get(0).getAfterHTML());
                                         InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Description", response.body().get(0).getDescriptionHTML());
-                                        if(n == prepareness.length - 1)
+                                        if (n == prepareness.length - 1)
                                             prepare = true;
                                         if (disaster && disasterMap && prepare) {
                                             initInstance();
