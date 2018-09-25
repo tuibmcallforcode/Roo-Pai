@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">ROO PAI</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">設定</string>
+    <string name="project_name">ROO PAI</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nearby">近所の</string>
+    <string name="news">ニュース</string>
+    <string name="map">地図</string>
+    <string name="stats">統計</string>
+    <string name="login">ログイン</string>
+    <string name="sign_up_now">今すぐ申し込む</string>
+    <string name="login_with_facebook">フェイスブックでログイン</string>
+    <string name="login_with_twitter">ツイッターでログイン</string>
+    <string name="don_t_have_account">アカウントを持っていない？</string>
+    <string name="or">または</string>
+    <string name="email">メール</string>
+    <string name="password">パスワード</string>
+    <string name="forgot_password">パスワードをお忘れですか ？</string>
+    <string name="sign_in">サインイン</string>
+    <string name="sign_up">サインアップ</string>
+    <string name="create">作成する</string>
+    <string name="already_have_account">すでにアカウントをお持ちですか？</string>
+    <string name="confirm">確認</string>
+    <string name="cancel">キャンセル</string>
+    <string name="facebook_app_id">1296034127197265</string>
+    <string name="fb_login_protocol_scheme">fb1296034127197265</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vw6JPJ09JenbmH4By3du4fItl</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">	0WAKz4hw72wKCWNvi8zPfMdKqVEM8bOQ4TbJZbZwOdPQKhVnYy</string>
+    <string name="login_with_google">とのログイン</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="general">総括</string>
+    <string name="unit_of_distance">距離の単位</string>
+    <string name="nearby_radius">近くの半径</string>
+    <string name="service_url">Service URL</string>
+    <string name="may_interest">興味があります</string>
+    <string name="severity">重大度</string>
+    <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
+    <string name="NEWS">ニュース</string>
+    <string name="categories">カテゴリー</string>
+    <string name="tab_to_chart">チャートにタブを入れて重大度を選択します。</string>
+    <string name="url">URL</string>
+    <string name="languages">言語</string>
+    <string name="service">SERVICE</string>
+    <string name="events">イベント</string>
+    <string name="days_ago">数日前</string>
+    <string name="km_away">離れて</string>
+    <string name="select_languages">言語を選択する</string>
+    <string name="settings">設定</string>
+    <string name="confirmation">確認</string>
+    <string name="exit_app">アプリケーションを終了してもよろしいですか？</string>
+    <string name="tips">ヒント</string>
+    <string name="prepare">準備</string>
+    <string name="source">ソースに行く</string>
+    <string name="english">英語</string>
+    <string name="spanish">スペイン語</string>
+    <string name="dutch">オランダの</string>
+    <string name="hindi">ヒンズー教徒</string>
+    <string name="danish">デンマーク語</string>
+    <string name="turkish">トルコ語</string>
+    <string name="portuguese">ポルトガル</string>
+    <string name="finnish">フィンランド語</string>
+    <string name="russian">ロシア</string>
+    <string name="french">フランス語</string>
+    <string name="italian">イタリアの</string>
+    <string name="chinese">中国語</string>
+    <string name="czech">チェコ語</string>
+    <string name="arabic">アラビア語</string>
+    <string name="norwegian">ノルウェー語</string>
+    <string name="japanese">日本語</string>
+    <string name="polish">研磨</string>
+    <string-array name="severity">
+        <item>Cold Wave</item>
+        <item>Drought</item>
+        <item>Earthquake</item>
+        <item>Epidemic</item>
+        <item>Extratropical Cyclone</item>
+        <item>Fire</item>
+        <item>Wild Fire</item>
+        <item>Flash Flood</item>
+        <item>Flood</item>
+        <item>Heat Wave</item>
+        <item>Insect Infestation</item>
+        <item>Land Slide</item>
+        <item>Mud Slide</item>
+        <item>Severe Local Storm</item>
+        <item>Snow Avalanche</item>
+        <item>Storm Surge</item>
+        <item>Technological</item>
+        <item>Tropical Cyclone</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+    <string-array name="prepareness">
+        <item>flood</item>
+        <item>earthquake</item>
+        <item>hurricane</item>
+        <item>tornado</item>
+    </string-array>
+</resources>

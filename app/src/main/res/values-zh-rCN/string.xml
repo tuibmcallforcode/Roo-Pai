@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">ROO PAI</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">設置</string>
+    <string name="project_name">ROO PAI</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nearby">附近</string>
+    <string name="news">新聞</string>
+    <string name="map">地圖</string>
+    <string name="stats">統計</string>
+    <string name="login">登錄</string>
+    <string name="sign_up_now">立即註冊</string>
+    <string name="login_with_facebook">使用FACEBOOK登錄</string>
+    <string name="login_with_twitter">用TWITTER登錄</string>
+    <string name="don_t_have_account">沒有帳戶？</string>
+    <string name="or">要么</string>
+    <string name="email">電子郵件</string>
+    <string name="password">密碼</string>
+    <string name="forgot_password">忘記密碼 ？</string>
+    <string name="sign_in">簽到</string>
+    <string name="sign_up">註冊</string>
+    <string name="create">創建</string>
+    <string name="already_have_account">已經擁有賬戶？</string>
+    <string name="confirm">確認</string>
+    <string name="cancel">取消</string>
+    <string name="facebook_app_id">1296034127197265</string>
+    <string name="fb_login_protocol_scheme">fb1296034127197265</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vw6JPJ09JenbmH4By3du4fItl</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">	0WAKz4hw72wKCWNvi8zPfMdKqVEM8bOQ4TbJZbZwOdPQKhVnYy</string>
+    <string name="login_with_google">登錄GOOGLE</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="general">一般</string>
+    <string name="unit_of_distance">距離單位</string>
+    <string name="nearby_radius">附近的半徑</string>
+    <string name="service_url">Service URL</string>
+    <string name="may_interest">可能有興趣</string>
+    <string name="severity">嚴重</string>
+    <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
+    <string name="NEWS">新聞</string>
+    <string name="categories">類別</string>
+    <string name="tab_to_chart">在圖表中選擇以選擇嚴重性。</string>
+    <string name="url">URL</string>
+    <string name="languages">語言</string>
+    <string name="service">SERVICE</string>
+    <string name="events">活動</string>
+    <string name="days_ago">幾天前</string>
+    <string name="km_away">公里外</string>
+    <string name="select_languages">選擇語言</string>
+    <string name="settings">設置</string>
+    <string name="confirmation">確認</string>
+    <string name="exit_app">你確定要退出申請嗎？</string>
+    <string name="tips">提示</string>
+    <string name="prepare">製備</string>
+    <string name="source">轉到來源</string>
+    <string name="english">英語</string>
+    <string name="spanish">西班牙語</string>
+    <string name="dutch">荷蘭人</string>
+    <string name="hindi">印度教</string>
+    <string name="danish">丹麥</string>
+    <string name="turkish">土耳其</string>
+    <string name="portuguese">葡萄牙語</string>
+    <string name="finnish">芬蘭</string>
+    <string name="russian">俄語</string>
+    <string name="french">法國</string>
+    <string name="italian">意大利</string>
+    <string name="chinese">中文</string>
+    <string name="czech">捷克</string>
+    <string name="arabic">阿拉伯</string>
+    <string name="norwegian">挪威</string>
+    <string name="japanese">日本</string>
+    <string name="polish">拋光</string>
+    <string-array name="severity">
+        <item>Cold Wave</item>
+        <item>Drought</item>
+        <item>Earthquake</item>
+        <item>Epidemic</item>
+        <item>Extratropical Cyclone</item>
+        <item>Fire</item>
+        <item>Wild Fire</item>
+        <item>Flash Flood</item>
+        <item>Flood</item>
+        <item>Heat Wave</item>
+        <item>Insect Infestation</item>
+        <item>Land Slide</item>
+        <item>Mud Slide</item>
+        <item>Severe Local Storm</item>
+        <item>Snow Avalanche</item>
+        <item>Storm Surge</item>
+        <item>Technological</item>
+        <item>Tropical Cyclone</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+    <string-array name="prepareness">
+        <item>flood</item>
+        <item>earthquake</item>
+        <item>hurricane</item>
+        <item>tornado</item>
+    </string-array>
+</resources>

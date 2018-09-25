@@ -65,6 +65,17 @@
     <string name="hindi">Hindi</string>
     <string name="danish">Dansk</string>
     <string name="turkish">Tyrkisk</string>
+    <string name="portuguese">Portugisisk</string>
+    <string name="finnish">Finsk</string>
+    <string name="russian">Russisk</string>
+    <string name="french">Fransk</string>
+    <string name="italian">Italiensk</string>
+    <string name="chinese">Kinesisk</string>
+    <string name="czech">Tjekkisk</string>
+    <string name="arabic">Arabisk</string>
+    <string name="norwegian">Norsk</string>
+    <string name="japanese">Japansk</string>
+    <string name="polish">Polere</string>
     <string-array name="severity">
         <item>Cold Wave</item>
         <item>Drought</item>

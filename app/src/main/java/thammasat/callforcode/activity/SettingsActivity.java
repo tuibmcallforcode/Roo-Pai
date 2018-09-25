@@ -312,6 +312,39 @@ public class SettingsActivity extends BaseActivity {
                 case "tr":
                     binding.tvLanguagesSelection.setText(getResources().getString(R.string.turkish));
                     break;
+                case "pt":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.portuguese));
+                    break;
+                case "fi":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.finnish));
+                    break;
+                case "ru":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.russian));
+                    break;
+                case "fr":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.french));
+                    break;
+                case "it":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.italian));
+                    break;
+                case "zh":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.chinese));
+                    break;
+                case "cs":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.czech));
+                    break;
+                case "ar":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.arabic));
+                    break;
+                case "nb":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.norwegian));
+                    break;
+                case "ja":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.japanese));
+                    break;
+                case "pl":
+                    binding.tvLanguagesSelection.setText(getResources().getString(R.string.polish));
+                    break;
             }
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());

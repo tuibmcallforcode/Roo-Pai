@@ -31,6 +31,9 @@ public interface ApiInterface {
     Call<List<Disaster>> getDisasterOthers(@Query("limit") int limit, @Query("page") int page, @Query("target") String target);
 
     @GET("/app/prepareness/{category}")
-    Call<List<Prepareness>> getPrepareness(@Path("category") String category);
+    Call<List<Prepareness>> getPreparenessEn(@Path("category") String category);
+
+    @GET("/app/prepareness/{category}")
+    Call<Prepareness> getPrepareness(@Path("category") String category, @Query("target") String target);
 }
 

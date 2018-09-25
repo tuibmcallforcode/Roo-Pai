@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">ROO PAI</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Nastavení</string>
+    <string name="project_name">ROO PAI</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nearby">NEBEZPEČÍ</string>
+    <string name="news">ZPRÁVY</string>
+    <string name="map">MAPA</string>
+    <string name="stats">STATISIKY</string>
+    <string name="login">PŘIHLÁSIT SE</string>
+    <string name="sign_up_now">Zaregistrujte se nyní</string>
+    <string name="login_with_facebook">PŘIHLÁSIT SE POMOCÍ FACEBOOKU</string>
+    <string name="login_with_twitter">PŘIHLÁŠENÍ S TWITTEREM</string>
+    <string name="don_t_have_account">Nemáte účet?</string>
+    <string name="or">Nebo</string>
+    <string name="email">E-mailem</string>
+    <string name="password">Heslo</string>
+    <string name="forgot_password">Zapomenuté heslo ?</string>
+    <string name="sign_in">PŘIHLÁSIT SE</string>
+    <string name="sign_up">PŘIHLÁSIT SE</string>
+    <string name="create">VYTVOŘIT</string>
+    <string name="already_have_account">Už máte účet?</string>
+    <string name="confirm">POTVRDIT</string>
+    <string name="cancel">ZRUŠENÍ</string>
+    <string name="facebook_app_id">1296034127197265</string>
+    <string name="fb_login_protocol_scheme">fb1296034127197265</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vw6JPJ09JenbmH4By3du4fItl</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">	0WAKz4hw72wKCWNvi8zPfMdKqVEM8bOQ4TbJZbZwOdPQKhVnYy</string>
+    <string name="login_with_google">PŘIHLÁŠENÍ S GOOGLE</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="general">VŠEOBECNÉ</string>
+    <string name="unit_of_distance">Jednotka vzdálenosti</string>
+    <string name="nearby_radius">Radius v blízkosti</string>
+    <string name="service_url">Service URL</string>
+    <string name="may_interest">MŮŽE ZAJÍMAT</string>
+    <string name="severity">Vážnost</string>
+    <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
+    <string name="NEWS">ZPRÁVY</string>
+    <string name="categories">KATEGORIE</string>
+    <string name="tab_to_chart">Klepnutím na tabulku vyberte závažnost.</string>
+    <string name="url">URL</string>
+    <string name="languages">Jazyk</string>
+    <string name="service">SERVICE</string>
+    <string name="events">Události</string>
+    <string name="days_ago">před pár dny</string>
+    <string name="km_away">km pryč</string>
+    <string name="select_languages">ZVOLTE JAZYK</string>
+    <string name="settings">Nastavení</string>
+    <string name="confirmation">Potvrzení</string>
+    <string name="exit_app">Opravdu chcete aplikaci ukončit?</string>
+    <string name="tips">Tipy</string>
+    <string name="prepare">Příprava</string>
+    <string name="source">Přejděte na zdroj</string>
+    <string name="english">Angličtina</string>
+    <string name="spanish">španělština</string>
+    <string name="dutch">Holandský</string>
+    <string name="hindi">Hind</string>
+    <string name="danish">Dánština</string>
+    <string name="turkish">Turečtina</string>
+    <string name="portuguese">Portugalština</string>
+    <string name="finnish">Finština</string>
+    <string name="russian">Ruština</string>
+    <string name="french">Francouzština</string>
+    <string name="italian">Italština</string>
+    <string name="chinese">čínština</string>
+    <string name="czech">čeština</string>
+    <string name="arabic">Arabština</string>
+    <string name="norwegian">Norština</string>
+    <string name="japanese">Japonský</string>
+    <string name="polish">Polština</string>
+    <string-array name="severity">
+        <item>Cold Wave</item>
+        <item>Drought</item>
+        <item>Earthquake</item>
+        <item>Epidemic</item>
+        <item>Extratropical Cyclone</item>
+        <item>Fire</item>
+        <item>Wild Fire</item>
+        <item>Flash Flood</item>
+        <item>Flood</item>
+        <item>Heat Wave</item>
+        <item>Insect Infestation</item>
+        <item>Land Slide</item>
+        <item>Mud Slide</item>
+        <item>Severe Local Storm</item>
+        <item>Snow Avalanche</item>
+        <item>Storm Surge</item>
+        <item>Technological</item>
+        <item>Tropical Cyclone</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+    <string-array name="prepareness">
+        <item>flood</item>
+        <item>earthquake</item>
+        <item>hurricane</item>
+        <item>tornado</item>
+    </string-array>
+</resources>

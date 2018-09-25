@@ -9,224 +9,528 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp">
+
+            <TextView
+                android:id="@+id/tvSelectLanguages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/select_languages"
+                android:textColor="@color/colorFontTitle"
+                android:textSize="20sp" />
+        </FrameLayout>
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.3" />
+            android:layout_weight="1"
+            android:scrollbars="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical">
-
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvSelectLanguages"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|center"
-                    android:text="@string/select_languages"
-                    android:textColor="@color/colorFontTitle"
-                    android:textSize="20sp" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/llEnglish"
-                android:layout_width="200dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_weight="0.5"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:id="@+id/llEnglish"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:src="@drawable/united_kingdom" />
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-                <TextView
-                    android:id="@+id/tvEnglish"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/united_kingdom" />
+
+                    <TextView
+                        android:id="@+id/tvEnglish"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/english"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llSpanish"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="@string/english"
-                    android:textColor="@color/colorFontTitle" />
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/spain" />
+
+                    <TextView
+                        android:id="@+id/tvSpanish"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/spanish"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDutch"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/dutch" />
+
+                    <TextView
+                        android:id="@+id/tvDutch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/dutch"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDenmark"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/denmark" />
+
+                    <TextView
+                        android:id="@+id/tvDenmark"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/danish"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llIndia"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/india" />
+
+                    <TextView
+                        android:id="@+id/tvIndia"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/hindi"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llTurkey"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/turkey" />
+
+                    <TextView
+                        android:id="@+id/tvTurkey"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/turkish"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPortuguese"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/portugal" />
+
+                    <TextView
+                        android:id="@+id/tvPortuguese"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/portuguese"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llFinnish"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/finland" />
+
+                    <TextView
+                        android:id="@+id/tvFinnish"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/finnish"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llRussian"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/russia" />
+
+                    <TextView
+                        android:id="@+id/tvRussian"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/russian"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llFrench"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/france" />
+
+                    <TextView
+                        android:id="@+id/tvFrench"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/french"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llItalian"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/italy" />
+
+                    <TextView
+                        android:id="@+id/tvItalian"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/italian"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llChinese"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/china" />
+
+                    <TextView
+                        android:id="@+id/tvChinese"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/chinese"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCzech"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/czech" />
+
+                    <TextView
+                        android:id="@+id/tvCzech"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/czech"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llArabic"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/arabic" />
+
+                    <TextView
+                        android:id="@+id/tvArabic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/arabic"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llNorwegian"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/norway" />
+
+                    <TextView
+                        android:id="@+id/tvNorwegian"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/norwegian"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llJapanese"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/japan" />
+
+                    <TextView
+                        android:id="@+id/tvJapanese"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/japanese"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPolish"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/poland" />
+
+                    <TextView
+                        android:id="@+id/tvPolish"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="@string/polish"
+                        android:textColor="@color/colorFontTitle" />
+                </LinearLayout>
             </LinearLayout>
+        </ScrollView>
 
-            <LinearLayout
-                android:id="@+id/llSpanish"
-                android:layout_width="200dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_weight="0.5"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:src="@drawable/spain" />
-
-                <TextView
-                    android:id="@+id/tvSpanish"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="@string/spanish"
-                    android:textColor="@color/colorFontTitle" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llDutch"
-                android:layout_width="200dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_weight="0.5"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:src="@drawable/spain" />
-
-                <TextView
-                    android:id="@+id/tvDutch"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="@string/dutch"
-                    android:textColor="@color/colorFontTitle" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llDenmark"
-                android:layout_width="200dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_weight="0.5"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:src="@drawable/denmark" />
-
-                <TextView
-                    android:id="@+id/tvDenmark"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="@string/danish"
-                    android:textColor="@color/colorFontTitle" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llIndia"
-                android:layout_width="200dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_weight="0.5"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:src="@drawable/india" />
-
-                <TextView
-                    android:id="@+id/tvIndia"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="@string/hindi"
-                    android:textColor="@color/colorFontTitle" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llTurkey"
-                android:layout_width="200dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_weight="0.5"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:src="@drawable/turkey" />
-
-                <TextView
-                    android:id="@+id/tvTurkey"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="@string/turkish"
-                    android:textColor="@color/colorFontTitle" />
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <Button
-                    android:id="@+id/btnConfirm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center"
-                    android:background="@drawable/selector_confirm_background"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp"
-                    android:paddingTop="12dp"
-                    android:text="@string/confirm"
-                    android:textColor="@drawable/selector_confirm_font"
-                    android:textSize="18sp" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <View
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3" />
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp">
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/selector_confirm_background"
+                android:paddingBottom="12dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="12dp"
+                android:text="@string/confirm"
+                android:textColor="@drawable/selector_confirm_font"
+                android:textSize="18sp" />
+        </FrameLayout>
     </LinearLayout>
 </layout>

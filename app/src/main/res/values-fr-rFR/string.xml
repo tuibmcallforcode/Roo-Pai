@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">ROO PAI</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Paramètres</string>
+    <string name="project_name">ROO PAI</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nearby">PROCHE</string>
+    <string name="news">NOUVELLES</string>
+    <string name="map">CARTE</string>
+    <string name="stats">STATISTIQUES</string>
+    <string name="login">S'IDENTIFIER</string>
+    <string name="sign_up_now">S'INSCRIRE MAINTENANT</string>
+    <string name="login_with_facebook">SE CONNECTER AVEC FACEBOOK</string>
+    <string name="login_with_twitter">CONNEXION AVEC TWITTER</string>
+    <string name="don_t_have_account">Vous n'avez pas de compte?</string>
+    <string name="or">Ou</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="forgot_password">Mot de passe oublié ?</string>
+    <string name="sign_in">SE CONNECTER</string>
+    <string name="sign_up">S'INSCRIRE</string>
+    <string name="create">CRÉER</string>
+    <string name="already_have_account">Vous avez déjà un compte?</string>
+    <string name="confirm">CONFIRMER</string>
+    <string name="cancel">ANNULER</string>
+    <string name="facebook_app_id">1296034127197265</string>
+    <string name="fb_login_protocol_scheme">fb1296034127197265</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vw6JPJ09JenbmH4By3du4fItl</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">	0WAKz4hw72wKCWNvi8zPfMdKqVEM8bOQ4TbJZbZwOdPQKhVnYy</string>
+    <string name="login_with_google">CONNEXION AVEC GOOGLE</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="general">GÉNÉRAL</string>
+    <string name="unit_of_distance">Unité de distance</string>
+    <string name="nearby_radius">Rayon à proximité</string>
+    <string name="service_url">Service URL</string>
+    <string name="may_interest">Peut intéresser</string>
+    <string name="severity">Gravité</string>
+    <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
+    <string name="NEWS">NOUVELLES</string>
+    <string name="categories">CATÉGORIES</string>
+    <string name="tab_to_chart">Onglet dans le graphique pour sélectionner la gravité.</string>
+    <string name="url">URL</string>
+    <string name="languages">La langue</string>
+    <string name="service">SERVICE</string>
+    <string name="events">Événements</string>
+    <string name="days_ago">il y a quelques jours</string>
+    <string name="km_away">km de distance</string>
+    <string name="select_languages">CHOISIR LA LANGUE</string>
+    <string name="settings">Paramètres</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="exit_app">Êtes-vous sûr de quitter l'application?</string>
+    <string name="tips">Conseils</string>
+    <string name="prepare">Préparation</string>
+    <string name="source">Aller à la source</string>
+    <string name="english">Anglais</string>
+    <string name="spanish">Espanol</string>
+    <string name="dutch">Néerlandais</string>
+    <string name="hindi">Hindou</string>
+    <string name="danish">Danois</string>
+    <string name="turkish">Turc</string>
+    <string name="portuguese">Portugais</string>
+    <string name="finnish">Finlandais</string>
+    <string name="russian">Russe</string>
+    <string name="french">Français</string>
+    <string name="italian">Italien</string>
+    <string name="chinese">Chinois</string>
+    <string name="czech">Tchèque</string>
+    <string name="arabic">Arabe</string>
+    <string name="norwegian">Norvégien</string>
+    <string name="japanese">Japonais</string>
+    <string name="polish">Polonais</string>
+    <string-array name="severity">
+        <item>Cold Wave</item>
+        <item>Drought</item>
+        <item>Earthquake</item>
+        <item>Epidemic</item>
+        <item>Extratropical Cyclone</item>
+        <item>Fire</item>
+        <item>Wild Fire</item>
+        <item>Flash Flood</item>
+        <item>Flood</item>
+        <item>Heat Wave</item>
+        <item>Insect Infestation</item>
+        <item>Land Slide</item>
+        <item>Mud Slide</item>
+        <item>Severe Local Storm</item>
+        <item>Snow Avalanche</item>
+        <item>Storm Surge</item>
+        <item>Technological</item>
+        <item>Tropical Cyclone</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+    <string-array name="prepareness">
+        <item>flood</item>
+        <item>earthquake</item>
+        <item>hurricane</item>
+        <item>tornado</item>
+    </string-array>
+</resources>

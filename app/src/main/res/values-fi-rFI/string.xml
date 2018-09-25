@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">ROO PAI</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Asetukset</string>
+    <string name="project_name">ROO PAI</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nearby">LÄHISTÖLLÄ</string>
+    <string name="news">UUTISET</string>
+    <string name="map">KARTTA</string>
+    <string name="stats">TILASTOT</string>
+    <string name="login">KIRJAUDU SISÄÄN</string>
+    <string name="sign_up_now">ILMOITTAUDU NYT</string>
+    <string name="login_with_facebook">Kirjaudu sisään FACEBOOKn kanssa</string>
+    <string name="login_with_twitter">Kirjaudu TWITTER: iin</string>
+    <string name="don_t_have_account">Don \ 't sinulla on tili?</string>
+    <string name="or">Tai</string>
+    <string name="email">Sähköposti</string>
+    <string name="password">Salasana</string>
+    <string name="forgot_password">Unohtuiko salasana ?</string>
+    <string name="sign_in">KIRJAUDU SISÄÄN</string>
+    <string name="sign_up">KIRJAUDU</string>
+    <string name="create">CREATE</string>
+    <string name="already_have_account">Onko sinulla jo tiliä?</string>
+    <string name="confirm">VAHVISTAA</string>
+    <string name="cancel">PERUUTTAA</string>
+    <string name="facebook_app_id">1296034127197265</string>
+    <string name="fb_login_protocol_scheme">fb1296034127197265</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vw6JPJ09JenbmH4By3du4fItl</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">	0WAKz4hw72wKCWNvi8zPfMdKqVEM8bOQ4TbJZbZwOdPQKhVnYy</string>
+    <string name="login_with_google">Kirjaudu sisään GOOGLEn kanssa</string>
+    <string name="title_activity_maps">Kartta</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="general">GENERAL</string>
+    <string name="unit_of_distance">Etäisyyden yksikkö</string>
+    <string name="nearby_radius">Lähialueen säde</string>
+    <string name="service_url">Service URL</string>
+    <string name="may_interest">VOI KORISI</string>
+    <string name="severity">Ankaruus</string>
+    <string name="week">WEEK</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
+    <string name="NEWS">NEWS</string>
+    <string name="categories">LUOKAT</string>
+    <string name="tab_to_chart">Valitse taulukko kaavion avulla.</string>
+    <string name="url">URL</string>
+    <string name="languages">Kieli</string>
+    <string name="service">SERVICE</string>
+    <string name="events">Tapahtumat</string>
+    <string name="days_ago">päiviä sitten</string>
+    <string name="km_away">km päässä</string>
+    <string name="select_languages">VALITSE KIELI</string>
+    <string name="settings">Asetukset</string>
+    <string name="confirmation">Vahvistus</string>
+    <string name="exit_app">Oletko varma, että poistut sovelluksesta?</string>
+    <string name="tips">Vinkkejä</string>
+    <string name="prepare">Valmistautuminen</string>
+    <string name="source">Siirry lähteeseen</string>
+    <string name="english">Englanti</string>
+    <string name="spanish">Espanja</string>
+    <string name="dutch">Hollannin kieli</string>
+    <string name="hindi">Hindu</string>
+    <string name="danish">Tanskan kieli</string>
+    <string name="turkish">Turkki</string>
+    <string name="portuguese">Portugalin kieli</string>
+    <string name="finnish">Suomalainen</string>
+    <string name="russian">Venäjän kieli</string>
+    <string name="french">Ranskan kieli</string>
+    <string name="italian">Italialainen</string>
+    <string name="chinese">Kiinalainen</string>
+    <string name="czech">Czech</string>
+    <string name="arabic">Arabialainen</string>
+    <string name="norwegian">Norjan kieli</string>
+    <string name="japanese">Japanilainen</string>
+    <string name="polish">Kiillottaa</string>
+    <string-array name="severity">
+        <item>Cold Wave</item>
+        <item>Drought</item>
+        <item>Earthquake</item>
+        <item>Epidemic</item>
+        <item>Extratropical Cyclone</item>
+        <item>Fire</item>
+        <item>Wild Fire</item>
+        <item>Flash Flood</item>
+        <item>Flood</item>
+        <item>Heat Wave</item>
+        <item>Insect Infestation</item>
+        <item>Land Slide</item>
+        <item>Mud Slide</item>
+        <item>Severe Local Storm</item>
+        <item>Snow Avalanche</item>
+        <item>Storm Surge</item>
+        <item>Technological</item>
+        <item>Tropical Cyclone</item>
+        <item>Tsunami</item>
+        <item>Volcano</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+    <string-array name="prepareness">
+        <item>flood</item>
+        <item>earthquake</item>
+        <item>hurricane</item>
+        <item>tornado</item>
+    </string-array>
+</resources>

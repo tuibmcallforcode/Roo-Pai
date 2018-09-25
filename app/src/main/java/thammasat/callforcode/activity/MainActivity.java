@@ -200,7 +200,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             @Override
                             public void onFailure(Call<List<DisasterMap>> call, Throwable t) {
                                 progressBar.setVisibility(View.GONE);
-                                permissionRequest("Couldn't connect to server.");
+                                permissionRequest("Connection timeout, please try again.");
                             }
                         });
                     }
@@ -209,7 +209,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         rx.Observable.fromCallable(new Callable<Call<List<Disaster>>>() {
             @Override
             public Call<List<Disaster>> call() throws Exception {
-                return languages.equals("en") ? apiService.getDisasterEn() : apiService.getDisasterOthers(100, 1, languages);
+                return languages.equals("en") ? apiService.getDisasterEn() : apiService.getDisasterOthers(10, 1, languages);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -247,7 +247,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             @Override
                             public void onFailure(Call<List<Disaster>> call, Throwable t) {
                                 progressBar.setVisibility(View.GONE);
-                                permissionRequest("Couldn't connect to server.");
+                                permissionRequest("Connection timeout, please try again.");
                             }
                         });
                     }
@@ -255,56 +255,107 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         for (int i = 0; i < prepareness.length; i++) {
             final int n = i;
-            Log.i("hello", prepareness[n]);
-            rx.Observable.fromCallable(new Callable<Call<List<Prepareness>>>() {
-                @Override
-                public Call<List<Prepareness>> call() throws Exception {
-                    return apiService.getPrepareness(prepareness[n]);
-                }
-            }).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Call<List<Prepareness>>>() {
-                        @Override
-                        public void onCompleted() {
+            if (languages.equals("en")) {
+                rx.Observable.fromCallable(new Callable<Call<List<Prepareness>>>() {
+                    @Override
+                    public Call<List<Prepareness>> call() throws Exception {
+                        return apiService.getPreparenessEn(prepareness[n]);
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Call<List<Prepareness>>>() {
+                            @Override
+                            public void onCompleted() {
 
-                        }
+                            }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            progressBar.setVisibility(View.GONE);
-                            permissionRequest("Couldn't connect to server.");
-                        }
+                            @Override
+                            public void onError(Throwable e) {
+                                progressBar.setVisibility(View.GONE);
+                                permissionRequest("Couldn't connect to server.");
+                            }
 
-                        @Override
-                        public void onNext(Call<List<Prepareness>> listCall) {
-                            listCall.enqueue(new Callback<List<Prepareness>>() {
-                                @Override
-                                public void onResponse(Call<List<Prepareness>> call, Response<List<Prepareness>> response) {
-                                    try {
-                                        InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Tips", response.body().get(0).getTipsHTML());
-                                        InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Prepare", response.body().get(0).getPrepareHTML());
-                                        InternalStorage.writeObject(MainActivity.this, prepareness[n] + "After", response.body().get(0).getAfterHTML());
-                                        InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Description", response.body().get(0).getDescriptionHTML());
-                                        if (n == prepareness.length - 1)
-                                            prepare = true;
-                                        if (disaster && disasterMap && prepare) {
-                                            initInstance();
-                                            eventListenerBinding();
-                                            progressBar.setVisibility(View.GONE);
+                            @Override
+                            public void onNext(Call<List<Prepareness>> listCall) {
+                                listCall.enqueue(new Callback<List<Prepareness>>() {
+                                    @Override
+                                    public void onResponse(Call<List<Prepareness>> call, Response<List<Prepareness>> response) {
+                                        try {
+                                            InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Tips", response.body().get(0).getTipsHTML());
+                                            InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Prepare", response.body().get(0).getPrepareHTML());
+                                            InternalStorage.writeObject(MainActivity.this, prepareness[n] + "After", response.body().get(0).getAfterHTML());
+                                            InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Description", response.body().get(0).getDescriptionHTML());
+                                            if (n == prepareness.length - 1)
+                                                prepare = true;
+                                            if (disaster && disasterMap && prepare) {
+                                                initInstance();
+                                                eventListenerBinding();
+                                                progressBar.setVisibility(View.GONE);
+                                            }
+                                        } catch (IOException e) {
+                                            Log.e(TAG, e.getMessage());
                                         }
-                                    } catch (IOException e) {
-                                        Log.e(TAG, e.getMessage());
                                     }
-                                }
 
-                                @Override
-                                public void onFailure(Call<List<Prepareness>> call, Throwable t) {
-                                    progressBar.setVisibility(View.GONE);
-                                    permissionRequest("Couldn't connect to server.");
-                                }
-                            });
-                        }
-                    });
+                                    @Override
+                                    public void onFailure(Call<List<Prepareness>> call, Throwable t) {
+                                        progressBar.setVisibility(View.GONE);
+                                        permissionRequest("Connection timeout, please try again.");
+                                    }
+                                });
+                            }
+                        });
+            } else {
+                rx.Observable.fromCallable(new Callable<Call<Prepareness>>() {
+                    @Override
+                    public Call<Prepareness> call() throws Exception {
+                        return apiService.getPrepareness(prepareness[n], languages);
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Call<Prepareness>>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                progressBar.setVisibility(View.GONE);
+                                permissionRequest("Couldn't connect to server.");
+                            }
+
+                            @Override
+                            public void onNext(Call<Prepareness> preparenessCall) {
+                                preparenessCall.enqueue(new Callback<Prepareness>() {
+                                    @Override
+                                    public void onResponse(Call<Prepareness> call, Response<Prepareness> response) {
+                                        try {
+                                            InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Tips", response.body().getTipsHTML());
+                                            InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Prepare", response.body().getPrepareHTML());
+                                            InternalStorage.writeObject(MainActivity.this, prepareness[n] + "After", response.body().getAfterHTML());
+                                            InternalStorage.writeObject(MainActivity.this, prepareness[n] + "Description", response.body().getDescriptionHTML());
+                                            if (n == prepareness.length - 1)
+                                                prepare = true;
+                                            if (disaster && disasterMap && prepare) {
+                                                initInstance();
+                                                eventListenerBinding();
+                                                progressBar.setVisibility(View.GONE);
+                                            }
+                                        } catch (IOException e) {
+                                            Log.e(TAG, e.getMessage());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Prepareness> call, Throwable t) {
+                                        progressBar.setVisibility(View.GONE);
+                                        permissionRequest("Connection timeout, please try again.");
+                                    }
+                                });
+                            }
+                        });
+            }
         }
     }
 
@@ -529,6 +580,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override

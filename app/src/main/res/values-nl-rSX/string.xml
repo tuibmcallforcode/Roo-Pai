@@ -65,6 +65,17 @@
     <string name="hindi">Hindi</string>
     <string name="danish">Deens</string>
     <string name="turkish">Turks</string>
+    <string name="portuguese">Portugees</string>
+    <string name="finnish">Fins</string>
+    <string name="russian">Russisch</string>
+    <string name="french">Frans</string>
+    <string name="italian">Italiaans</string>
+    <string name="chinese">Chinese</string>
+    <string name="czech">Tsjechisch</string>
+    <string name="arabic">Arabisch</string>
+    <string name="norwegian">Noors</string>
+    <string name="japanese">Japans</string>
+    <string name="polish">Pools</string>
     <string-array name="severity">
         <item>Cold Wave</item>
         <item>Drought</item>

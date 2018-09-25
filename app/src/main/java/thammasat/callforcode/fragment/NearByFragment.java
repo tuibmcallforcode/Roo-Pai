@@ -49,6 +49,7 @@ public class NearByFragment extends BaseFragment {
     }
 
     private void initInstance() {
+        binding.tvSafe.setTypeface(bold);
         linearLayoutManager = new LinearLayoutManager(getContext());
         listAdapter = new ListAdapter(getContext(), disasterList, true);
         binding.recyclerView.setLayoutManager(linearLayoutManager);
@@ -64,6 +65,11 @@ public class NearByFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
             }
         });
+        if (listAdapter.getItemCount() == 0) {
+            binding.llSafe.setVisibility(View.VISIBLE);
+        } else {
+            binding.llSafe.setVisibility(View.GONE);
+        }
     }
 
     @Override

@@ -159,7 +159,7 @@
                             android:id="@+id/llSource"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center|left"
+                            android:layout_gravity="center"
                             android:layout_marginTop="24dp"
                             android:background="@drawable/selector_source_background"
                             android:gravity="center"
